@@ -1,0 +1,107 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[╭─](fg:#2d3748)\
+$username\
+$os\
+$directory\
+$git_branch$git_status\
+$cmd_duration\
+$status\
+\n[╰─](fg:#2d3748)\
+$python$nodejs$golang$rust$c$docker_context\
+$character"""
+
+add_newline = true
+
+[username]
+show_always = false
+style_root = "fg:#ffffff bg:#dc2626 bold"
+format = '[](fg:#dc2626)[# ROOT]($style)[](fg:#dc2626)[─](fg:#2d3748)'
+
+[os]
+disabled = false
+style = "fg:#ffffff bg:#2373ee bold"
+format = '[](fg:#2373ee)[$symbol]($style)[](fg:#2373ee)'
+
+[os.symbols]
+Kali = " "
+Debian = " "
+Linux = " "
+Ubuntu = " "
+Arch = "󰣇 "
+
+[directory]
+style = "fg:#e2e8f0 bg:#181d26 bold"
+format = '[─](fg:#2d3748)[](fg:#181d26)[󰝰 ](fg:#38bdf8 bg:#181d26)[$path]($style)[](fg:#181d26)'
+truncation_length = 2
+fish_style_pwd_dir_length = 1
+truncate_to_repo = true
+truncation_symbol = "…/"
+read_only = " 󰌾"
+read_only_style = "fg:#ef4444 bg:#181d26"
+
+[git_branch]
+symbol = "󰊢 "
+style = "fg:#a5b4fc bg:#1f2333 bold"
+format = '[─](fg:#2d3748)[](fg:#1f2333)[$symbol$branch]($style)'
+
+[git_status]
+style = "fg:#38bdf8 bg:#1f2333 bold"
+format = '([ $all_status$ahead_behind]($style))[](fg:#1f2333)'
+conflicted = "󰀦 "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "󰃻 "
+untracked = " ${count} "
+stashed = "󰏖 "
+modified = "󱈸${count} "
+staged = "󰄬 ${count} "
+deleted = "󰆴 ${count} "
+
+[cmd_duration]
+min_time = 2_000
+style = "fg:#f59e0b bg:#232018 bold"
+format = '[─](fg:#2d3748)[](fg:#232018)[ $duration]($style)[](fg:#232018)'
+
+[status]
+disabled = false
+style = "fg:#f87171 bg:#2d1519 bold"
+symbol = "󰅚 "
+format = '[─](fg:#2d3748)[](fg:#2d1519)[$symbol$status]($style)[](fg:#2d1519)'
+
+[python]
+symbol = " "
+style = "fg:#eab308 bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )(\($virtualenv\))]($style)[](fg:#161a22)'
+detect_extensions = ['py', 'ipynb']
+detect_folders = ['.venv', 'venv', 'env', '.env']
+
+[nodejs]
+symbol = " "
+style = "fg:#22c55e bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
+[golang]
+symbol = " "
+style = "fg:#00add8 bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
+[rust]
+symbol = "󱘗 "
+style = "fg:#f97316 bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
+[c]
+symbol = " "
+style = "fg:#60a5fa bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
+[docker_context]
+symbol = "󰡨 "
+style = "fg:#38bdf8 bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol$context]($style)[](fg:#161a22)'
+
+[character]
+success_symbol = "[─](bold #2d3748)[⬤](bold #38bdf8)"
+error_symbol = "[─](bold #2d3748)[⬤](bold #f87171)"
