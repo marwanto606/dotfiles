@@ -1,7 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-
-format = """
-[╭─](fg:#2d3748)\
+format = """[╭─](fg:#2d3748)\
 $username\
 $os\
 $directory\
@@ -12,12 +10,14 @@ $status\
 $python$nodejs$golang$rust$c$docker_context\
 $character"""
 
-add_newline = true
+add_newline = false
+scan_timeout = 100
+command_timeout = 1000
 
 [username]
 show_always = false
 style_root = "fg:#ffffff bg:#dc2626 bold"
-format = '[](fg:#dc2626)[# ROOT]($style)[](fg:#dc2626)[─](fg:#2d3748)'
+format = '[](fg:#dc2626)[#ROOT]($style)[](fg:#dc2626)[─](fg:#2d3748)'
 
 [os]
 disabled = false
