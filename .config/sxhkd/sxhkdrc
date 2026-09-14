@@ -1,6 +1,9 @@
 # Reload functions
 super + Escape
-	"$XDG_CONFIG_HOME"/sxhkd/functions
+	pkill -USR1 -x sxhkd
+    
+super + ctrl + Escape
+	dm-tool lock
 
 super + Return
 	qterminal

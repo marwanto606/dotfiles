@@ -80,7 +80,7 @@ chosen="$(echo -e "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str 
 # Eksekusi aksi berdasarkan kata yang dipilih
 case "$chosen" in
     "Lock")
-        xflock4 || slock || i3lock
+        dm-tool lock || i3lock || slock || xflock4
         ;;
     "Logout")
         bspc quit
