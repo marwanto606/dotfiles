@@ -17,6 +17,9 @@ super + e
 super + d
 	rofi -show drun
 
+super + b
+    qterminal -name btop -e btop
+
 # Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
 super + Tab
     rofi -show window
@@ -24,6 +27,7 @@ super + Tab
 # Switch workspace
 super + {1-9}
     bspc desktop -f '^{1-9}'
+
 # Move window to workspace
 super + shift + {1-9}
     bspc node -d '^{1-9}'
@@ -50,11 +54,19 @@ super + f
 
 # Toggle floating
 super + space
-    bspc node -t ~floating
+    bspc node -t '~floating'
 
 # Close window
 super + q
     bspc node -c
+
+# ==========================================
+# MOVE FLOATING WINDOWS (MENGGESER DENGAN KEYBOARD)
+# ==========================================
+
+# Menggeser window floating ke kiri, bawah, atas, kanan
+super + shift + {Left,Down,Up,Right}
+    bspc node -v {-20 0, 0 20, 0 -20, 20 0}
 
 # ==========================================
 # RELOAD & RESTART
@@ -112,6 +124,10 @@ XF86MonBrightnessUp
 
 XF86MonBrightnessDown
     brightnessctl set 5%-
+
+# Toggle mute/unmute microphone (Tombol Mic Laptop)
+XF86AudioMicMute
+    pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # ==========================================
 # SCREENSHOT (TANGKAPAN LAYAR)

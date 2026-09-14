@@ -1,9 +1,17 @@
 # dotfiles
 ## installation
 ```
-sudo apt install bspwm rofi polybar picom sxhkd nm-applet feh starship thunar
-cp .config/* ~/.config/
+sudo apt install bspwm rofi polybar picom sxhkd nm-applet feh starship thunar brightnessctl
+git clone https://github.com/marwanto606/dotfiles.git
+cd dotfiles
+cp -r .config/* ~/.config/
 mkdir -p ~/Pictures/wallpapers && cp -r wallpapers/* ~/Pictures/wallpapers
+```
+## starship init .zshrc
+```
+if [[ "$TERM" != "linux" ]]; then
+    eval "$(starship init zsh)"
+fi
 ```
 ## install mprisence for discord
 `

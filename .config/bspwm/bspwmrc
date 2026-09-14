@@ -26,7 +26,7 @@ picom --config ~/.config/picom/picom.conf &
 nm-applet >/dev/null 2>&1 &
 
 # ================= WORKSPACES & PADDING =================
-bspc monitor -d 1 2 3 4 5 6 7 8 9
+bspc monitor -d 0 1 2 3 4 5 6 7 8 9
 
 # Padding (Jarak Tepi)
 bspc config top_padding          0
@@ -45,6 +45,7 @@ bspc config gapless_monocle      true
 bspc config bottom_monocle_padding 5
 
 # ================= WINDOW RULES =================
+bspc rule -a Qterminal:btop state=floating rectangle=1000x700+0+0 center=on
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Chromium desktop='^2'
 bspc rule -a mplayer2 state=floating
@@ -78,4 +79,4 @@ pkill -f "bspc subscribe desktop_layout" 2>/dev/null
           done
       fi
   done
-) &
+) & 
