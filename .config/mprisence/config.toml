@@ -1,0 +1,19 @@
+interval = 1000
+event_driven = true
+
+clear_on_pause = true
+
+[time]
+show = true
+as_elapsed = true
+
+[cover.provider]
+provider = []
+
+[activity_type]
+use_content_type = true
+default = "listening"
+
+[player."*aimp*"]
+ignore = false
+app_id = "429559336982020107"  # App ID yang memunculkan nama "AIMP" di Discord
