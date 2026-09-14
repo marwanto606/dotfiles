@@ -11,7 +11,7 @@ $python$nodejs$golang$rust$c$docker_context\
 $character"""
 
 add_newline = false
-scan_timeout = 120
+scan_timeout = 1000
 command_timeout = 1200
 
 [username]
