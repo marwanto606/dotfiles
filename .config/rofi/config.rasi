@@ -1,0 +1,131 @@
+/* ==========================================================
+ *   ROFI TRUE DARK - TEAL & FUCHSIA HIGH CONTRAST
+ * ========================================================== */
+
+configuration {
+    modi:                       "drun,run,window";
+    font:                       "JetBrains Mono SemiBold 10";
+    show-icons:                 true;
+    icon-theme:                 "Papirus";
+    display-drun:               " ";
+    drun-display-format:        "{name}";
+    hover-select:               true;
+    me-select-entry:            "";
+    me-accept-entry:            "MousePrimary";
+}
+
+* {
+    /* Palet Dark Pekat */
+    bg-main:        #0F111A;
+    bg-input:       #161A26;
+    bg-item:        #161A26;
+    
+    /* Aksen */
+    teal:           #008080;
+    teal-bright:    #2DD4BF;
+    fuchsia:        #D946EF;
+    
+    /* Kontras Font */
+    fg-main:        #E2E8F0;
+    fg-muted:       #8892B0;
+    fg-selected:    #0F111A;   /* Teks hitam pekat saat item disorot agar kontras */
+
+    background-color: transparent;
+}
+
+window {
+    width:            680px;
+    height:           440px;
+    background-color: @bg-main;
+    border:           2px;
+    border-color:     @teal;
+    border-radius:    14px;
+    padding:          16px;
+}
+
+mainbox {
+    spacing:          14px;
+    children:         [ inputbar, listview ];
+}
+
+/* Input / Search Bar */
+inputbar {
+    background-color: @bg-input;
+    border-radius:    10px;
+    padding:          6px 12px;
+    children:         [ prompt, entry ];
+    border:           1px;
+    border-color:     #23283B;
+}
+
+prompt {
+    font:             "Font Awesome 6 Free Solid 11";
+    text-color:       @fuchsia;
+    vertical-align:   0.5;
+    padding:          0px 8px 0px 4px;
+}
+
+entry {
+    font:             "JetBrains Mono 10";
+    text-color:       @fg-main;
+    placeholder:      "Ketik untuk mencari...";
+    placeholder-color:@fg-muted;
+    vertical-align:   0.5;
+}
+
+/* List Items Grid */
+listview {
+    columns:          2;
+    lines:            6;
+    spacing:          8px;
+    scrollbar:        false;
+}
+
+element {
+    padding:          10px 14px;
+    border-radius:    8px;
+    spacing:          12px;
+    cursor:           pointer;
+    border:           1px;
+    border-color:     transparent;
+}
+
+element-icon {
+    size:             24px;
+    vertical-align:   0.5;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align:   0.5;
+    background-color: transparent;
+    text-color:       inherit;
+}
+
+/* ================= KONTROL WARNA ELEMENT (MENCEGAH BACKGROUND LIGHT) ================= */
+
+/* Item Biasa / Tidak Aktif (Dark Gelap dengan font abu terang jelas) */
+element normal.normal {
+    background-color: @bg-item;
+    text-color:       @fg-main;
+    border-color:     #23283B;
+}
+
+/* Item Baris Alternatif (Dimatikan warna putih bawaannya) */
+element alternate.normal {
+    background-color: @bg-item;
+    text-color:       @fg-main;
+    border-color:     #23283B;
+}
+
+/* Item Aktif yang Sedang Dipilih / Disorot Kursor */
+element selected.normal, element selected.active {
+    background-color: @teal-bright;
+    text-color:       @fg-selected;
+    border-color:     @teal-bright;
+}
+
+element selected.normal element-text, element selected.active element-text {
+    text-color:       @fg-selected;
+    font:             "JetBrains Mono Bold 10";
+}

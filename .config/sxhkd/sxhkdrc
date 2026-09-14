@@ -1,0 +1,123 @@
+# Reload functions
+super + Escape
+	"$XDG_CONFIG_HOME"/sxhkd/functions
+
+super + Return
+	qterminal
+
+super + t
+	xfce4-terminal
+
+super + e
+    thunar
+    
+super + d
+	rofi -show drun
+
+# Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
+super + Tab
+    rofi -show window
+
+# Switch workspace
+super + {1-9}
+    bspc desktop -f '^{1-9}'
+# Move window to workspace
+super + shift + {1-9}
+    bspc node -d '^{1-9}'
+
+# ==========================================
+# BSPWM WINDOW CONTROL
+# ==========================================
+
+# Focus window
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+# Move window
+super + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
+
+# Toggle monocle layout
+super + m
+    bspc desktop -l next
+
+# Fullscreen
+super + f
+    bspc node -t '~fullscreen'
+
+# Toggle floating
+super + space
+    bspc node -t ~floating
+
+# Close window
+super + q
+    bspc node -c
+
+# ==========================================
+# RELOAD & RESTART
+# ==========================================
+
+# Restart BSPWM tanpa menutup aplikasi yang terbuka
+super + alt + r
+    bspc wm -r
+
+# Reload konfigurasi sxhkd
+super + alt + s
+    pkill -USR1 -x sxhkd
+
+# ==========================================
+# RESIZE / MENGUBAH UKURAN JENDELA
+# ==========================================
+
+# Memperbesar ukuran jendela (gunakan tombol panah)
+super + alt + {Left,Down,Up,Right}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Memperkecil ukuran jendela (gunakan Ctrl + Super + panah)
+super + ctrl + {Left,Down,Up,Right}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# ==========================================
+# PRESELECTION (MENENTUKAN POSISI SPLIT)
+# ==========================================
+
+# Menentukan arah bukaan jendela baru berikutnya (kiri/bawah/atas/kanan)
+super + ctrl + {h,j,k,l}
+    bspc node -p {west,south,north,east}
+
+# Membatalkan arah bukaan jendela
+super + ctrl + space
+    bspc node -p cancel
+
+# ==========================================
+# KONTROL MEDIA & AUDIO (TOMBOL LAPTOP)
+# ==========================================
+
+# Atur volume audio (memerlukan pulseaudio-utils / pactl)
+XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Atur kecerahan layar (memerlukan brightnessctl atau xbacklight)
+XF86MonBrightnessUp
+    brightnessctl set +5%
+
+XF86MonBrightnessDown
+    brightnessctl set 5%-
+
+# ==========================================
+# SCREENSHOT (TANGKAPAN LAYAR)
+# ==========================================
+
+# Screenshot seluruh layar (memerlukan scrot atau maim)
+Print
+    scrot ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png
+
+# Screenshot area yang dipilih
+shift + Print
+    sleep 0.2; scrot -s ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S-screenshot.png 

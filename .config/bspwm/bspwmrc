@@ -1,0 +1,81 @@
+#! /bin/sh
+
+# ================= INISIALISASI X11 =================
+# Hilangkan '&' agar Xresources selesai dimuat sebelum aplikasi lain membacanya
+xrdb -merge ~/.Xresources
+export XCURSOR_THEME="Future-cyan-cursors"
+export XCURSOR_SIZE=24
+xsetroot -cursor_name left_ptr
+
+# Hilangkan '&' agar setting touchpad ter-apply secara berurutan
+xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+
+# ================= PEMBERSIHAN PROSES (Mencegah Duplikasi) =================
+killall -q picom polybar sxhkd nm-applet
+
+# Tunggu sebentar hingga proses benar-benar mati
+while pgrep -x polybar >/dev/null; do sleep 0.1; done
+while pgrep -x nm-applet >/dev/null; do sleep 0.1; done
+
+# ================= AUTOSTART =================
+# Jalankan proses, buang output nm-applet agar tidak membocorkan error tray ke terminal
+feh --bg-fill ~/Pictures/wallpapers/cyber1.png &
+sxhkd &
+picom --config ~/.config/picom/picom.conf &
+~/.config/polybar/launch.sh &
+nm-applet >/dev/null 2>&1 &
+
+# ================= WORKSPACES & PADDING =================
+bspc monitor -d 1 2 3 4 5 6 7 8 9
+
+# Padding (Jarak Tepi)
+bspc config top_padding          0
+bspc config bottom_padding       20
+bspc config left_padding         0
+bspc config right_padding        0
+
+# ================= PENGATURAN WINDOW & MONOCLE =================
+bspc config border_width         1
+bspc config window_gap           5
+
+bspc config split_ratio          0.52
+bspc config single_monocle       false
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+bspc config bottom_monocle_padding 5
+
+# ================= WINDOW RULES =================
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+
+# ================= POINTER / MOUSE =================
+bspc config focus_follows_pointer         false
+bspc config pointer_motion_interval       5
+bspc config pointer_modifier              mod4 
+bspc config pointer_action1               move 
+bspc config pointer_action2               resize_side 
+bspc config pointer_action3               resize_corner
+
+# ================= SCRIPT OTOMATIS: MONOCLE ROUNDED CORNERS =================
+# Matikan background loop lama jika bspwm di-reload
+pkill -f "bspc subscribe desktop_layout" 2>/dev/null
+
+# Jalankan background loop baru
+(
+  bspc subscribe desktop_layout | while read -r _ _ desktop layout; do
+      if [ "$layout" = "monocle" ]; then
+          for win in $(bspc query -N -d "$desktop" -n .window.!hidden 2>/dev/null); do
+              if xdotool getwindowname "$win" >/dev/null 2>&1 || xprop -id "$win" WM_CLASS >/dev/null 2>&1; then
+                  xprop -id "$win" -f _PICOM_ROUNDED 32c -set _PICOM_ROUNDED 1 2>/dev/null
+              fi
+          done
+      else
+          for win in $(bspc query -N -d "$desktop" -n .window.!hidden 2>/dev/null); do
+              xprop -id "$win" -remove _PICOM_ROUNDED 2>/dev/null
+          done
+      fi
+  done
+) &
