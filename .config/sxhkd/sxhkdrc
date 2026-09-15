@@ -137,10 +137,10 @@ XF86WLAN
 # SCREENSHOT (TANGKAPAN LAYAR)
 # ==========================================
 
-# Screenshot seluruh layar (memerlukan scrot atau maim)
+# Screenshot seluruh layar
 Print
-    scrot ~/Pictures/Screenshots/%Y-%m-%d-%T-screenshot.png
+    ~/.config/bspwm/scripts/screenshot-notify.sh full
 
 # Screenshot area yang dipilih
 shift + Print
-    sleep 0.2; scrot -s ~/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S-screenshot.png 
+    ~/.config/bspwm/scripts/screenshot-notify.sh area

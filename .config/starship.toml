@@ -103,5 +103,5 @@ style = "fg:#38bdf8 bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol$context]($style)[](fg:#161a22)'
 
 [character]
-success_symbol = "[─](bold #2d3748)[⬤](bold #38bdf8)"
-error_symbol = "[─](bold #2d3748)[⬤](bold #f87171)"
+success_symbol = "[─](bold #2d3748)[🞉](bold #38bdf8)"
+error_symbol = "[─](bold #2d3748)[🞉](bold #f87171)"

@@ -1,7 +1,7 @@
 # dotfiles
 ## installation
 ```
-sudo apt install bspwm rofi polybar picom sxhkd nm-applet feh starship thunar brightnessctl xfce4-notifyd
+sudo apt install bspwm rofi polybar picom sxhkd nm-applet feh starship thunar brightnessctl xfce4-notifyd scrot
 git clone https://github.com/marwanto606/dotfiles.git
 cd dotfiles
 cp -r .config/* ~/.config/
