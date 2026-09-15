@@ -9,4 +9,4 @@ while pgrep -x polybar >/dev/null; do
 done
 
 # Jalankan polybar
-polybar -c "$HOME/.config/polybar/config.ini" example >/dev/null 2>&1 &
+polybar -c "$HOME/.config/polybar/config.ini" main >/dev/null 2>&1 &
