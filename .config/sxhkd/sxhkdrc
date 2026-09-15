@@ -110,24 +110,28 @@ super + ctrl + space
 
 # Atur volume audio (memerlukan pulseaudio-utils / pactl)
 XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5%
+    ~/.config/bspwm/scripts/volume-notify.sh up
 
 XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5%
+    ~/.config/bspwm/scripts/volume-notify.sh down
 
 XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    ~/.config/bspwm/scripts/volume-notify.sh mute
 
 # Atur kecerahan layar (memerlukan brightnessctl atau xbacklight)
 XF86MonBrightnessUp
-    brightnessctl set +5%
+    ~/.config/bspwm/scripts/brightness-notify.sh up
 
 XF86MonBrightnessDown
-    brightnessctl set 5%-
+    ~/.config/bspwm/scripts/brightness-notify.sh down
 
 # Toggle mute/unmute microphone (Tombol Mic Laptop)
 XF86AudioMicMute
-    pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    ~/.config/bspwm/scripts/mic-notify.sh
+
+# Wi-Fi
+XF86WLAN
+    ~/.config/bspwm/scripts/wifi-notify.sh
 
 # ==========================================
 # SCREENSHOT (TANGKAPAN LAYAR)

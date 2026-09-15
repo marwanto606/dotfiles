@@ -1,7 +1,7 @@
 # dotfiles
 ## installation
 ```
-sudo apt install bspwm rofi polybar picom sxhkd nm-applet feh starship thunar brightnessctl
+sudo apt install bspwm rofi polybar picom sxhkd nm-applet feh starship thunar brightnessctl xfce4-notifyd
 git clone https://github.com/marwanto606/dotfiles.git
 cd dotfiles
 cp -r .config/* ~/.config/
@@ -21,6 +21,7 @@ https://github.com/lazykern/mprisence
 ## chmod script
 ```
 chmod +x ~/.config/bspwm/bspwmrc
+chmod +x ~/.config/bspwm/scripts/*
 chmod +x ~/.config/mprisence/mprisence.sh
 chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/rofi/powermenu.sh
