@@ -13,6 +13,9 @@ xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 # ================= PEMBERSIHAN PROSES (Mencegah Duplikasi) =================
 killall -q picom polybar sxhkd nm-applet
 
+# Matikan script wallpaper yang lama agar tidak menumpuk saat reload
+pkill -f "workspace-wallpaper.sh" 
+
 # Tunggu sebentar hingga proses benar-benar mati
 while pgrep -x polybar >/dev/null; do sleep 0.1; done
 while pgrep -x nm-applet >/dev/null; do sleep 0.1; done

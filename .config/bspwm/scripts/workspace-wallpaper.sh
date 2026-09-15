@@ -2,30 +2,39 @@
 
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 
-set_wallpaper() {
-    case "$1" in
-	0) WALLPAPER="$WALLPAPER_DIR/cyber0.png" ;;
-        1) WALLPAPER="$WALLPAPER_DIR/cyber1.png" ;;
-        2) WALLPAPER="$WALLPAPER_DIR/cyber2.png" ;;
-        3) WALLPAPER="$WALLPAPER_DIR/cyber3.png" ;;
-        4) WALLPAPER="$WALLPAPER_DIR/cyber4.png" ;;
-        5) WALLPAPER="$WALLPAPER_DIR/cyber5.png" ;;
-        6) WALLPAPER="$WALLPAPER_DIR/cyber6.png" ;;
-        7) WALLPAPER="$WALLPAPER_DIR/cyber7.png" ;;
-        8) WALLPAPER="$WALLPAPER_DIR/cyber8.png" ;;
-        9) WALLPAPER="$WALLPAPER_DIR/cyber9.png" ;;
-        *) return ;;
-    esac
+# Aktifkan nullglob agar ekstensi yang tidak ada tidak menjadi string literal (error)
+shopt -s nullglob
 
-    [ -f "$WALLPAPER" ] && feh --bg-fill "$WALLPAPER"
+# MEMORI CACHE: Baca isi folder SATU KALI SAJA saat script dijalankan.
+# Ini membuat perpindahan wallpaper bebas lag dan sangat hemat CPU.
+WALLPAPERS=("$WALLPAPER_DIR"/*.{png,jpg,jpeg})
+
+# Jika tidak ada file gambar di dalam folder, matikan script
+if [ ${#WALLPAPERS[@]} -eq 0 ]; then
+    exit 1
+fi
+
+set_random_wallpaper() {
+    # Pilih indeks gambar secara acak (menggunakan math bawaan bash)
+    local random_index=$(( RANDOM % ${#WALLPAPERS[@]} ))
+    local random_pic="${WALLPAPERS[$random_index]}"
+    
+    # Eksekusi feh (tambahkan --no-fehbg agar tidak meninggalkan file sampah)
+    feh --bg-fill "$random_pic" --no-fehbg
 }
 
-# Pas BSPWM mulai, langsung pasang wallpaper workspace aktif
-DESKTOP=$(bspc query -D -d focused --names)
-set_wallpaper "$DESKTOP"
+# 1. Saat BSPWM baru mulai, pasang satu wallpaper acak
+set_random_wallpaper
 
-# Pantau perpindahan workspace
-bspc subscribe desktop_focus | while read -r _ _ _ _; do
-    DESKTOP=$(bspc query -D -d focused --names)
-    set_wallpaper "$DESKTOP"
+# 2. Dapatkan ID dari desktop (workspace) yang sedang aktif sekarang
+CURRENT_DESK_ID=$(bspc query -D -d focused)
+
+# 3. Pantau perpindahan workspace
+bspc subscribe desktop_focus | while read -r _ _ desktop_id; do
+    # Jika ID workspace baru BERBEDA dengan ID workspace sebelumnya,
+    # maka ganti wallpaper. Ini mencegah script tereksekusi dua kali.
+    if [ "$desktop_id" != "$CURRENT_DESK_ID" ]; then
+        CURRENT_DESK_ID="$desktop_id"
+        set_random_wallpaper
+    fi
 done
