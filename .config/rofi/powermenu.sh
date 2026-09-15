@@ -36,6 +36,7 @@ chosen="$(echo -e "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str 
         spacing:          16px;
         scrollbar:        false;
         cycle:            true;
+        border:           0;
     }
     element {
         orientation:      vertical;

@@ -19,9 +19,9 @@ while pgrep -x nm-applet >/dev/null; do sleep 0.1; done
 
 # ================= AUTOSTART =================
 # Jalankan proses, buang output nm-applet agar tidak membocorkan error tray ke terminal
-feh --bg-fill ~/Pictures/wallpapers/cyber1.png &
 sxhkd &
 picom --config ~/.config/picom/picom.conf &
+~/.config/bspwm/scripts/workspace-wallpaper.sh &
 ~/.config/polybar/launch.sh &
 nm-applet >/dev/null 2>&1 &
 

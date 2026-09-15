@@ -7,7 +7,7 @@ configuration {
     font:                       "JetBrains Mono SemiBold 10";
     show-icons:                 true;
     icon-theme:                 "Papirus";
-    display-drun:               " ";
+    display-drun:               " ";
     drun-display-format:        "{name}";
     hover-select:               true;
     me-select-entry:            "";
@@ -52,7 +52,7 @@ mainbox {
 inputbar {
     background-color: @bg-input;
     border-radius:    10px;
-    padding:          6px 12px;
+    padding:          15px;
     children:         [ prompt, entry ];
     border:           1px;
     border-color:     #23283B;
@@ -60,7 +60,7 @@ inputbar {
 
 prompt {
     font:             "Font Awesome 6 Free Solid 11";
-    text-color:       @fuchsia;
+    text-color:       @teal;
     vertical-align:   0.5;
     padding:          0px 8px 0px 4px;
 }
@@ -68,7 +68,7 @@ prompt {
 entry {
     font:             "JetBrains Mono 10";
     text-color:       @fg-main;
-    placeholder:      "Ketik untuk mencari...";
+    placeholder:      "Search Applications ...";
     placeholder-color:@fg-muted;
     vertical-align:   0.5;
 }
@@ -79,6 +79,7 @@ listview {
     lines:            6;
     spacing:          8px;
     scrollbar:        false;
+    border:           0;
 }
 
 element {
@@ -120,9 +121,9 @@ element alternate.normal {
 
 /* Item Aktif yang Sedang Dipilih / Disorot Kursor */
 element selected.normal, element selected.active {
-    background-color: @teal-bright;
+    background-color: @teal;
     text-color:       @fg-selected;
-    border-color:     @teal-bright;
+    border-color:     @teal;
 }
 
 element selected.normal element-text, element selected.active element-text {
