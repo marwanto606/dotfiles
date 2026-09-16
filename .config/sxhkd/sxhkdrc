@@ -1,28 +1,28 @@
 # Reload functions
 super + Escape
-	pkill -USR1 -x sxhkd
+    pkill -USR1 -x sxhkd
     
 super + ctrl + Escape
-	dm-tool lock
+    dm-tool lock
 
 super + Return
-	qterminal
+    qterminal > /dev/null 2>&1 &
 
 super + t
-	xfce4-terminal
+    xfce4-terminal > /dev/null 2>&1 &
 
 super + e
-    thunar
+    thunar > /dev/null 2>&1 &
     
 super + d
-	rofi -show drun
+    rofi -show drun > /dev/null 2>&1 &
 
 super + b
-    qterminal -name btop -e btop
+    qterminal -name btop -e btop > /dev/null 2>&1 &
 
 # Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
 super + Tab
-    rofi -show window
+    rofi -show window > /dev/null 2>&1 &
 
 # Switch workspace
 super + {1-9}

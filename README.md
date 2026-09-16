@@ -1,6 +1,7 @@
 # dotfiles
 ## installation
 ```
+sudo apt update
 sudo apt install bspwm rofi polybar picom sxhkd nm-applet feh starship thunar brightnessctl xfce4-notifyd scrot
 git clone https://github.com/marwanto606/dotfiles.git
 cd dotfiles
@@ -18,6 +19,14 @@ fi
 install mprisence repo:
 https://github.com/lazykern/mprisence
 `
+## install fonts
+```
+sudo apt update
+sudo apt install fonts-jetbrains-mono fonts-font-awesome
+mkdir -p ~/.local/share/fonts
+cp -r fonts/* ~/.local/share/fonts/
+fc-cache -fv
+```
 ## chmod script
 ```
 chmod +x ~/.config/bspwm/bspwmrc
