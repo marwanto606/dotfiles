@@ -41,14 +41,13 @@ chosen="$(echo -e "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str 
     element {
         orientation:      vertical;
         border-radius:    14px;
-        /* Padding ini dihitung pas agar ruang ikon dan teks lega */
         padding:          25px 0px;
         cursor:           pointer;
         border:           1px;
-        spacing:          15px; /* Jarak antara ikon dan tulisan */
+        spacing:          15px;
     }
     element-icon {
-        size:             64px; /* Ukuran Ikon SVG Besar */
+        size:             64px;
         horizontal-align: 0.5;
         background-color: transparent;
     }
@@ -77,6 +76,12 @@ chosen="$(echo -e "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str 
         text-color:       #0F111A;
     }
 ')"
+
+# Jika pengguna menekan ESC atau membatalkan (variabel kosong), langsung keluar
+[[ -z "$chosen" ]] && exit 0
+
+# Beri jeda sepersekian detik agar animasi fade-out Rofi selesai sepenuhnya dari layar
+sleep 0.25
 
 # Eksekusi aksi berdasarkan kata yang dipilih
 case "$chosen" in

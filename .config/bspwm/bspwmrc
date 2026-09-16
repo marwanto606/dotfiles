@@ -84,3 +84,18 @@ pkill -f "bspc subscribe desktop_layout" 2>/dev/null
       fi
   done
 ) & 
+
+# Otomatis mute mic setiap kali login / unlock dari dm-tool
+(
+    # Mute pertama kali saat login
+    sleep 2
+    pactl set-source-mute @DEFAULT_SOURCE@ 1 2>/dev/null
+
+    # Dengarkan sinyal dbus saat layar di-unlock (Session Active = true)
+    gdbus monitor --system --dest org.freedesktop.login1 2>/dev/null | while read -r line; do
+        if echo "$line" | grep -q "'Active': <true>"; then
+            sleep 1
+            pactl set-source-mute @DEFAULT_SOURCE@ 1 2>/dev/null
+        fi
+    done
+) &

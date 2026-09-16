@@ -1,8 +1,17 @@
-# Reload functions
-super + Escape
+# ==========================================
+# RELOAD & RESTART
+# ==========================================
+
+# Restart BSPWM tanpa menutup aplikasi yang terbuka
+super + alt + r
+    bspc wm -r
+
+# Reload konfigurasi sxhkd
+super + alt + s
     pkill -USR1 -x sxhkd
-    
-super + ctrl + Escape
+
+# lock screen    
+ctrl + alt + l
     dm-tool lock
 
 super + Return
@@ -67,18 +76,6 @@ super + q
 # Menggeser window floating ke kiri, bawah, atas, kanan
 super + shift + {Left,Down,Up,Right}
     bspc node -v {-20 0, 0 20, 0 -20, 20 0}
-
-# ==========================================
-# RELOAD & RESTART
-# ==========================================
-
-# Restart BSPWM tanpa menutup aplikasi yang terbuka
-super + alt + r
-    bspc wm -r
-
-# Reload konfigurasi sxhkd
-super + alt + s
-    pkill -USR1 -x sxhkd
 
 # ==========================================
 # RESIZE / MENGUBAH UKURAN JENDELA

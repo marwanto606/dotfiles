@@ -14,11 +14,19 @@ if [[ "$TERM" != "linux" ]]; then
     eval "$(starship init zsh)"
 fi
 ```
+## install aimp
+`
+The native Linux version of AIMP is currently in the beta stage, you can download the .deb file at https://aimp.ru/?do=download&os=linux
+`
 ## install mprisence for discord
 `
-install mprisence repo:
-https://github.com/lazykern/mprisence
+install mprisence in the repository: https://github.com/lazykern/mprisence
 `
+## disable starup mprisence
+```
+systemctl --user disable mprisence.service
+systemctl --user stop mprisence.service
+```
 ## install fonts
 ```
 sudo apt update
