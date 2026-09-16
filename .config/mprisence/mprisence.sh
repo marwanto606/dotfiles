@@ -18,7 +18,7 @@ fi
 
 # Bagian Status
 if systemctl --user is-active --quiet "$SERVICE"; then
-    echo "%{F#FFFFFF}♬%{F-}"
+    echo "%{F#FFFFFF}%{F-}"
 else
-    echo "%{F#FFFFFF}◼%{F-}"
+    echo "%{F#FFFFFF}%{F-}"
 fi
