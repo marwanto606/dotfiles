@@ -1,93 +1,44 @@
 #!/bin/bash
 
-# ==========================================================
-# PAVUCONTROL SINGLE SCRIPT
-#
-# Usage:
-#   pavucontrol.sh speaker
-#   pavucontrol.sh mic
-# ==========================================================
+# Tentukan Tab
+TAB=$([ "$1" == "mic" ] && echo 4 || echo 3)
 
-case "$1" in
-    speaker)
-        TAB=3
-        ;;
-    mic)
-        TAB=4
-        ;;
-    *)
-        echo "Usage: $0 {speaker|mic}"
-        exit 1
-        ;;
-esac
+# 1. Toggle: Tutup jika sudah terbuka
+if pgrep -x pavucontrol >/dev/null; then pkill -x pavucontrol; exit 0; fi
 
-
-# ==========================================================
-# Tutup Pavucontrol lama
-# ==========================================================
-
-pkill -x pavucontrol 2>/dev/null
-sleep 0.3
-
-
-# ==========================================================
-# Buka Pavucontrol
-# ==========================================================
-
+# 2. Buka Pavucontrol
 pavucontrol --tab="$TAB" >/dev/null 2>&1 &
 
-
-# ==========================================================
-# Tunggu window benar-benar muncul
-# ==========================================================
-
-for i in {1..50}; do
+# 3. Cari Window ID
+WIN_ID=""
+for i in {1..20}; do
     WIN_ID=$(xdotool search --onlyvisible --class pavucontrol 2>/dev/null | head -n 1)
-
-    if [ -n "$WIN_ID" ]; then
-        break
-    fi
-
-    sleep 0.1
+    [ -n "$WIN_ID" ] && break; sleep 0.1
 done
-
-
-# Kalau window tidak ditemukan, selesai
 [ -z "$WIN_ID" ] && exit 1
 
-
-# ==========================================================
-# Auto close ketika fokus pindah
-# ==========================================================
-
+# 4. Pemantau Auto-Close & Escape (Sangat Simpel dengan xinput)
 (
-    # Tunggu sampai Pavucontrol mendapatkan fokus terlebih dahulu
-    while true; do
-        FOCUSED=$(xdotool getactivewindow 2>/dev/null)
+    xinput test-xi2 --root | grep -E --line-buffered "RawButtonPress|detail: 9" | while read -r event; do
+        
+        ! pgrep -x pavucontrol >/dev/null && break
+        
+        ACTIVE=$(xdotool getactivewindow 2>/dev/null)
 
-        if [ "$FOCUSED" = "$WIN_ID" ]; then
-            break
+        # Jika tombol Escape ditekan saat pavucontrol aktif
+        if [[ "$event" == *"detail: 9"* ]] && [ "$ACTIVE" == "$WIN_ID" ]; then
+            pkill -x pavucontrol; break
         fi
 
-        # Kalau Pavucontrol sudah mati, keluar
-        if ! pgrep -x pavucontrol >/dev/null; then
-            exit 0
+        # Jika Mouse di-klik
+        if [[ "$event" == *"RawButtonPress"* ]]; then
+            # Cek apakah klik terjadi di area luar jendela pavucontrol
+            eval $(xdotool getmouselocation --shell 2>/dev/null)
+            eval $(xdotool getwindowgeometry --shell "$WIN_ID" 2>/dev/null | sed 's/^X=/W_X=/; s/^Y=/W_Y=/; s/^WIDTH=/W_W=/; s/^HEIGHT=/W_H=/')
+            
+            if (( X < W_X || X > W_X + W_W || Y < W_Y || Y > W_Y + W_H )); then
+                pkill -x pavucontrol; break
+            fi
         fi
-
-        sleep 0.1
-    done
-
-
-    # Setelah Pavucontrol aktif, pantau fokus
-    while pgrep -x pavucontrol >/dev/null; do
-
-        FOCUSED=$(xdotool getactivewindow 2>/dev/null)
-
-        if [ "$FOCUSED" != "$WIN_ID" ]; then
-            pkill -x pavucontrol 2>/dev/null
-            break
-        fi
-
-        sleep 0.15
     done
 ) &
