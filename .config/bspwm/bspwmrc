@@ -49,12 +49,10 @@ bspc config gapless_monocle      true
 bspc config bottom_monocle_padding 5
 
 # ================= WINDOW RULES =================
-bspc rule -a Qterminal:btop state=floating rectangle=1000x700+0+0 center=on
-bspc rule -a Gimp desktop='^8' state=floating follow=on
-bspc rule -a Chromium desktop='^2'
-bspc rule -a mplayer2 state=floating
-bspc rule -a Kupfer.py focus=on
-bspc rule -a Screenkey manage=off
+bspc rule -a 'pavucontrol:pavucontrol' state=floating layer=above sticky=on border=off manage=on rectangle=360x300+993+418
+bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off rectangle=730x568+633+150
+
+#bspc rule -a Eww state=floating sticky=on layer=above border=off manage=on
 
 # ================= POINTER / MOUSE =================
 bspc config focus_follows_pointer         false

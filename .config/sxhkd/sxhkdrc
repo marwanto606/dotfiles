@@ -77,6 +77,10 @@ super + space
 super + q
     bspc node -c
 
+# Kill
+super + shift + q
+    bspc node -k
+
 # ==========================================
 # MOVE FLOATING WINDOWS (MENGGESER DENGAN KEYBOARD)
 # ==========================================

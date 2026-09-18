@@ -11,7 +11,7 @@ $python$nodejs$golang$rust$c$docker_context\
 $character"""
 
 add_newline = false
-scan_timeout = 1000
+scan_timeout = 2000
 command_timeout = 1200
 
 [username]
@@ -88,7 +88,7 @@ style = "fg:#00add8 bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
 
 [rust]
-symbol = "󱘗 "
+symbol = " "
 style = "fg:#f97316 bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
 
@@ -98,7 +98,7 @@ style = "fg:#60a5fa bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
 
 [docker_context]
-symbol = "󰡨 "
+symbol = " "
 style = "fg:#38bdf8 bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol$context]($style)[](fg:#161a22)'
 
