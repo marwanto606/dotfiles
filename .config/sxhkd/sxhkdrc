@@ -14,11 +14,11 @@ super + alt + s
 ctrl + alt + l
     dm-tool lock
 
-super + Return
-    qterminal > /dev/null 2>&1 &
+super + {_,alt + }Return
+    {qterminal, bspc rule -a \* -o state=floating center=true rectangle=700x420+0+0 && qterminal} > /dev/null 2>&1 &
 
-super + t
-    xfce4-terminal > /dev/null 2>&1 &
+super + {_,alt + }t
+    {xfce4-terminal, bspc rule -a \* -o state=floating center=true rectangle=700x420+0+0 && xfce4-terminal} > /dev/null 2>&1 &
 
 super + e
     thunar > /dev/null 2>&1 &
@@ -27,19 +27,27 @@ super + d
     rofi -show drun > /dev/null 2>&1 &
 
 super + b
-    qterminal -name btop -e btop > /dev/null 2>&1 &
+    x-www-browser > /dev/null 2>&1 &
 
 # Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
 super + Tab
     rofi -show window > /dev/null 2>&1 &
 
-# Switch workspace
-super + {1-9}
-    bspc desktop -f '^{1-9}'
+# Switch workspace (1-10)
+super + {1-9,0}
+    bspc desktop -f '^{1-9,10}'
 
-# Move window to workspace
-super + shift + {1-9}
-    bspc node -d '^{1-9}'
+# Move window to workspace (1-10)
+super + shift + {1-9,0}
+    bspc node -d '^{1-9,10}'
+
+# Switch workspace directionally (prev/next)
+super + {Left,Right}
+    bspc desktop -f {prev,next}
+
+# Send focused node to workspace directionally and follow
+super + ctrl + {Left,Right}
+    bspc node -d {prev,next} '--follow'
 
 # ==========================================
 # BSPWM WINDOW CONTROL
