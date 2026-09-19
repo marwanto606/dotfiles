@@ -1,4 +1,5 @@
 show_calendar = 1
+show_timezones = 1
 mark_today = 1
 show_week_numbers = 0
 close_on_unfocus = 1
@@ -6,3 +7,6 @@ close_on_mouseleave = 0
 mainwindow_decorated = 0
 mainwindow_keep_above = 1
 mainwindow_skip_taskbar = 1
+clock_format = %A %d %b %Y %H:%M:%S
+clock_label = 
+clock_tz =
