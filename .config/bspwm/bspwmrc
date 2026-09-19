@@ -51,8 +51,7 @@ bspc config bottom_monocle_padding 5
 # ================= WINDOW RULES =================
 bspc rule -a 'pavucontrol:pavucontrol' state=floating layer=above sticky=on border=off manage=on rectangle=360x300+993+418
 bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off rectangle=730x568+633+150
-
-#bspc rule -a Eww state=floating sticky=on layer=above border=off manage=on
+bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on rectangle=220x172+1131+551
 
 # ================= POINTER / MOUSE =================
 bspc config focus_follows_pointer         false
