@@ -28,6 +28,11 @@ picom --config ~/.config/picom/picom.conf &
 ~/.config/polybar/launch.sh &
 nm-applet >/dev/null 2>&1 &
 
+# Hanya jalankan snixembed jika belum berjalan:
+if ! pgrep -x "snixembed" > /dev/null; then
+    (sleep 2 && snixembed >/dev/null 2>&1) &
+fi
+
 # ================= WORKSPACES & PADDING =================
 bspc monitor -d 0 1 2 3 4 5 6 7 8 9
 
@@ -52,6 +57,7 @@ bspc config bottom_monocle_padding 5
 bspc rule -a 'pavucontrol:pavucontrol' state=floating layer=above sticky=on border=off manage=on rectangle=360x300+993+418
 bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off rectangle=730x568+633+160
 bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on rectangle=220x210+1120+510
+bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
 
 # ================= POINTER / MOUSE =================
 bspc config focus_follows_pointer         false
