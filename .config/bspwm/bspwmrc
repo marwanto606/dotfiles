@@ -59,6 +59,9 @@ bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off r
 bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on rectangle=220x210+1120+510
 bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
 
+bspc config external_rules_command ~/.config/bspwm/external_rules
+
+
 # ================= POINTER / MOUSE =================
 bspc config focus_follows_pointer         false
 bspc config pointer_motion_interval       5

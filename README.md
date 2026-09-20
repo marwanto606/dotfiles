@@ -48,6 +48,7 @@ fc-cache -fv
 ## chmod script
 ```
 chmod +x ~/.config/bspwm/bspwmrc
+chmod +x ~/.config/bspwm/external_rules
 chmod +x ~/.config/bspwm/scripts/*
 chmod +x ~/.config/mprisence/mprisence.sh
 chmod +x ~/.config/polybar/launch.sh
