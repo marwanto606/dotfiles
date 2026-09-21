@@ -46,19 +46,19 @@ super + {Left,Right}
     bspc desktop -f {prev,next}
 
 # Send focused node to workspace directionally and follow
-super + ctrl + {Left,Right}
+super + shift + {Left,Right}
     bspc node -d {prev,next} '--follow'
 
 # ==========================================
 # BSPWM WINDOW CONTROL
 # ==========================================
 
-# Focus window
-super + {h,j,k,l}
+# Fokus jendela (Kiri, Bawah, Atas, Kanan)
+super + {j,k,i,l}
     bspc node -f {west,south,north,east}
 
-# Move window
-super + shift + {h,j,k,l}
+# Menukar / memindahkan posisi jendela (Kiri, Bawah, Atas, Kanan)
+super + shift + {j,k,i,l}
     bspc node -s {west,south,north,east}
 
 # Toggle monocle layout
@@ -105,8 +105,8 @@ super + ctrl + {Left,Down,Up,Right}
 # PRESELECTION (MENENTUKAN POSISI SPLIT)
 # ==========================================
 
-# Menentukan arah bukaan jendela baru berikutnya (kiri/bawah/atas/kanan)
-super + ctrl + {h,j,k,l}
+# Menentukan arah bukaan jendela berikutnya (Kiri, Bawah, Atas, Kanan)
+super + ctrl + {j,k,i,l}
     bspc node -p {west,south,north,east}
 
 # Membatalkan arah bukaan jendela

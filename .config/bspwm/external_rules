@@ -10,7 +10,7 @@ if [ -z "$class" ] && [ -z "$instance" ]; then
     if [ "$title" = "Picture-in-picture" ] || [ "$title" = "Picture in picture" ]; then
         # 1. Atur ukuran dasar ke 360p (640x360), buat floating, sticky, dan top.
         # Catatan: Sengaja TIDAK dikunci agar jendela tetap bisa di-resize manual nanti.
-        echo "state=floating rectangle=640x360 sticky=on top=on"
+        echo "state=floating rectangle=640x360 sticky=on top=on honor_size_hints=false"
         
         # 2. Pindahkan jendela secara dinamis ke sudut kanan bawah layar aktif
         # Kita beri jeda 0.1 detik agar bspwm selesai membuat jendelanya terlebih dahulu
