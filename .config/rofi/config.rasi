@@ -12,6 +12,7 @@ configuration {
     hover-select:               true;
     me-select-entry:            "";
     me-accept-entry:            "MousePrimary";
+    drun-use-desktop-cache:     true;
 }
 
 * {

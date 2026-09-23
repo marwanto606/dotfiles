@@ -30,7 +30,7 @@ nm-applet >/dev/null 2>&1 &
 
 # Hanya jalankan snixembed jika belum berjalan:
 if ! pgrep -x "snixembed" > /dev/null; then
-    (sleep 2 && snixembed >/dev/null 2>&1) &
+    (sleep 2 && ~/.local/bin/snixembed >/dev/null 2>&1) &
 fi
 
 # ================= WORKSPACES & PADDING =================

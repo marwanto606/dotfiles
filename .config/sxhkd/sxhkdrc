@@ -153,3 +153,23 @@ Print
 # Screenshot area yang dipilih
 shift + Print
     ~/.config/bspwm/scripts/screenshot-notify.sh area
+
+# ==========================================
+# SCREEN RECORDING (SIMPLESCREENRECORDER)
+# ==========================================
+
+# Mulai perekaman layar
+ctrl + Print
+    ~/.config/bspwm/scripts/record-notify.sh start
+
+# Jeda / Pause perekaman
+ctrl + alt + Print
+    ~/.config/bspwm/scripts/record-notify.sh pause
+
+# Selesai & Simpan rekaman video
+ctrl + shift + Print
+    ~/.config/bspwm/scripts/record-notify.sh save
+
+# Buka jendela GUI pengaturan jika ingin mengubah mic/resolusi
+super + shift + r
+    ~/.config/bspwm/scripts/record-notify.sh gui
