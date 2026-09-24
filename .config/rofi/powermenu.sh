@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-# Menggunakan fitur rahasia Rofi: Memuat Ikon SVG bawaan sistem!
-# Format: Nama Menu \0icon\x1f Nama Ikon Papirus
-options="Lock\0icon\x1fsystem-lock-screen\n"
-options+="Logout\0icon\x1fsystem-log-out\n"
-options+="Reboot\0icon\x1fsystem-reboot\n"
-options+="Shutdown\0icon\x1fsystem-shutdown"
+# Buat daftar menu menggunakan format dmenu icon Rofi
+options="Lock\0icon\x1fsystem-lock-screen\n\
+Logout\0icon\x1fsystem-log-out\n\
+Reboot\0icon\x1fsystem-reboot\n\
+Shutdown\0icon\x1fsystem-shutdown"
 
-# Jalankan Rofi dengan opsi -show-icons
-chosen="$(echo -e "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str '
+# Eksekusi Rofi:
+# -no-config : Mencegah Rofi membaca file config global (SANGAT MEMPERCEPAT WAKTU BUKA)
+chosen=$(printf "%b" "$options" | rofi -no-config -dmenu -i -show-icons -p "Power" -theme-str '
     configuration {
-        icon-theme:       "Papirus";
+        icon-theme:   "Papirus-Dark";
     }
     * {
         background-color: transparent;
@@ -50,6 +50,7 @@ chosen="$(echo -e "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str 
         size:             64px;
         horizontal-align: 0.5;
         background-color: transparent;
+        cursor:           inherit;
     }
     element-text {
         horizontal-align: 0.5;
@@ -57,36 +58,34 @@ chosen="$(echo -e "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str 
         font:             "JetBrains Mono Bold 11";
         text-color:       inherit;
         background-color: transparent;
+        cursor:           inherit;
     }
 
-    /* KOTAK NORMAL (DARK PEKAT) */
+    /* Kotak Normal (Dark Pekat, Border Halus) */
     element normal.normal, element alternate.normal {
         background-color: #161A26;
-        text-color:       #E2E8F0;
+        text-color:       #FFFFFF;
         border-color:     #23283B;
     }
 
-    /* KOTAK TERPILIH (MAGENTA SOLID, IKON & TEKS HITAM PEKAT) */
-    element selected.normal {
+    /* Kotak Terpilih / Hover (Fuchsia Solid) */
+    element selected.normal, element selected.active {
         background-color: #D946EF;
-        text-color:       #0F111A;
         border-color:     #D946EF;
     }
-    element selected.normal element-text {
+    element selected.normal element-text, element selected.active element-text {
         text-color:       #0F111A;
     }
-')"
+')
 
-# Jika pengguna menekan ESC atau membatalkan (variabel kosong), langsung keluar
+# Keluar jika pengguna menekan ESC / klik di luar jendela
 [[ -z "$chosen" ]] && exit 0
 
-# Beri jeda sepersekian detik agar animasi fade-out Rofi selesai sepenuhnya dari layar
-sleep 0.25
-
-# Eksekusi aksi berdasarkan kata yang dipilih
+# Eksekusi instan tanpa sleep
 case "$chosen" in
     "Lock")
-        dm-tool lock || i3lock || slock || xflock4
+        # Ganti dengan locker spesifik Anda jika tidak memakai i3lock
+        dm-tool lock || i3lock  || slock
         ;;
     "Logout")
         bspc quit

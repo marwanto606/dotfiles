@@ -44,6 +44,13 @@ mkdir -p ~/.local/share/fonts
 cp -r fonts/* ~/.local/share/fonts/
 fc-cache -fv
 ```
+## install icon and cache
+```
+sudo apt install -y papirus-icon-theme
+sudo gtk-update-icon-cache -f /usr/share/icons/Papirus
+sudo gtk-update-icon-cache -f /usr/share/icons/Papirus-Dark
+rofi -show drun -drun-reload-desktop-cache
+```
 
 ## chmod script
 ```

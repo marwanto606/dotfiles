@@ -1,133 +1,139 @@
 /* ==========================================================
- *   ROFI TRUE DARK - TEAL & FUCHSIA HIGH CONTRAST
+ *   ROFI TRUE DARK - PURE TEAL & ZERO DEFAULT BLEED
  * ========================================================== */
 
+/* Matikan stylesheet bawaan Rofi agar tidak ada warna putih bocor */
+@theme "/dev/null"
+
 configuration {
-    modi:                       "drun,run,window";
-    font:                       "JetBrains Mono SemiBold 10";
+    modi:                       "drun";
+    font:                       "JetBrains Mono 10";
     show-icons:                 true;
-    icon-theme:                 "Papirus";
-    display-drun:               " ";
+    icon-theme:                 "Papirus-Dark";
+    display-drun:               ">_";
     drun-display-format:        "{name}";
-    hover-select:               true;
+    hover-select:               false;
     me-select-entry:            "";
     me-accept-entry:            "MousePrimary";
     drun-use-desktop-cache:     true;
+    kb-move-front:              "Control+Home";
+    kb-clear-line:              "Control+a,Control+w"; 
 }
 
 * {
-    /* Palet Dark Pekat */
-    bg-main:        #0F111A;
-    bg-input:       #161A26;
-    bg-item:        #161A26;
-    
-    /* Aksen */
-    teal:           #008080;
-    teal-bright:    #2DD4BF;
-    fuchsia:        #D946EF;
-    
-    /* Kontras Font */
-    fg-main:        #E2E8F0;
-    fg-muted:       #8892B0;
-    fg-selected:    #0F111A;   /* Teks hitam pekat saat item disorot agar kontras */
+    /* Palet Dark Mode */
+    bg-main:        #0B0D13;   /* Background jendela utama */
+    bg-input:       #131722;   /* Search bar */
+    bg-item:        #141824;   /* Kotak item unselected (Gelap Pekat) */
+    border-color:   #1E2333;   /* Garis tepi halus */
+
+    teal:           #008080;   /* Warna seleksi aktif */
+    teal-bright:    #2DD4BF;   /* Ikon search */
+
+    fg-white:       #FFFFFF;   /* Teks unselected putih murni */
+    fg-muted:       #717D96;   /* Placeholder */
+    fg-selected:    #0B0D13;   /* Teks item aktif (kontras tajam di atas teal) */
 
     background-color: transparent;
 }
 
 window {
-    width:            680px;
-    height:           440px;
+    width:            720px;
     background-color: @bg-main;
     border:           2px;
     border-color:     @teal;
-    border-radius:    14px;
-    padding:          16px;
+    border-radius:    12px;
+    padding:          14px;
 }
 
 mainbox {
-    spacing:          14px;
+    spacing:          12px;
     children:         [ inputbar, listview ];
 }
 
 /* Input / Search Bar */
 inputbar {
     background-color: @bg-input;
-    border-radius:    10px;
-    padding:          15px;
-    children:         [ prompt, entry ];
     border:           1px;
-    border-color:     #23283B;
+    border-color:     @border-color;
+    border-radius:    8px;
+    padding:          8px 12px;
+    spacing:          10px;
+    children:         [ icon-search, entry ];
+}
+
+/* Memanggil ikon dari tema sistem */
+icon-search {
+    expand:           false;
+    filename:         "system-search";
+    size:             18px;
+    vertical-align:   0.5;
 }
 
 prompt {
-    font:             "Font Awesome 6 Free Solid 11";
-    text-color:       @teal;
+    text-color:       @teal-bright;
     vertical-align:   0.5;
-    padding:          0px 8px 0px 4px;
 }
 
 entry {
-    font:             "JetBrains Mono 10";
-    text-color:       @fg-main;
-    placeholder:      "Search Applications ...";
+    text-color:       @fg-white;
+    placeholder:      "Search apps...";
     placeholder-color:@fg-muted;
     vertical-align:   0.5;
 }
 
-/* List Items Grid */
+/* --- 2 Kolom Grid --- */
 listview {
     columns:          2;
     lines:            6;
     spacing:          8px;
+    cycle:            true;
+    dynamic:          true;
     scrollbar:        false;
-    border:           0;
 }
 
+/* --- Struktur Elemen Dasar --- */
 element {
-    padding:          10px 14px;
+    padding:          9px 12px;
     border-radius:    8px;
     spacing:          12px;
     cursor:           pointer;
     border:           1px;
-    border-color:     transparent;
 }
 
 element-icon {
     size:             24px;
     vertical-align:   0.5;
     background-color: transparent;
+    cursor:           inherit;
 }
 
 element-text {
     vertical-align:   0.5;
     background-color: transparent;
-    text-color:       inherit;
+    cursor:           inherit;
+    text-color:       @fg-white;
 }
 
-/* ================= KONTROL WARNA ELEMENT (MENCEGAH BACKGROUND LIGHT) ================= */
+/* ================= KUNCI ANTI-PUTIH / DARK MODE ENFORCED ================= */
 
-/* Item Biasa / Tidak Aktif (Dark Gelap dengan font abu terang jelas) */
-element normal.normal {
-    background-color: @bg-item;
-    text-color:       @fg-main;
-    border-color:     #23283B;
-}
-
-/* Item Baris Alternatif (Dimatikan warna putih bawaannya) */
+/* Item Biasa & Item Baris Alternatif (Keduanya Gelap Pekat, Teks Putih) */
+element normal.normal,
 element alternate.normal {
     background-color: @bg-item;
-    text-color:       @fg-main;
-    border-color:     #23283B;
+    border-color:     @border-color;
 }
 
-/* Item Aktif yang Sedang Dipilih / Disorot Kursor */
-element selected.normal, element selected.active {
+/* Item Aktif yang Dipilih / Selected (Warna Teal, Teks Gelap Kontras) */
+element selected.normal,
+element selected.active,
+element selected.urgent {
     background-color: @teal;
-    text-color:       @fg-selected;
     border-color:     @teal;
 }
 
-element selected.normal element-text, element selected.active element-text {
+element selected.normal element-text,
+element selected.active element-text,
+element selected.urgent element-text {
     text-color:       @fg-selected;
-    font:             "JetBrains Mono Bold 10";
 }
