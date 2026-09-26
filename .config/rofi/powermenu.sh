@@ -10,7 +10,10 @@ Shutdown\0icon\x1fsystem-shutdown"
 # -no-config : Mencegah Rofi membaca file config global (SANGAT MEMPERCEPAT WAKTU BUKA)
 chosen=$(printf "%b" "$options" | rofi -no-config -dmenu -i -show-icons -p "Power" -theme-str '
     configuration {
-        icon-theme:   "Papirus-Dark";
+        icon-theme:      "Kali-Dark";
+        hover-select:    true;
+        me-select-entry: "";
+        me-accept-entry: "MousePrimary";
     }
     * {
         background-color: transparent;
@@ -81,7 +84,10 @@ chosen=$(printf "%b" "$options" | rofi -no-config -dmenu -i -show-icons -p "Powe
 # Keluar jika pengguna menekan ESC / klik di luar jendela
 [[ -z "$chosen" ]] && exit 0
 
-# Eksekusi instan tanpa sleep
+# Beri jeda sepersekian detik agar animasi fade-out Rofi selesai sepenuhnya dari layar
+sleep 0.25
+
+# Eksekusi aksi berdasarkan kata yang dipilih
 case "$chosen" in
     "Lock")
         # Ganti dengan locker spesifik Anda jika tidak memakai i3lock
