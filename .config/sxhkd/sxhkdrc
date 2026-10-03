@@ -18,7 +18,7 @@ super + {_,alt + }Return
     {qterminal, bspc rule -a \* -o state=floating center=true rectangle=700x420+0+0 && qterminal} > /dev/null 2>&1 &
 
 super + {_,alt + }t
-    {xfce4-terminal, bspc rule -a \* -o state=floating center=true rectangle=700x420+0+0 && xfce4-terminal} > /dev/null 2>&1 &
+    {kitty, bspc rule -a \* -o state=floating center=true rectangle=700x420+0+0 && kitty} > /dev/null 2>&1 &
 
 super + e
     thunar > /dev/null 2>&1 &
