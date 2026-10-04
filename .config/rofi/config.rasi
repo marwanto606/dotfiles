@@ -8,7 +8,7 @@
 configuration {
     modi:                       "drun";
     font:                       "JetBrains Mono 10";
-    show-icons:                 true;
+    show-icons:                 false;
     icon-theme:                 "Papirus-Dark";
     display-drun:               ">_";
     drun-display-format:        "{name}";
@@ -99,10 +99,11 @@ element {
     spacing:          12px;
     cursor:           pointer;
     border:           1px;
+    children: [ element-text ];
 }
 
 element-icon {
-    size:             24px;
+    size:             0px;
     vertical-align:   0.5;
     background-color: transparent;
     cursor:           inherit;

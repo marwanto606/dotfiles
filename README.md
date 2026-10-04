@@ -23,10 +23,18 @@ if [[ "$TERM" != "linux" ]]; then
     eval "$(starship init zsh)"
 fi
 ```
+## install zed
+```
+curl -f https://zed.dev/install.sh | sh
+```
 ## install aimp
 `
-The native Linux version of AIMP is currently in the beta stage, you can download the .deb file at https://aimp.ru/?do=download&os=linux
+The native version of AIMP for Linux is currently in the beta stage, you can download the .deb file from https://aimp.ru/?do=download&os=linux or install the application aimp_6.00.3083~beta6-1_amd64.deb, which remains compatible with bspwm.
 `
+```
+sudo apt install ./aimp_6.00.3083\~beta6-1_amd64.deb
+```
+
 ## install mprisence for discord
 `
 install mprisence in the repository: https://github.com/lazykern/mprisence
@@ -62,4 +70,4 @@ chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/rofi/powermenu.sh
 ```
 
-![ricing cyber1](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-09-14-12%3A25%3A08-screenshot.png)
+![ricing cyber1](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-10-04-10-52-40-screenshot.png)

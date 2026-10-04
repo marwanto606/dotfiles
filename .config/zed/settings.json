@@ -1,0 +1,98 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  // 1. Shortcut ala VS Code (Memudahkan transisi muscle memory)
+  "preview_tabs": {
+    "enable_preview_from_multibuffer": true,
+    "enabled": true,
+    "enable_preview_from_project_panel": true
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false
+  },
+  "title_bar": {
+    "show_menus": false
+  },
+  "reduce_motion": "on",
+  "cursor_animation": {
+    "enabled": true
+  },
+  "markdown_preview": {
+    "code_font_family": "Cantarell",
+    "font_family": "Fira Code"
+  },
+  "base_keymap": "VSCode",
+
+  // 2. Tema & Tampilan Dasar
+  "ui_font_size": 14,
+  "buffer_font_size": 12.0,
+  "buffer_font_family": "Maple Mono NF", // Memakai font yang sama agar ada ligature & ikon
+  "theme": "One Dark Pro",
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)",
+  },
+
+  // 3. UX Editor ala VS Code
+  "cursor_blink": true,
+  "cursor_shape": "bar",
+  "current_line_highlight": "all",
+  "show_wrap_guides": true,
+  "scroll_beyond_last_line": "one_page",
+  "vertical_scroll_margin": 5,
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware", // Garis indentasi aktif mengikuti posisi kursor
+  },
+
+  // 4. File Tree / Project Panel
+  "project_panel": {
+    "auto_reveal_entries": true, // Otomatis mengarahkan posisi file di sidebar saat tab berganti
+  },
+
+  // 5. Tabs & Status
+  "tabs": {
+    "file_icons": true,
+    "git_status": true, // Menampilkan warna modified/untracked di tab
+  },
+
+  // 6. Produktivitas & Format Otomatis
+  "autosave": "on_focus_change", // Otomatis simpan saat pindah tab / minimize (seperti VS Code)
+  "format_on_save": "on", // Format kode otomatis saat file disimpan
+  "auto_signature_help": true, // Memunculkan bantuan parameter fungsi saat mengetik
+
+  // 7. Inlay Hints (Menampilkan tipe data & nama parameter variabel seperti VS Code)
+  "inlay_hints": {
+    "enabled": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true,
+  },
+
+  // 8. Fitur Git ala GitLens
+  "git": {
+    "inline_blame": {
+      "enabled": true, // Menampilkan siapa pembuat baris kode dan waktu commit di ujung baris
+      "delay_ms": 300,
+    },
+  },
+
+  // 9. Konfigurasi Terminal
+  "terminal": {
+    "copy_on_select": true,
+    "blinking": "on",
+    "cursor_shape": "bar",
+    "shell": "system",
+    "font_family": "Maple Mono NF",
+    "font_size": 12,
+    "line_height": "standard",
+    "dock": "bottom",
+  },
+}
