@@ -26,10 +26,10 @@ format = '[](fg:#2373ee)[$symbol]($style)[](fg:#2373ee)'
 
 [os.symbols]
 Kali = " "
-Debian = " "
-Linux = " "
-Ubuntu = " "
-Arch = "󰣇 "
+Debian = ""
+Linux = ""
+Ubuntu = ""
+Arch = "󰣇"
 
 [directory]
 style = "fg:#e2e8f0 bg:#181d26 bold"

@@ -2,7 +2,7 @@
 ## installation
 ```
 sudo apt update
-sudo apt install bspwm rofi polybar picom sxhkd nm-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty
+sudo apt install bspwm rofi polybar picom sxhkd network-manager-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty
 git clone https://github.com/marwanto606/dotfiles.git
 cd dotfiles
 cp -r .config/* ~/.config/
@@ -52,6 +52,7 @@ mkdir -p ~/.local/share/fonts
 cp -r fonts/* ~/.local/share/fonts/
 fc-cache -fv
 ```
+`If the Font Awesome version obtained via 'apt' is outdated, you must install it manually by downloading Font Awesome 6 from https://github.com/FortAwesome/Font-Awesome/releases/tag/6.7.2`
 ## install icon and cache
 ```
 sudo apt install -y papirus-icon-theme
