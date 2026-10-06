@@ -26,11 +26,29 @@ super + e
 super + d
     rofi -show drun > /dev/null 2>&1 &
 
-super + b
-    x-www-browser > /dev/null 2>&1 &
+super + a
+    google-chrome-stable > /dev/null 2>&1 &
 
-super + n
-    glava > /dev/null 2>&1  &
+super + f
+    aimp > /dev/null 2>&1 &
+
+super + s
+    discord > /dev/null 2>&1 &
+
+super + z
+    zed > /dev/null 2>&1 &
+
+super + x
+    ABDownloadManager > /dev/null 2>&1 &
+
+super + alt + b
+    polybar-msg cmd toggle
+
+super + shift + g
+    pkill -x glava
+
+super + g
+    pkill -x glava || glava > /dev/null 2>&1 &
 
 # Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
 super + Tab
