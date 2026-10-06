@@ -42,7 +42,7 @@ super + x
     ABDownloadManager > /dev/null 2>&1 &
 
 super + alt + b
-    polybar-msg cmd toggle
+    ~/.config/bspwm/scripts/toggle_polybar.sh
 
 super + shift + g
     pkill -x glava
@@ -172,7 +172,7 @@ Print
     ~/.config/bspwm/scripts/screenshot-notify.sh full
 
 # Screenshot area yang dipilih
-shift + Print
+alt + Print
     ~/.config/bspwm/scripts/screenshot-notify.sh area
 
 # ==========================================

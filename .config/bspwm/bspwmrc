@@ -28,7 +28,7 @@ xsetroot -cursor_name left_ptr
 ) &
 
 # ================= PEMBERSIHAN PROSES (Mencegah Duplikasi) =================
-killall -q picom polybar sxhkd nm-applet
+killall -q picom polybar sxhkd nm-applet glava
 
 # Matikan script wallpaper yang lama agar tidak menumpuk saat reload
 pkill -f "workspace-wallpaper.sh" 
@@ -44,6 +44,8 @@ picom --config ~/.config/picom/picom.conf &
 ~/.config/bspwm/scripts/workspace-wallpaper.sh &
 ~/.config/polybar/launch.sh &
 nm-applet >/dev/null 2>&1 &
+#pkill -x glava
+(sleep 2 && glava) > /dev/null 2>&1 &
 
 # Hanya jalankan snixembed jika belum berjalan:
 if ! pgrep -x "snixembed" > /dev/null; then
