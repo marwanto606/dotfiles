@@ -76,6 +76,9 @@ bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off r
 bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on rectangle=220x210+1120+510
 bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
 
+# Turunkan layer GLava ke tumpukan paling bawah jika sedang berjalan
+which xdo > /dev/null && xdo lower -N GLava 2>/dev/null
+
 bspc config external_rules_command ~/.config/bspwm/external_rules
 
 
