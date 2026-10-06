@@ -29,6 +29,9 @@ super + d
 super + b
     x-www-browser > /dev/null 2>&1 &
 
+super + n
+    glava --desktop > /dev/null 2>&1 &
+
 # Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
 super + Tab
     rofi -show window > /dev/null 2>&1 &
