@@ -3,25 +3,33 @@ window_id=$1
 class=$2
 instance=$3
 
-# Jika jendela tidak memiliki class dan instance (ciri khas PiP Chrome)
-if [ -z "$class" ] && [ -z "$instance" ]; then
-    title=$(xprop -id "$window_id" WM_NAME | cut -d '"' -f 2)
-    
-    if [ "$title" = "Picture-in-picture" ] || [ "$title" = "Picture in picture" ]; then
-        # 1. Atur ukuran dasar ke 360p (640x360), buat floating, sticky, dan top.
-        # Catatan: Sengaja TIDAK dikunci agar jendela tetap bisa di-resize manual nanti.
-        echo "state=floating rectangle=640x360 sticky=on top=on honor_size_hints=false"
-        
-        # 2. Pindahkan jendela secara dinamis ke sudut kanan bawah layar aktif
-        # Kita beri jeda 0.1 detik agar bspwm selesai membuat jendelanya terlebih dahulu
-        (
-            sleep 0.1
-            # Menggunakan xdotool untuk mendeteksi resolusi layar secara otomatis
-            # Jendela dipindahkan ke pojok kanan bawah dengan margin/jarak 20 pixel dari tepi
-            eval $(xdotool getdisplaygeometry | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')
-            X=$((SCREEN_W - 640 - 10))
-            Y=$((SCREEN_H - 360 - 50))
-            xdotool windowmove "$window_id" $X $Y
-        ) &
-    fi
-fi
+case "$class" in
+    ""|*[Bb]rave*|*[Cc]hrome*|*[Cc]hromium*)
+        # Cek judul PiP
+        title=$(xprop -id "$window_id" _NET_WM_NAME WM_NAME 2>/dev/null | grep -E '("Picture in picture"|"Picture-in-picture")')
+
+        if [ -n "$title" ]; then
+            WIDTH=640
+            HEIGHT=360
+            GAP_X=10
+            GAP_Y=50
+
+            # Ambil resolusi layar aktif
+            eval "$(xdotool getdisplaygeometry | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+
+            # Hitung posisi kanan bawah
+            X=$((SCREEN_W - WIDTH - GAP_X))
+            Y=$((SCREEN_H - HEIGHT - GAP_Y))
+
+            # 1. Output aturan bspwm dengan format lengkap: WIDTHxHEIGHT+X+Y
+            echo "state=floating rectangle=${WIDTH}x${HEIGHT}+${X}+${Y} sticky=on top=on honor_size_hints=false"
+
+            # 2. Subshell delay untuk mengunci ukuran & posisi jika ditimpa oleh Chrome
+            (
+                sleep 0.15
+                xdotool windowsize "$window_id" $WIDTH $HEIGHT
+                xdotool windowmove "$window_id" $X $Y
+            ) &
+        fi
+        ;;
+esac
