@@ -25,44 +25,57 @@ style = "fg:#ffffff bg:#2373ee bold"
 format = '[](fg:#2373ee)[$symbol]($style)[](fg:#2373ee)'
 
 [os.symbols]
-Kali = " "
-Debian = ""
-Linux = ""
-Ubuntu = ""
-Arch = "󰣇"
+AlmaLinux = "  "
+Kali = "   "
+Debian = "  "
+Linux = " 󰌽 "
+Ubuntu = "  "
+Arch = " 󰣇 "
+Zorin = "  "
+Redhat = "  "
+RedHatEnterprise = "  "
+NixOS = "  "
+Mint = "  "
+Unknown = " 󰚾 "
+Manjaro = "  "
+Macos = "  "
+Fedora = "  "
+FreeBSD = "  "
+MidnightBSD = "  "
+Raspbian = "  "
 
 [directory]
 style = "fg:#e2e8f0 bg:#181d26 bold"
-format = '[─](fg:#2d3748)[](fg:#181d26)[󰝰 ](fg:#38bdf8 bg:#181d26)[$path]($style)[](fg:#181d26)'
+format = '[─](fg:#2d3748)[](fg:#181d26)[ ](fg:#38bdf8 bg:#181d26)[$path]($style)[](fg:#181d26)'
 truncation_length = 2
 fish_style_pwd_dir_length = 1
 truncate_to_repo = true
 truncation_symbol = "…/"
-read_only = " 󰌾"
+read_only = " 󰍁"
 read_only_style = "fg:#ef4444 bg:#181d26"
 
 [git_branch]
-symbol = "󰊢 "
+symbol = " "
 style = "fg:#a5b4fc bg:#1f2333 bold"
 format = '[─](fg:#2d3748)[](fg:#1f2333)[$symbol$branch]($style)'
 
 [git_status]
 style = "fg:#38bdf8 bg:#1f2333 bold"
 format = '([ $all_status$ahead_behind]($style))[](fg:#1f2333)'
-conflicted = "󰀦 "
-ahead = "⇡${count} "
-behind = "⇣${count} "
-diverged = "󰃻 "
-untracked = " ${count} "
-stashed = "󰏖 "
-modified = "󱈸${count} "
-staged = "󰄬 ${count} "
-deleted = "󰆴 ${count} "
+conflicted = " "
+ahead = "${count} "
+behind = "${count} "
+diverged = "󰦻 "
+untracked = " ${count} "
+stashed = " "
+modified = "${count} "
+staged = " ${count} "
+deleted = " ${count} "
 
 [cmd_duration]
 min_time = 2_000
 style = "fg:#f59e0b bg:#232018 bold"
-format = '[─](fg:#2d3748)[](fg:#232018)[ $duration]($style)[](fg:#232018)'
+format = '[─](fg:#2d3748)[](fg:#232018)[󰚭 $duration]($style)[](fg:#232018)'
 
 [status]
 disabled = false
@@ -77,9 +90,29 @@ format = '[](fg:#161a22)[$symbol($version )(\($virtualenv\))]($style)[](fg
 detect_extensions = ['py', 'ipynb']
 detect_folders = ['.venv', 'venv', 'env', '.env']
 
+[swift]
+symbol = "󰛥 "
+style = "fg:#F25116 bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
+[zig]
+symbol = " "
+style = "fg:#F28C0F bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
+[kotlin]
+symbol = " "
+style = "fg:#229AC5 bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
 [nodejs]
-symbol = " "
+symbol = " "
 style = "fg:#22c55e bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
+[bun]
+symbol = " "
+style = "fg:#F0E9E4 bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
 
 [golang]
@@ -97,11 +130,16 @@ symbol = " "
 style = "fg:#60a5fa bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
 
+[cpp]
+symbol = "󰙲 "
+style = "fg:#60a5fa bg:#161a22 bold"
+format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+
 [docker_context]
-symbol = " "
+symbol = " "
 style = "fg:#38bdf8 bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol$context]($style)[](fg:#161a22)'
 
 [character]
-success_symbol = "[─](bold #2d3748)[●](bold #38bdf8)"
-error_symbol = "[─](bold #2d3748)[●](bold #f87171)"
+success_symbol = "[─](bold #2d3748)[](bold #38bdf8)"
+error_symbol = "[─](bold #2d3748)[](bold #f87171)"
