@@ -60,6 +60,13 @@ sudo gtk-update-icon-cache -f /usr/share/icons/Papirus
 sudo gtk-update-icon-cache -f /usr/share/icons/Papirus-Dark
 rofi -show drun -drun-reload-desktop-cache
 ```
+## cursor
+```
+mkdir -p ~/.icons
+cp -r .icons/* ~/.icons/
+cd ~/.icons
+tar -xvf Future-cyan-cursors.tar.gz
+```
 
 ## chmod script
 ```

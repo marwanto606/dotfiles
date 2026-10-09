@@ -10,7 +10,7 @@ Shutdown\0icon\x1fsystem-shutdown"
 # -no-config : Mencegah Rofi membaca file config global (SANGAT MEMPERCEPAT WAKTU BUKA)
 chosen=$(printf "%b" "$options" | rofi -no-config -dmenu -i -show-icons -p "Power" -theme-str '
     configuration {
-        icon-theme:      "Kali-Dark";
+        icon-theme:      "Papirus-Dark";
         hover-select:    true;
         me-select-entry: "";
         me-accept-entry: "MousePrimary";
