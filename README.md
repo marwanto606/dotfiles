@@ -53,11 +53,26 @@ cp -r fonts/* ~/.local/share/fonts/
 fc-cache -fv
 ```
 `If the Font Awesome version obtained via 'apt' is outdated, you must install it manually by downloading Font Awesome 6 from https://github.com/FortAwesome/Font-Awesome/releases/tag/6.7.2`
-## install icon and cache
+## install icon and cache (old config icon)
 ```
 sudo apt install -y papirus-icon-theme
 sudo gtk-update-icon-cache -f /usr/share/icons/Papirus
 sudo gtk-update-icon-cache -f /usr/share/icons/Papirus-Dark
+```
+## install icon and gtk theme 
+```
+# Layan gtk theme
+git clone --depth=1 https://github.com/vinceliuice/Layan-gtk-theme
+cd Layan-gtk-theme
+./install.sh
+
+# WhiteSur icon theme
+git clone --depth=1 https://github.com/vinceliuice/WhiteSur-icon-theme
+cd WhiteSur-icon-theme
+./install.sh -a -b
+```
+## rofi reload cache
+```
 rofi -show drun -drun-reload-desktop-cache
 ```
 ## cursor

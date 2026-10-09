@@ -4,6 +4,33 @@ class=$2
 instance=$3
 
 case "$class" in
+    # ========================================================
+    # 1. Gsimplecal (Ukuran Dinamis GTK & Pojok Kanan Bawah)
+    # ========================================================
+    [Gg]simplecal)
+        # Ambil ukuran dinamis rendering GTK-3
+        eval "$(xwininfo -id "$window_id" 2>/dev/null | awk '/Width:/{print "CAL_W=" $2} /Height:/{print "CAL_H=" $2}')"
+
+        if [ -n "$CAL_W" ] && [ -n "$CAL_H" ]; then
+            # Ambil resolusi layar (metode sama persis seperti PiP Anda)
+            eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+
+            # Offset: GAP_X = 5, GAP_Y = 50 (45 bottom_padding + 5 window_gap)
+            GAP_X=5
+            GAP_Y=50
+
+            # Hitung koordinat pojok kanan bawah
+            X=$((SCREEN_W - CAL_W - GAP_X))
+            Y=$((SCREEN_H - CAL_H - GAP_Y))
+
+            # Suntikkan aturan sebelum jendela di-render (Instan tanpa kedip)
+            echo "state=floating layer=above sticky=on border=off focus=on rectangle=${CAL_W}x${CAL_H}+${X}+${Y}"
+        fi
+        ;;
+
+    # ========================================================
+    # 2. Picture-in-Picture Player (Brave / Chrome / Chromium)
+    # ========================================================
     ""|*[Bb]rave*|*[Cc]hrome*|*[Cc]hromium*)
         # Cek judul PiP
         title=$(xprop -id "$window_id" _NET_WM_NAME WM_NAME 2>/dev/null | grep -E '("Picture in picture"|"Picture-in-picture")')
@@ -15,16 +42,16 @@ case "$class" in
             GAP_Y=50
 
             # Ambil resolusi layar aktif
-            eval "$(xdotool getdisplaygeometry | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+            eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
 
             # Hitung posisi kanan bawah
             X=$((SCREEN_W - WIDTH - GAP_X))
             Y=$((SCREEN_H - HEIGHT - GAP_Y))
 
-            # 1. Output aturan bspwm dengan format lengkap: WIDTHxHEIGHT+X+Y
+            # Output aturan bspwm
             echo "state=floating rectangle=${WIDTH}x${HEIGHT}+${X}+${Y} sticky=on top=on honor_size_hints=false"
 
-            # 2. Subshell delay untuk mengunci ukuran & posisi jika ditimpa oleh Chrome
+            # Subshell delay untuk mengunci ukuran & posisi jika ditimpa oleh Chrome
             (
                 sleep 0.15
                 xdotool windowsize "$window_id" $WIDTH $HEIGHT

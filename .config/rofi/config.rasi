@@ -8,8 +8,8 @@
 configuration {
     modi:                       "drun";
     font:                       "JetBrains Mono 10";
-    show-icons:                 false;
-    icon-theme:                 "Papirus-Dark";
+    show-icons:                 true;
+    icon-theme:                 "WhiteSur-dark";
     display-drun:               ">_";
     drun-display-format:        "{name}";
     hover-select:               false;
@@ -66,7 +66,7 @@ inputbar {
 icon-search {
     expand:           false;
     filename:         "system-search";
-    size:             18px;
+    size:             30px;
     vertical-align:   0.5;
 }
 
@@ -99,11 +99,11 @@ element {
     spacing:          12px;
     cursor:           pointer;
     border:           1px;
-    children: [ element-text ];
+    /*children: [ element-text ];*/
 }
 
 element-icon {
-    size:             0px;
+    size:             25px;
     vertical-align:   0.5;
     background-color: transparent;
     cursor:           inherit;

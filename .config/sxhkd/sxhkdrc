@@ -14,6 +14,10 @@ super + alt + s
 ctrl + alt + l
     dm-tool lock
 
+# Rofi power menu
+super + Escape
+    ~/.config/rofi/powermenu.sh
+
 super + {_,alt + }Return
     {qterminal, bspc rule -a \* -o state=floating center=true rectangle=700x420+0+0 && qterminal} > /dev/null 2>&1 &
 

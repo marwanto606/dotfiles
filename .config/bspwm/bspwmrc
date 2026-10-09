@@ -84,23 +84,20 @@ bspc config gapless_monocle      true
 bspc config bottom_monocle_padding 5
 
 # ================= WINDOW RULES (POSISI RELATIF) =================
-# 1. Pavucontrol (Pojok Kanan Bawah, di atas Polybar)
+# 1. Pavucontrol
 PAVU_W=360; PAVU_H=300
 PAVU_X=$((WIDTH - PAVU_W - 10))
 PAVU_Y=$((HEIGHT - PAVU_H - 55))
 bspc rule -a 'pavucontrol:pavucontrol' state=floating layer=above sticky=on border=off manage=on rectangle="${PAVU_W}x${PAVU_H}+${PAVU_X}+${PAVU_Y}"
 
-# 2. Htop Task Manager (Tepat di Tengah Layar)
+# 2. Htop Task Manager
 HTOP_W=730; HTOP_H=545
 HTOP_X=$((WIDTH - HTOP_W - 10))
 HTOP_Y=$((HEIGHT - HTOP_H - 55))
 bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off rectangle="${HTOP_W}x${HTOP_H}+${HTOP_X}+${HTOP_Y}"
 
 # 3. Gsimplecal (Pojok Kanan Bawah dekat jam tray)
-CAL_W=220; CAL_H=210
-CAL_X=$((WIDTH - CAL_W - 10))
-CAL_Y=$((HEIGHT - CAL_H - 55))
-bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on rectangle="${CAL_W}x${CAL_H}+${CAL_X}+${CAL_Y}"
+bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on center=off
 
 # 4. App lain
 bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
