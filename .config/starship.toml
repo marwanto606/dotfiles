@@ -5,7 +5,6 @@ $username\
 $directory\
 $git_branch$git_status\
 $cmd_duration\
-$status\
 \n[╰─](fg:#2d3748)\
 $python$nodejs$golang$rust$c$docker_context\
 $character"""
@@ -31,7 +30,6 @@ Debian = "  "
 Linux = " 󰌽 "
 Ubuntu = "  "
 Arch = " 󰣇 "
-Zorin = "  "
 Redhat = "  "
 RedHatEnterprise = "  "
 NixOS = "  "
@@ -77,11 +75,11 @@ min_time = 2_000
 style = "fg:#f59e0b bg:#232018 bold"
 format = '[─](fg:#2d3748)[](fg:#232018)[󰚭 $duration]($style)[](fg:#232018)'
 
-[status]
-disabled = false
-style = "fg:#f87171 bg:#2d1519 bold"
-symbol = "󰅚 "
-format = '[─](fg:#2d3748)[](fg:#2d1519)[$symbol$status]($style)[](fg:#2d1519)'
+# [status]
+# disabled = false
+# style = "fg:#f87171 bg:#2d1519 bold"
+# symbol = "󰅚 "
+# format = '[─](fg:#2d3748)[](fg:#2d1519)[$symbol$status]($style)[](fg:#2d1519)'
 
 [python]
 symbol = " "
@@ -130,10 +128,10 @@ symbol = " "
 style = "fg:#60a5fa bg:#161a22 bold"
 format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
 
-[cpp]
-symbol = "󰙲 "
-style = "fg:#60a5fa bg:#161a22 bold"
-format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
+# [cpp]
+# symbol = "󰙲 "
+# style = "fg:#60a5fa bg:#161a22 bold"
+# format = '[](fg:#161a22)[$symbol($version )]($style)[](fg:#161a22)'
 
 [docker_context]
 symbol = " "

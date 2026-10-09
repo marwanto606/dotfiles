@@ -1,70 +1,81 @@
 #! /bin/sh
 
 # ================= INISIALISASI X11 =================
-# Hilangkan '&' agar Xresources selesai dimuat sebelum aplikasi lain membacanya
 xrdb -merge ~/.Xresources
 export XCURSOR_THEME="Future-cyan-cursors"
 export XCURSOR_SIZE=24
 xsetroot -cursor_name left_ptr
 
+# ================= AUTO DETECT RESOLUSI LAYAR =================
+# Mengambil resolusi layar via xdpyinfo atau xrandr
+SCREEN_RES=$(xdpyinfo 2>/dev/null | awk '/dimensions:/ {print $2}')
+[ -z "$SCREEN_RES" ] && SCREEN_RES=$(xrandr --current 2>/dev/null | awk '/\*/ {print $1; exit}')
+
+WIDTH=$(echo "$SCREEN_RES" | cut -d'x' -f1)
+HEIGHT=$(echo "$SCREEN_RES" | cut -d'x' -f2)
+
+# Fallback aman jika sistem gagal membaca resolusi (mencegah variabel kosong)
+WIDTH=${WIDTH:-1366}
+HEIGHT=${HEIGHT:-768}
+
 # --- AUTO DETECT TOUCHPAD & TAP-TO-CLICK ---
 (
-    # 1. Deteksi untuk driver libinput
     for id in $(xinput list --id-only 2>/dev/null); do
         if xinput list-props "$id" 2>/dev/null | grep -q "libinput Tapping Enabled"; then
             xinput set-prop "$id" "libinput Tapping Enabled" 1
         fi
-        
-        # 2. Deteksi untuk driver Synaptics via xinput
         if xinput list-props "$id" 2>/dev/null | grep -q "Synaptics Tap Action"; then
             xinput set-prop "$id" "Synaptics Tap Action" 2 3 0 0 1 3 2 2>/dev/null
         fi
     done
 
-    # 3. Cadangan jika sistem menggunakan utilitas synclient
     if command -v synclient >/dev/null 2>&1; then
         synclient TapButton1=1 TapButton2=3 TapButton3=2 2>/dev/null
     fi
 ) &
 
-# ================= PEMBERSIHAN PROSES (Mencegah Duplikasi) =================
-killall -q picom polybar sxhkd nm-applet glava
-
-# Matikan script wallpaper yang lama agar tidak menumpuk saat reload
+# ================= PEMBERSIHAN PROSES =================
+killall -q picom polybar sxhkd nm-applet
 pkill -f "workspace-wallpaper.sh" 
 
-# Tunggu sebentar hingga proses benar-benar mati
 while pgrep -x polybar >/dev/null; do sleep 0.1; done
 while pgrep -x nm-applet >/dev/null; do sleep 0.1; done
 
 # ================= AUTOSTART =================
-# Jalankan proses, buang output nm-applet agar tidak membocorkan error tray ke terminal
 sxhkd &
 picom --config ~/.config/picom/picom.conf &
 ~/.config/bspwm/scripts/workspace-wallpaper.sh &
 ~/.config/polybar/launch.sh &
 nm-applet >/dev/null 2>&1 &
-#pkill -x glava
+
+# Perbarui geometry GLava HANYA jika WIDTH dan HEIGHT benar-benar berupa angka
+if echo "$WIDTH" | grep -Eq '^[0-9]+$' && echo "$HEIGHT" | grep -Eq '^[0-9]+$'; then
+    sed -i "s/#request setgeometry .*/#request setgeometry 0 0 $WIDTH $HEIGHT/" "$HOME/.config/glava/rc.glsl"
+fi
+
+# Jalankan GLava
+pkill -x glava
 (sleep 2 && glava) > /dev/null 2>&1 &
 
-# Hanya jalankan snixembed jika belum berjalan:
 if ! pgrep -x "snixembed" > /dev/null; then
     (sleep 2 && ~/.local/bin/snixembed >/dev/null 2>&1) &
 fi
 
-# ================= WORKSPACES & PADDING =================
-bspc monitor -d 0 1 2 3 4 5 6 7 8 9
+# ================= WORKSPACES & MONITOR DINAMIS =================
+# Deteksi semua monitor yang terhubung agar fleksibel di PC/Laptop mana pun
+for monitor in $(bspc query -M); do
+    bspc monitor "$monitor" -d 0 1 2 3 4 5 6 7 8 9
+done
 
 # Padding (Jarak Tepi)
 bspc config top_padding          0
-bspc config bottom_padding       20
+bspc config bottom_padding       45
 bspc config left_padding         0
 bspc config right_padding        0
 
 # ================= PENGATURAN WINDOW & MONOCLE =================
 bspc config border_width         0
 bspc config window_gap           5
-
 bspc config automatic_scheme     spiral
 bspc config split_ratio          0.52
 bspc config single_monocle       false
@@ -72,17 +83,30 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 bspc config bottom_monocle_padding 5
 
-# ================= WINDOW RULES =================
-bspc rule -a 'pavucontrol:pavucontrol' state=floating layer=above sticky=on border=off manage=on rectangle=360x300+993+418
-bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off rectangle=730x568+633+160
-bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on rectangle=220x210+1120+510
+# ================= WINDOW RULES (POSISI RELATIF) =================
+# 1. Pavucontrol (Pojok Kanan Bawah, di atas Polybar)
+PAVU_W=360; PAVU_H=300
+PAVU_X=$((WIDTH - PAVU_W - 10))
+PAVU_Y=$((HEIGHT - PAVU_H - 55))
+bspc rule -a 'pavucontrol:pavucontrol' state=floating layer=above sticky=on border=off manage=on rectangle="${PAVU_W}x${PAVU_H}+${PAVU_X}+${PAVU_Y}"
+
+# 2. Htop Task Manager (Tepat di Tengah Layar)
+HTOP_W=730; HTOP_H=545
+HTOP_X=$((WIDTH - HTOP_W - 10))
+HTOP_Y=$((HEIGHT - HTOP_H - 55))
+bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off rectangle="${HTOP_W}x${HTOP_H}+${HTOP_X}+${HTOP_Y}"
+
+# 3. Gsimplecal (Pojok Kanan Bawah dekat jam tray)
+CAL_W=220; CAL_H=210
+CAL_X=$((WIDTH - CAL_W - 10))
+CAL_Y=$((HEIGHT - CAL_H - 55))
+bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on rectangle="${CAL_W}x${CAL_H}+${CAL_X}+${CAL_Y}"
+
+# 4. App lain
 bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
 
-# Turunkan layer GLava ke tumpukan paling bawah jika sedang berjalan
 which xdo > /dev/null && xdo lower -N GLava 2>/dev/null
-
 bspc config external_rules_command ~/.config/bspwm/external_rules
-
 
 # ================= POINTER / MOUSE =================
 bspc config focus_follows_pointer         false
@@ -93,10 +117,8 @@ bspc config pointer_action2               resize_side
 bspc config pointer_action3               resize_corner
 
 # ================= SCRIPT OTOMATIS: MONOCLE ROUNDED CORNERS =================
-# Matikan background loop lama jika bspwm di-reload
 pkill -f "bspc subscribe desktop_layout" 2>/dev/null
 
-# Jalankan background loop baru
 (
   bspc subscribe desktop_layout | while read -r _ _ desktop layout; do
       if [ "$layout" = "monocle" ]; then
@@ -115,11 +137,9 @@ pkill -f "bspc subscribe desktop_layout" 2>/dev/null
 
 # Otomatis mute mic setiap kali login / unlock dari dm-tool
 (
-    # Mute pertama kali saat login
     sleep 2
     pactl set-source-mute @DEFAULT_SOURCE@ 1 2>/dev/null
 
-    # Dengarkan sinyal dbus saat layar di-unlock (Session Active = true)
     gdbus monitor --system --dest org.freedesktop.login1 2>/dev/null | while read -r line; do
         if echo "$line" | grep -q "'Active': <true>"; then
             sleep 1
