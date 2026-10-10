@@ -5,6 +5,7 @@ xrdb -merge ~/.Xresources
 export XCURSOR_THEME="Future-cyan-cursors"
 export XCURSOR_SIZE=24
 xsetroot -cursor_name left_ptr
+xset b off
 
 # ================= AUTO DETECT RESOLUSI LAYAR =================
 # Mengambil resolusi layar via xdpyinfo atau xrandr
