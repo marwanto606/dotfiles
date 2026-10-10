@@ -5,7 +5,7 @@ instance=$3
 
 case "$class" in
     # ========================================================
-    # 1. Gsimplecal (Ukuran Dinamis GTK & Pojok Kanan Bawah)
+    # Gsimplecal (Ukuran Dinamis GTK & Pojok Kanan Bawah)
     # ========================================================
     [Gg]simplecal)
         # Ambil ukuran dinamis rendering GTK-3
@@ -29,7 +29,7 @@ case "$class" in
         ;;
 
     # ========================================================
-    # 2. Picture-in-Picture Player (Brave / Chrome / Chromium)
+    # Picture-in-Picture Player (Brave / Chrome / Chromium)
     # ========================================================
     ""|*[Bb]rave*|*[Cc]hrome*|*[Cc]hromium*)
         # Cek judul PiP
@@ -57,6 +57,42 @@ case "$class" in
                 xdotool windowsize "$window_id" $WIDTH $HEIGHT
                 xdotool windowmove "$window_id" $X $Y
             ) &
+        fi
+        ;;
+    # ========================================================
+    # Pavucontrol (Ukuran & Posisi Pojok Kanan Bawah)
+    # ========================================================
+    [Pp]avucontrol)
+        PAVU_W=360
+        PAVU_H=300
+        GAP_X=10
+        GAP_Y=55
+
+        # Ambil resolusi layar saat ini
+        eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+
+        if [ -n "$SCREEN_W" ]; then
+            X=$((SCREEN_W - PAVU_W - GAP_X))
+            Y=$((SCREEN_H - PAVU_H - GAP_Y))
+            echo "state=floating layer=above sticky=on border=off focus=on rectangle=${PAVU_W}x${PAVU_H}+${X}+${Y}"
+        fi
+        ;;
+    # ========================================================
+    # Htop Task Manager (Pojok Kanan Bawah)
+    # ========================================================
+    HtopTaskManager|htoptaskmanager)
+        HTOP_W=730
+        HTOP_H=545
+        GAP_X=10
+        GAP_Y=55
+
+        # Ambil resolusi layar saat ini
+        eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+
+        if [ -n "$SCREEN_W" ]; then
+            X=$((SCREEN_W - HTOP_W - GAP_X))
+            Y=$((SCREEN_H - HTOP_H - GAP_Y))
+            echo "state=floating layer=above sticky=on border=off focus=on rectangle=${HTOP_W}x${HTOP_H}+${X}+${Y}"
         fi
         ;;
 esac

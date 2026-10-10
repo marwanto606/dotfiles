@@ -1,0 +1,38 @@
+# --- Tampilan Efek ---
+display_on=0
+span_image=false
+lock_timeout=150
+dim_level=40
+blur_level=2
+
+# --- Teks & Font ---
+font="JetBrains Mono"
+locktext="Type password..."
+veriftext="Verifying..."
+wrongtext="Wrong password!"
+time_format="%H:%M:%S"
+
+# --- Warna Elemen (Hex RRGGBBAA) ---
+# Lingkaran Utama (Idle)
+ringcolor=ffffff33
+insidecolor=00000066
+separatorcolor=00000000
+
+# Saat Mengetik (Highlight Neon Teal)
+keyhlcolor=00f5d4ff
+bshlcolor=ff00ffff
+
+# Saat Verifikasi (Warna TEAL)
+ringvercolor=00f5d4ff          # Garis lingkaran Teal cerah
+insidevercolor=00b4d844        # Latar dalam lingkaran Teal transparan
+verifcolor=00f5d4ff            # Teks "Verifying..." Teal
+
+# Saat Password Salah (Warna FUCHSIA)
+ringwrongcolor=ff00ffff        # Garis lingkaran Fuchsia
+insidewrongcolor=ff00ff33      # Latar dalam lingkaran Fuchsia transparan
+wrongcolor=ff00ffff            # Teks "Wrong password!" Fuchsia
+
+# Teks & Jam
+timecolor=ffffffff
+greetercolor=ffffffff
+layoutcolor=ffffffff

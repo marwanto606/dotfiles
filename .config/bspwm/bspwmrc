@@ -50,13 +50,13 @@ picom --config ~/.config/picom/picom.conf &
 nm-applet >/dev/null 2>&1 &
 
 # Perbarui geometry GLava HANYA jika WIDTH dan HEIGHT benar-benar berupa angka
-if echo "$WIDTH" | grep -Eq '^[0-9]+$' && echo "$HEIGHT" | grep -Eq '^[0-9]+$'; then
-    sed -i "s/#request setgeometry .*/#request setgeometry 0 0 $WIDTH $HEIGHT/" "$HOME/.config/glava/rc.glsl"
-fi
+# if echo "$WIDTH" | grep -Eq '^[0-9]+$' && echo "$HEIGHT" | grep -Eq '^[0-9]+$'; then
+#     sed -i "s/#request setgeometry .*/#request setgeometry 0 0 $WIDTH $HEIGHT/" "$HOME/.config/glava/rc.glsl"
+# fi
 
-# Jalankan GLava
-pkill -x glava
-(sleep 2 && glava) > /dev/null 2>&1 &
+# autostart GLava (opsional)
+# pkill -x glava
+# (sleep 2 && glava) > /dev/null 2>&1 &
 
 if ! pgrep -x "snixembed" > /dev/null; then
     (sleep 2 && ~/.local/bin/snixembed >/dev/null 2>&1) &
@@ -79,28 +79,12 @@ bspc config border_width         0
 bspc config window_gap           5
 bspc config automatic_scheme     spiral
 bspc config split_ratio          0.52
-bspc config single_monocle       false
+bspc config single_monocle       false:
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 bspc config bottom_monocle_padding 5
 
-# ================= WINDOW RULES (POSISI RELATIF) =================
-# 1. Pavucontrol
-PAVU_W=360; PAVU_H=300
-PAVU_X=$((WIDTH - PAVU_W - 10))
-PAVU_Y=$((HEIGHT - PAVU_H - 55))
-bspc rule -a 'pavucontrol:pavucontrol' state=floating layer=above sticky=on border=off manage=on rectangle="${PAVU_W}x${PAVU_H}+${PAVU_X}+${PAVU_Y}"
-
-# 2. Htop Task Manager
-HTOP_W=730; HTOP_H=545
-HTOP_X=$((WIDTH - HTOP_W - 10))
-HTOP_Y=$((HEIGHT - HTOP_H - 55))
-bspc rule -a "HtopTaskManager" state=floating layer=above sticky=on border=off rectangle="${HTOP_W}x${HTOP_H}+${HTOP_X}+${HTOP_Y}"
-
-# 3. Gsimplecal (Pojok Kanan Bawah dekat jam tray)
-bspc rule -a 'Gsimplecal:gsimplecal' state=floating layer=above sticky=on border=off focus=on center=off
-
-# 4. App lain
+# ================= WINDOW RULES =================
 bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
 
 which xdo > /dev/null && xdo lower -N GLava 2>/dev/null

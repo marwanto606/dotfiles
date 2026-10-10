@@ -12,7 +12,7 @@ super + alt + s
 
 # lock screen    
 ctrl + alt + l
-    dm-tool lock
+    betterlockscreen -l blur
 
 # Rofi power menu
 super + Escape

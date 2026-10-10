@@ -91,7 +91,7 @@ sleep 0.25
 case "$chosen" in
     "Lock")
         # Ganti dengan locker spesifik Anda jika tidak memakai i3lock
-        dm-tool lock || i3lock  || slock
+        betterlockscreen -l blur || dm-tool lock
         ;;
     "Logout")
         bspc quit

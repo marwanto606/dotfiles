@@ -2,12 +2,13 @@
 ## installation
 ```
 sudo apt update
-sudo apt install bspwm rofi polybar picom sxhkd network-manager-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty
+sudo apt install bspwm rofi polybar picom sxhkd network-manager-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty betterlockscreen
 sudo apt install x11-utils xdotool
 git clone https://github.com/marwanto606/dotfiles.git
 cd dotfiles
 cp -r .config/* ~/.config/
 mkdir -p ~/Pictures/wallpapers && cp -r wallpapers/* ~/Pictures/wallpapers
+betterlockscreen -u ~/Pictures/wallpapers/
 ```
 ## install snixembed
 ```
