@@ -15,8 +15,9 @@ mkdir -p ~/Pictures/wallpapers && cp -r wallpapers/* ~/Pictures/wallpapers
 sudo apt update
 sudo apt install libdbusmenu-gtk3-4 libayatana-appindicator3-1
 mkdir -p ~/.local/bin
-cp -r .local/bin/snixembed ~/.local/bin/
+cp -r .local/bin/* ~/.local/bin/
 chmod +x ~/.local/bin/snixembed
+chmod +x ~/.local/bin/rxfetch
 ```
 ## starship init .zshrc
 ```

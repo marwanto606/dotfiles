@@ -1,0 +1,32 @@
+# --- Tampilan & Tema ---
+theme = Atom One Dark
+window-decoration = none
+background-opacity = 0.90
+background-blur-radius = 20
+
+# --- Font ---
+font-family = "Maple Mono NF"
+font-size = 12
+font-feature = ["calt", "liga"]
+
+# --- Padding & Layout ---
+window-padding-x = 5
+window-padding-y = 5
+window-padding-balance = true
+unfocused-split-opacity = 0.7
+
+# --- Kursor & Animasi Trail ---
+# Pilihan: block | bar | underline | block_hollow
+cursor-style = bar
+cursor-style-blink = true
+
+# PENTING: Mencegah shell menimpa bentuk & kedipan kursor
+shell-integration-features = no-cursor
+
+# Shader kursor
+custom-shader = shaders/cursor_warp.glsl
+custom-shader-animation = always
+
+# --- UX / Mouse ---
+mouse-hide-while-typing = true
+copy-on-select = clipboard
