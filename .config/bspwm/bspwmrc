@@ -1,5 +1,8 @@
 #! /bin/sh
 
+# Pastikan binary user (~/.local/bin) terbaca oleh bspwm & sxhkd
+export PATH="$HOME/.local/bin:$PATH"
+
 # ================= INISIALISASI X11 =================
 xrdb -merge ~/.Xresources
 export XCURSOR_THEME="Future-cyan-cursors"
@@ -37,8 +40,10 @@ HEIGHT=${HEIGHT:-768}
 
 # ================= PEMBERSIHAN PROSES =================
 killall -q picom polybar sxhkd nm-applet
-pkill -f "workspace-wallpaper.sh" 
+pkill -f "workspace-wallpaper.sh"
 
+# Tunggu sampai proses lama benar-benar bersih
+while pgrep -x sxhkd >/dev/null; do sleep 0.1; done
 while pgrep -x polybar >/dev/null; do sleep 0.1; done
 while pgrep -x nm-applet >/dev/null; do sleep 0.1; done
 
