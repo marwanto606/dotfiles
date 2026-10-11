@@ -10,6 +10,10 @@ super + alt + r
 super + alt + s
     pkill -USR1 -x sxhkd
 
+# menampilakan keybind window
+super + d
+    ~/.config/rofi/keybind.sh
+
 # lock screen    
 ctrl + alt + l
     betterlockscreen -l blur
@@ -27,13 +31,13 @@ super + {_,alt + }t
 super + e
     thunar > /dev/null 2>&1 &
     
-super + d
+super + space
     rofi -show drun > /dev/null 2>&1 &
 
 super + a
     google-chrome-stable > /dev/null 2>&1 &
 
-super + f
+super + c
     aimp > /dev/null 2>&1 &
 
 super + s
@@ -95,7 +99,7 @@ super + f
     bspc node -t '~fullscreen'
 
 # Toggle floating
-super + space
+super + v
     bspc node -t '~floating'
 
 # Close window
