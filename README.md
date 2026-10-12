@@ -95,6 +95,7 @@ chmod +x ~/.config/mprisence/mprisence.sh
 chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/rofi/powermenu.sh
 chmod +x ~/.config/rofi/keybind.sh
+chmod +x ~/.config/rofi/process-manager.sh
 ```
 
 ![ricing cyber1](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-10-04-10-52-40-screenshot.png)

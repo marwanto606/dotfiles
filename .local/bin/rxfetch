@@ -42,19 +42,63 @@ get_uptime() {
     fi
 }
 
-# --- 3. RAM Cepat (Procfs) ---
+# --- 3. RAM Cepat (Procfs - Rumus Htop & Format Dinamis M/G) ---
 get_mem() {
     if [ -f /proc/meminfo ]; then
         awk '
-        /MemTotal/ {t=$2}
-        /MemAvailable/ {a=$2}
-        END { printf "%.0fM / %.0fM\n", (t-a)/1024, t/1024 }' /proc/meminfo
+        function human(kb) {
+            mb = kb / 1024
+            if (mb < 1024) {
+                return sprintf("%.0fM", mb)
+            } else {
+                return sprintf("%.1fG", mb / 1024)
+            }
+        }
+        /MemTotal:/      { total = $2 }
+        /MemFree:/       { free = $2 }
+        /Buffers:/       { buffers = $2 }
+        /^Cached:/       { cached = $2 }
+        /SReclaimable:/  { sreclaimable = $2 }
+        /Shmem:/         { shmem = $2 }
+        END {
+            used = total - free - buffers - cached - sreclaimable + shmem
+            if (used < 0) used = 0
+            printf "%s / %s\n", human(used), human(total)
+        }' /proc/meminfo
     else
-        free -m | awk 'NR==2{print $3"M / "$2"M"}'
+        free -m | awk 'NR==2{printf "%sM / %sM\n", $3, $2}'
     fi
 }
 
-# --- 4. CPU Ringkas (Dibersihkan dari spasi ganda & @ clock) ---
+# --- 4. SWAP Cepat (Procfs - Format Dinamis M/G) ---
+get_swap() {
+    if [ -f /proc/meminfo ]; then
+        awk '
+        function human(kb) {
+            mb = kb / 1024
+            if (mb < 1024) {
+                return sprintf("%.0fM", mb)
+            } else {
+                return sprintf("%.1fG", mb / 1024)
+            }
+        }
+        /SwapTotal:/ { total = $2 }
+        /SwapFree:/  { free = $2 }
+        END {
+            if (total == 0 || total == "") {
+                print "0M / 0M"
+                exit
+            }
+            used = total - free
+            if (used < 0) used = 0
+            printf "%s / %s\n", human(used), human(total)
+        }' /proc/meminfo
+    else
+        echo "0M / 0M"
+    fi
+}
+
+# --- 5. CPU Ringkas (Dibersihkan dari spasi ganda & @ clock) ---
 get_cpu() {
     if [ -f /proc/cpuinfo ]; then
         awk -F': ' '/model name/ {
@@ -69,7 +113,7 @@ get_cpu() {
     fi
 }
 
-# --- 5. Package Count ---
+# --- 6. Package Count ---
 get_pkg_count() {
     local pkgs=0
     if command -v dpkg-query >/dev/null 2>&1; then
@@ -80,12 +124,12 @@ get_pkg_count() {
     echo "$pkgs"
 }
 
-# --- 6. Storage Disk ---
+# --- 7. Storage Disk ---
 get_disk() {
     df -h / 2>/dev/null | awk 'NR==2 {print $3 " / " $2}'
 }
 
-# --- 7. DE / WM Detection ---
+# --- 8. DE / WM Detection ---
 get_de_wm() {
     local wm="${XDG_CURRENT_DESKTOP#*:}"
     [ -z "$wm" ] && wm="$DESKTOP_SESSION"
@@ -108,7 +152,7 @@ get_de_wm() {
     echo "${wm:-TTY}"
 }
 
-# --- 8. Terminal ---
+# --- 9. Terminal ---
 get_term() {
     local term="${TERM_PROGRAM:-$TERM}"
     echo "${term##*/}"
@@ -123,11 +167,11 @@ wm_val="$(get_de_wm)"
 term_val="$(get_term)"
 disk_val="$(get_disk)"
 ram_val="$(get_mem)"
+swap_val="$(get_swap)"
 cpu_val="$(get_cpu)"
 up_val="$(get_uptime)"
 
-# --- 9. Dynamic Terminal Color Palette Dots ---
-# Membaca warna ANSI register 1 sampai 6 langsung dari konfigurasi tema terminal aktif
+# --- 10. Dynamic Terminal Color Palette Dots ---
 color_dots=""
 for c in {1..6}; do
     color_dots+="\033[38;5;${c}m● \033[0m"
@@ -143,20 +187,16 @@ pad_info() {
     local lbl_fmt
     lbl_fmt=$(printf "%-5s" "${label}")
 
-    # Batas maksimal panjang value agar ekor logo TIDAK PERNAH terdorong
-    # (5 karakter label + 1 spasi pemisah + minimal 1 spasi sebelum logo)
     local max_val_len=$((target_col - 5 - 1 - 1))
 
-    # Proteksi: potong teks jika melebihi batas agar bentuk logo tetap utuh
+    # Proteksi: potong teks jika melebihi batas agar logo tidak terdorong
     if [ "${#value}" -gt "$max_val_len" ] && [ "$max_val_len" -gt 3 ]; then
         value="${value:0:$((max_val_len - 1))}…"
     fi
 
-    # Hitung panjang karakter teks asli yang tampil di layar
     local raw_text="${lbl_fmt} ${value}"
     local vlen=${#raw_text}
 
-    # Hitung spasi dinamis (otomatis berkurang jika value panjang, bertambah jika pendek)
     local pad_count=$((target_col - vlen))
     local spaces=""
     if [ "$pad_count" -gt 0 ]; then
@@ -165,7 +205,6 @@ pad_info() {
         spaces=" "
     fi
 
-    # Cetak dengan warna dan spasi hasil kalkulasi
     echo -ne "${lc}${lbl_fmt} ${vc}${value}${reset}${spaces}"
 }
 
@@ -176,27 +215,26 @@ echo -e "  ${gray}--------------------------------------------${reset}"
 
 # --- Cetak Logo yang Disisipi Info (Embedded Layout) ---
 
-# [Baris 0 - 2] Sayap atas di kiri, Info di kanan atas (Sejajar di kolom 24)
+# [Baris 0 - 2] Sayap atas di kiri, Info di kanan atas
 echo -e "  ${c_art}⠀⠀⠀⠀⠠⠤⠤⠤⠤⠤⣤⣤⣤⣄⣀⣀${reset}        ${lc}os ${vc}${os_val}${reset}"
 echo -e "  ${c_art}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠿⢶⣤⣄⡀${reset}  ${lc}ker ${vc}${ker_val}${reset}"
 echo -e "  ${c_art}⠀⠀⢀⣀⣀⣠⣤⣤⣴⠶⠶⠶⠶⠶⠶⠶⠶⠿⠿⢿⡇${reset}   ${color_dots}"
 
-# [Baris 3 - 8] Lekukan badan logo tengah
+# [Baris 3 - 7] Lekukan badan logo tengah
 echo -e "  ${c_art}⠚⠛⠉⠉⠉⠀⠀⠀⠀⠀⠀⢀⣀⣀⣤⡴⠶⠶⠿⠿⠿⣧⡀⠀⠀⠀⠤⢄⣀${reset}"
 echo -e "  ${c_art}⠀⠀⠀⠀⠀⠀⠀⢀⣠⡴⠞⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⢸⣿⣷⣶⣦⣤⣄⣈⡑⢦⣀${reset}"
 echo -e "  ${c_art}⠀⠀⠀⠀⣠⠔⠚⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⡿⠟⠉⠉⠉⠉⠙⠛⠿⣿⣮⣷⣤${reset}"
 echo -e "  ${c_art}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⢻⣯⣧⡀${reset}"
 echo -e "  ${c_art}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⢷⡤${reset}"
-echo -e "  ${c_art}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⡀${reset}"
 
-# [Baris 9 - 16] Info sistem di sisi kiri, Ekor logo presisi di kanan (Auto-Pad Dinamis)
-echo -e "  $(pad_info "pkgs" "${pkg_val}" 19)${c_art}⠈⠻⣿⣦⣤⣀⡀${reset}"
-echo -e "  $(pad_info "sh"   "${sh_val}"  22)${c_art}⠉⠙⠛⠛⠻⠿⠿⣿⣶⣶⣦⣄⣀${reset}"
-echo -e "  $(pad_info "wm"   "${wm_val}"  30)${c_art}⠉⠻⣿⣯⡛⠻⢦⡀${reset}"
-echo -e "  $(pad_info "term" "${term_val}" 32)${c_art}⠈⠙⢿⣆⠀⠙⢆⠀${reset}"
-echo -e "  $(pad_info "disk" "${disk_val}" 34)${c_art}⠈⢻⣆⠀⠈⢣${reset}"
-echo -e "  $(pad_info "ram"  "${ram_val}"  36)${c_art}⠻⡆⠀⠈${reset}"
+# [Baris 8 - 16] Info sistem di sisi kiri, Ekor logo presisi di kanan
+echo -e "  $(pad_info "pkgs" "${pkg_val}" 18)${c_art}⠈⢿⣿⡀${reset}"
+echo -e "  $(pad_info "sh"   "${sh_val}"  19)${c_art}⠈⠻⣿⣦⣤⣀⡀${reset}"
+echo -e "  $(pad_info "wm"   "${wm_val}"  22)${c_art}⠉⠙⠛⠛⠻⠿⠿⣿⣶⣶⣦⣄⣀${reset}"
+echo -e "  $(pad_info "term" "${term_val}" 30)${c_art}⠉⠻⣿⣯⡛⠻⢦⡀${reset}"
+echo -e "  $(pad_info "disk" "${disk_val}" 32)${c_art}⠈⠙⢿⣆⠀⠙⢆⠀${reset}"
+echo -e "  $(pad_info "ram"  "${ram_val}"  34)${c_art}⠈⢻⣆⠀⠈⢣${reset}"
+echo -e "  $(pad_info "swap" "${swap_val}" 36)${c_art}⠻⡆⠀⠈${reset}"
 echo -e "  $(pad_info "cpu"  "${cpu_val}"  37)${c_art}⢻⡀⠀${reset}"
 echo -e "  $(pad_info "up"   "${up_val}"   37)${c_art}⠈⠃⠀${reset}"
-
 echo ""

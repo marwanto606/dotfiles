@@ -42,7 +42,7 @@ window {
     background-color: @bg-main;
     border:           2px;
     border-color:     @teal;
-    border-radius:    12px;
+    border-radius:    10px;
     padding:          14px;
 }
 
