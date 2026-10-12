@@ -17,6 +17,8 @@ super + alt + t::Floating Terminal (kitty)
 super + space::App Launcher (rofi drun)
 super + Tab::Switch Active Windows (rofi window)
 super + e::File Manager (Thunar)
+super + w::Open Wifi (rofi wifi)
+super + r::Open Process Manager (rofi proccess)
 super + a::Browser (Google Chrome)
 super + c::Music Player (AIMP)
 super + s::Discord

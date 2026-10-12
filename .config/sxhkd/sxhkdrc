@@ -30,6 +30,12 @@ super + {_,alt + }t
 
 super + e
     thunar > /dev/null 2>&1 &
+
+super + w
+    ~/.config/rofi/wifi.sh
+
+super + r
+    ~/.config/rofi/process-manager.sh
     
 super + space
     rofi -show drun > /dev/null 2>&1 &
