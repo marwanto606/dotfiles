@@ -34,11 +34,24 @@ super + e
 super + w
     ~/.config/rofi/wifi.sh
 
-super + r
+super + ctrl + r
     ~/.config/rofi/process-manager.sh
-    
+
+# Membuka Rofi mode drun (ikon system-search di bar, list ber-ikon)
 super + d
-    rofi -show drun > /dev/null 2>&1 &
+    rofi -show drun -theme-str 'inputbar \{ children: [ icon-search, entry ]; \}' > /dev/null 2>&1 &
+
+# Membuka Rofi mode run (dengan petunjuk tombol yang tepat)
+super + r
+    rofi -show run -theme-str 'element-icon \{ enabled: false; \} entry \{ placeholder: "Run: [Enter] GUI / [Shift+Enter] Terminal"; \}'
+
+# Membuka Rofi mode filebrowser (ber-ikon di list, placeholder custom)
+super + alt + f
+    rofi -show filebrowser -theme-str 'entry \{ placeholder: "Browse files..."; \}'
+
+# Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
+super + Tab
+    rofi -show window -theme-str 'inputbar \{ children: [ icon-search, entry ]; \}' > /dev/null 2>&1 &
 
 super + a
     google-chrome-stable > /dev/null 2>&1 &
@@ -63,10 +76,6 @@ super + shift + g
 
 super + g
     pkill -x glava || glava > /dev/null 2>&1 &
-
-# Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
-super + Tab
-    rofi -show window > /dev/null 2>&1 &
 
 # Switch workspace (1-10)
 super + {1-9,0}

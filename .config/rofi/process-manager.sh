@@ -198,7 +198,7 @@ while true; do
         -i \
         -me-select-entry '' \
         -me-accept-entry MousePrimary \
-        -p "Process" \
+        -p " " \
         -mesg "$SYS_INFO" \
         -theme-str "$ROFI_THEME")
 
