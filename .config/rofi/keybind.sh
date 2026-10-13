@@ -75,5 +75,5 @@ done <<< "$DATA"
 # Jalankan via Rofi dmenu (sangat cepat & fuzzy search bawaan Rofi aktif)
 echo -n "$FORMATTED_DATA" | rofi -dmenu \
     -i \
-    -p "Shortcuts" \
+    -p " " \
     -theme "$THEME"
