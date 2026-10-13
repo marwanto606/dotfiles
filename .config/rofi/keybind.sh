@@ -6,7 +6,7 @@ TOTAL_WIDTH=80
 DATA=$(cat << 'EOF'
 super + alt + r::Restart BSPWM
 super + alt + s::Reload SXHKD config
-super + d::Cheat Sheet Keybindings
+super + F1::Cheat Sheet Keybindings
 ctrl + alt + l::Lock Screen (betterlockscreen)
 super + Escape::Rofi Power Menu
 super + alt + b::Toggle Polybar
@@ -14,7 +14,7 @@ super + Return::Terminal (qterminal)
 super + alt + Return::Floating Terminal (qterminal)
 super + t::Terminal (kitty)
 super + alt + t::Floating Terminal (kitty)
-super + space::App Launcher (rofi drun)
+super + d::App Launcher (rofi drun)
 super + Tab::Switch Active Windows (rofi window)
 super + e::File Manager (Thunar)
 super + w::Open Wifi (rofi wifi)
@@ -37,7 +37,7 @@ super + [1-9, 0]::Pindah Workspace 1 - 10
 super + shift + [1-9, 0]::Kirim Jendela ke Workspace 1 - 10
 super + [Left, Right]::Pindah Workspace (Prev / Next)
 super + shift + [Left, Right]::Kirim Jendela & Ikuti
-super + shift + Arrows::Geser Floating Window (20px)
+super + shift + alt + Arrows::Geser Floating Window (20px)
 super + alt + Arrows::Perbesar Ukuran Window
 super + ctrl + Arrows::Perkecil Ukuran Window
 super + ctrl + [j, k, i, l]::Preselection Split Mode

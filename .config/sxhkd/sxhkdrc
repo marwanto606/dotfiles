@@ -10,8 +10,8 @@ super + alt + r
 super + alt + s
     pkill -USR1 -x sxhkd
 
-# menampilakan keybind window
-super + d
+# menampilakan keybind window (super + F1)
+super + F1
     ~/.config/rofi/keybind.sh
 
 # lock screen    
@@ -37,7 +37,7 @@ super + w
 super + r
     ~/.config/rofi/process-manager.sh
     
-super + space
+super + d
     rofi -show drun > /dev/null 2>&1 &
 
 super + a
@@ -121,7 +121,7 @@ super + shift + q
 # ==========================================
 
 # Menggeser window floating ke kiri, bawah, atas, kanan
-super + shift + {Left,Down,Up,Right}
+super + shift + alt + {Left,Down,Up,Right}
     bspc node -v {-20 0, 0 20, 0 -20, 20 0}
 
 # ==========================================
