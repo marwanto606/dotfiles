@@ -21,6 +21,11 @@ mainbox {
 entry {
     placeholder: "Select Wi-Fi Network...";
 }
+prompt {
+    enabled: true;
+    font: "JetBrains Mono 12";
+    text-color: #D946EF;
+}
 message {
     enabled: true;
     padding: 8px 12px;
@@ -145,7 +150,7 @@ fi
 chosen_network=$(echo "$menu_content" | rofi \
     -dmenu \
     -i \
-    -p "Wi-Fi" \
+    -p " " \
     -mesg "$SYS_INFO" \
     -theme-str "$ROFI_THEME")
 
