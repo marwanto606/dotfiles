@@ -74,7 +74,7 @@ case "$class" in
         if [ -n "$SCREEN_W" ]; then
             X=$((SCREEN_W - PAVU_W - GAP_X))
             Y=$((SCREEN_H - PAVU_H - GAP_Y))
-            echo "state=floating layer=above sticky=on border=off focus=on rectangle=${PAVU_W}x${PAVU_H}+${X}+${Y}"
+            echo "state=floating layer=above top=on sticky=on border=off focus=on rectangle=${PAVU_W}x${PAVU_H}+${X}+${Y}"
         fi
         ;;
     # ========================================================
@@ -92,7 +92,73 @@ case "$class" in
         if [ -n "$SCREEN_W" ]; then
             X=$((SCREEN_W - HTOP_W - GAP_X))
             Y=$((SCREEN_H - HTOP_H - GAP_Y))
-            echo "state=floating layer=above sticky=on border=off focus=on rectangle=${HTOP_W}x${HTOP_H}+${X}+${Y}"
+            echo "state=floating layer=above top=on sticky=on border=off focus=on rectangle=${HTOP_W}x${HTOP_H}+${X}+${Y}"
         fi
+        ;;
+
+    # ========================================================
+    # AIMP Player, Preferences, & TrayControl
+    # ========================================================
+    [Aa]imp)
+        title=$(xprop -id "$window_id" WM_NAME 2>/dev/null | awk -F '"' '{print $2}')
+
+        case "$title" in
+            # --- 1. Mode TrayControl (Mini Widget) ---
+            "TrayControl")
+                echo "state=floating layer=above border=off focus=off honor_size_hints=true"
+                ;;
+
+            # --- 2. Menu Setting / Preferences (Center & Ukuran Alami) ---
+            "Preferences")
+                # center=on & honor_size_hints=true membuat ukurannya tidak terpengaruh player
+                echo "state=floating layer=above center=on focus=on border=off honor_size_hints=true"
+
+                # Subshell pengunci agar posisi benar-benar tepat di tengah monitor
+                (
+                    sleep 0.05
+                    eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SW=" $1 "; SH=" $2}')"
+                    eval "$(xwininfo -id "$window_id" 2>/dev/null | awk '/Width:/{print "PW=" $2} /Height:/{print "PH=" $2}')"
+                    if [ -n "$PW" ] && [ -n "$PH" ] && [ -n "$SW" ]; then
+                        X=$(( (SW - PW) / 2 ))
+                        Y=$(( (SH - PH) / 2 ))
+                        xdotool windowmove "$window_id" "$X" "$Y"
+                    fi
+                ) &
+                ;;
+
+            # --- 3. Jendela Utama AIMP Player (1/3 Layar Kanan Bawah) ---
+            *)
+                eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+
+                if [ -n "$SCREEN_W" ]; then
+                    GAP=5
+                    GAP_POLYBAR=45
+                    BOTTOM_GAP=$(( GAP_POLYBAR + GAP )) # 50px
+
+                    # Lebar 1/3 layar
+                    AIMP_W=$(( (SCREEN_W / 3) - (GAP * 2) ))
+
+                    eval "$(xwininfo -id "$window_id" 2>/dev/null | awk '/Height:/{print "SKIN_H=" $2}')"
+                    MAX_H=$(( SCREEN_H - BOTTOM_GAP - GAP ))
+
+                    if [ -n "$SKIN_H" ] && [ "$SKIN_H" -le "$MAX_H" ] && [ "$SKIN_H" -gt 100 ]; then
+                        AIMP_H=$SKIN_H
+                    else
+                        AIMP_H=$MAX_H
+                    fi
+
+                    X=$(( SCREEN_W - AIMP_W - GAP ))
+                    Y=$(( SCREEN_H - AIMP_H - BOTTOM_GAP ))
+
+                    echo "state=floating layer=normal border=off rectangle=${AIMP_W}x${AIMP_H}+${X}+${Y} honor_size_hints=false"
+
+                    (
+                        sleep 0.15
+                        xdotool windowsize "$window_id" "$AIMP_W" "$AIMP_H"
+                        xdotool windowmove "$window_id" "$X" "$Y"
+                    ) &
+                fi
+                ;;
+        esac
         ;;
 esac

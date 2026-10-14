@@ -33,16 +33,16 @@ super + shift + q::Force Kill window
 super + m::Toggle Monocle layout
 super + f::Toggle Fullscreen
 super + v::Toggle Floating mode
-super + [j, k, i, l]::Fokus Jendela (West/South/North/East)
-super + shift + [j, k, i, l]::Tukar Jendela (West/South/North/East)
-super + [1-9, 0]::Pindah Workspace 1 - 10
-super + shift + [1-9, 0]::Kirim Jendela ke Workspace 1 - 10
-super + [Left, Right]::Pindah Workspace (Prev / Next)
-super + shift + [Left, Right]::Kirim Jendela & Ikuti
+super + (j, k, i, l)::Fokus Jendela (West/South/North/East)
+super + shift + (j, k, i, l)::Tukar Jendela (West/South/North/East)
+super + (1-9, 0)::Pindah Workspace 1 - 10
+super + shift + (1-9, 0)::Kirim Jendela ke Workspace 1 - 10
+super + (Left, Right)::Pindah Workspace (Prev / Next)
+super + shift + (Left, Right)::Kirim Jendela & Ikuti
 super + shift + alt + Arrows::Geser Floating Window (20px)
 super + alt + Arrows::Perbesar Ukuran Window
 super + ctrl + Arrows::Perkecil Ukuran Window
-super + ctrl + [j, k, i, l]::Preselection Split Mode
+super + ctrl + (j, k, i, l)::Preselection Split Mode
 super + ctrl + space::Batalkan Preselection
 XF86 Audio Keys::Volume Up / Down / Mute
 XF86 Brightness Keys::Brightness Up / Down
@@ -53,6 +53,9 @@ ctrl + Print::Screen Record (Start)
 ctrl + alt + Print::Screen Record (Pause)
 ctrl + shift + Print::Screen Record (Save & Stop)
 super + shift + r::Screen Record Settings GUI
+super + \::Open, play, pause (AIMP player)
+super + ]::Next Track Music (AIMP player)
+super + [::Previous Track Music (AIMP player)
 EOF
 )
 

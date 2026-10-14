@@ -217,3 +217,22 @@ ctrl + shift + Print
 # Buka jendela GUI pengaturan jika ingin mengubah mic/resolusi
 super + shift + r
     ~/.config/bspwm/scripts/record-notify.sh gui
+
+
+# ==========================================
+# KONTROL AIMP MEDIA PLAYER
+# ==========================================
+
+# 1. Tombol Fn Media Bawaan Laptop / Keyboard (Sangat Direkomendasikan kalo ada)
+XF86Audio{Play,Next,Prev}
+    ~/.config/polybar/scripts/aimp.sh {play-pause,next,prev}
+
+# 2. Tombol Shortcut Kombinasi Keyboard (Sebagai Alternatif)
+# Super + backslash (\) : Play / Pause (Otomatis buka AIMP jika mati)
+# Super + ]             : Lagu Berikutnya (Next)
+# Super + [             : Lagu Sebelumnya (Prev)
+super + backslash
+    ~/.config/polybar/scripts/aimp.sh play-pause
+
+super + bracket{right,left}
+    ~/.config/polybar/scripts/aimp.sh {next,prev}
