@@ -93,6 +93,7 @@ chmod +x ~/.config/bspwm/external_rules
 chmod +x ~/.config/bspwm/scripts/*
 chmod +x ~/.config/mprisence/mprisence.sh
 chmod +x ~/.config/polybar/launch.sh
+chmod +x ~/.config/polybar/scripts/aimp.sh
 chmod +x ~/.config/rofi/powermenu.sh
 chmod +x ~/.config/rofi/keybind.sh
 chmod +x ~/.config/rofi/process-manager.sh
