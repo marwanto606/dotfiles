@@ -22,7 +22,6 @@ super + alt + f::Open File Borwser (rofi filebrowser)
 super + w::Open Wifi (rofi wifi)
 super + ctrl + r::Open Process Manager (rofi proccess)
 super + a::Browser (Google Chrome)
-super + c::Music Player (AIMP)
 super + s::Discord
 super + z::Text Editor (Zed)
 super + x::AB Download Manager
@@ -54,6 +53,7 @@ ctrl + alt + Print::Screen Record (Pause)
 ctrl + shift + Print::Screen Record (Save & Stop)
 super + shift + r::Screen Record Settings GUI
 super + \::Open, play, pause (AIMP player)
+super + shift + \::Kill Aimp player
 super + ]::Next Track Music (AIMP player)
 super + [::Previous Track Music (AIMP player)
 EOF

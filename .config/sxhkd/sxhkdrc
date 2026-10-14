@@ -56,9 +56,6 @@ super + Tab
 super + a
     google-chrome-stable > /dev/null 2>&1 &
 
-super + c
-    aimp > /dev/null 2>&1 &
-
 super + s
     discord > /dev/null 2>&1 &
 
@@ -231,6 +228,9 @@ XF86Audio{Play,Next,Prev}
 # Super + backslash (\) : Play / Pause (Otomatis buka AIMP jika mati)
 # Super + ]             : Lagu Berikutnya (Next)
 # Super + [             : Lagu Sebelumnya (Prev)
+super + shift + backslash
+    killall aimp > /dev/null 2>&1
+
 super + backslash
     ~/.config/polybar/scripts/aimp.sh play-pause
 
