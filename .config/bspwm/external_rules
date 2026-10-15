@@ -59,6 +59,7 @@ case "$class" in
             ) &
         fi
         ;;
+        
     # ========================================================
     # Pavucontrol (Ukuran & Posisi Pojok Kanan Bawah)
     # ========================================================
@@ -77,6 +78,7 @@ case "$class" in
             echo "state=floating layer=above top=on sticky=on border=off focus=on rectangle=${PAVU_W}x${PAVU_H}+${X}+${Y}"
         fi
         ;;
+        
     # ========================================================
     # Htop Task Manager (Pojok Kanan Bawah)
     # ========================================================
@@ -160,5 +162,40 @@ case "$class" in
                 fi
                 ;;
         esac
+        ;;
+
+    # ========================================================
+    # Free Download Manager (FDM)
+    # ========================================================
+    "Free Download Manager"|[Ff]dm)
+        # Ambil title untuk membedakan Main Window vs Window Progress/Popup
+        title=$(xprop -id "$window_id" WM_NAME 2>/dev/null | awk -F '"' '{print $2}')
+
+        if [ "$title" = "Free Download Manager" ]; then
+            # --- 1. Jendela Utama FDM ---
+            # Ukuran diset ke 900x600 (bisa Anda ubah sesuai selera) dan posisinya di tengah layar
+            FDM_W=900
+            FDM_H=600
+
+            eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+
+            if [ -n "$SCREEN_W" ]; then
+                X=$(( (SCREEN_W - FDM_W) / 2 ))
+                Y=$(( (SCREEN_H - FDM_H) / 2 ))
+
+                echo "state=floating center=on rectangle=${FDM_W}x${FDM_H}+${X}+${Y} honor_size_hints=false"
+
+                # Subshell pengunci untuk aplikasi berbasis Qt/Web (mencegah resize liar)
+                (
+                    sleep 0.15
+                    xdotool windowsize "$window_id" $FDM_W $FDM_H
+                    xdotool windowmove "$window_id" $X $Y
+                ) &
+            fi
+        else
+            # --- 2. Jendela Dialog / Progress  ---
+            # Dibuat floating, di tengah layar, tapi mematuhi ukuran asli (honor_size_hints=true)
+            echo "state=floating center=on layer=above focus=on honor_size_hints=true"
+        fi
         ;;
 esac
