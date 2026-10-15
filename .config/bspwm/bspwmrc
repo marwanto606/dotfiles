@@ -3,6 +3,10 @@
 # Pastikan binary user (~/.local/bin) terbaca oleh bspwm & sxhkd
 export PATH="$HOME/.local/bin:$PATH"
 
+# Integrasi Qt ala Parrot OS / Standalone WM
+export QT_QPA_PLATFORMTHEME=""
+export QT_STYLE_OVERRIDE="Fusion"
+
 # ================= INISIALISASI X11 =================
 xrdb -merge ~/.Xresources
 export XCURSOR_THEME="Future-cyan-cursors"
@@ -40,7 +44,7 @@ HEIGHT=${HEIGHT:-768}
 
 # ================= PEMBERSIHAN PROSES =================
 killall -q picom polybar sxhkd nm-applet
-pkill -f "workspace-wallpaper.sh"
+pkill -f "workspace-wallpaper.sh" 
 
 # Tunggu sampai proses lama benar-benar bersih
 while pgrep -x sxhkd >/dev/null; do sleep 0.1; done
@@ -91,6 +95,7 @@ bspc config bottom_monocle_padding 5
 
 # ================= WINDOW RULES =================
 bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
+bspc rule -a Kitty state=tiled
 
 which xdo > /dev/null && xdo lower -N GLava 2>/dev/null
 bspc config external_rules_command ~/.config/bspwm/external_rules
