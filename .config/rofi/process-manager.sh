@@ -21,24 +21,25 @@ entry {
 }
 message {
     enabled: true;
-    padding: 8px 12px;
-    border: 1px;
-    border-color: #444444;
-    border-radius: 6px;
+    padding: 15px 20px;
+    border: 0px 2px;
+    border-radius: 8px;
+    border-color: @teal;
+    background-color: @bg-main;
 }
 textbox {
     enabled: true;
-    text-color: #ffffff;
+    text-color: @fg-white;
 }
 listview {
     enabled: true;
     columns: 1;
     lines: 10;
-    spacing: 4px;
+    spacing: 5px;
     scrollbar: false;
 }
 element {
-    padding: 5px 8px;
+    padding: 9px 12px;
     cursor: pointer;
     border-radius: 4px;
 }
@@ -62,32 +63,27 @@ window {
     width: 420px;
     padding: 15px;
     border-radius: 10px;
-    border: 2px;
-    border-color: #D946EF;
+    border: 0px 5px;
+    border-color: @fuchsia;
 }
 mainbox {
-    children: [ inputbar, listview ];
+    children: [ message, listview ];
     spacing: 12px;
 }
-inputbar {
-    enabled: true;
-    children: [ prompt ];
-}
-prompt {
-    enabled: true;
-    text-color: #D946EF;
-    font: "JetBrains Mono Bold 10";
-    expand: true;
-    padding: 0px 5px;
-}
-entry {
-    enabled: false;
-}
 message {
-    enabled: false;
+    enabled: true;
+    padding: 15px 20px;
+    border: 0px 2px;
+    border-radius: 8px;
+    border-color: @fuchsia;
+    background-color: @bg-main;
 }
 textbox {
-    enabled: false;
+    enabled: true;
+    text-color: @fg-white;
+    background-color: transparent;
+    font: "JetBrains Mono 9.5";
+    markup: true;
 }
 listview {
     columns: 1;
@@ -95,28 +91,25 @@ listview {
     spacing: 6px;
 }
 element {
-    padding: 6px 10px;
+    padding: 8px 12px;
     cursor: pointer;
     border-radius: 4px;
+    background-color: @bg-item;
+    text-color: @fg-white;
 }
-element normal.normal, element alternate.normal {
-    background-color: #161A26;
-    text-color: #FFFFFF;
-    border-color: #23283B;
-}
+
 element-icon {
     enabled: false;
 }
 element-text {
+    text-color: inherit;
     cursor: inherit;
     vertical-align: 0.5;
 }
 element selected.normal, element selected.active {
-    background-color: #D946EF;
-    border-color: #D946EF;
-}
-element selected.normal element-text, element selected.active element-text {
-    text-color: #0F111A;
+    background-color: @fuchsia;
+    border-color: @fuchsia;
+    text-color: @fg-selected;
 }
 '
 
@@ -196,8 +189,8 @@ while true; do
     SELECTED=$(echo "$PROCESS_LIST" | rofi \
         -dmenu \
         -i \
-        -me-select-entry '' \
-        -me-accept-entry MousePrimary \
+        -me-select-entry MousePrimary \
+        -me-accept-entry '!MousePrimary' \
         -p " " \
         -mesg "$SYS_INFO" \
         -theme-str "$ROFI_THEME")
@@ -217,9 +210,9 @@ while true; do
     ACTION=$(echo -e "1. Terminate (SIGTERM - Normal)\n2. Kill (SIGKILL - Paksa)\n3. Cancel (Kembali)" | rofi \
         -dmenu \
         -i \
-        -me-select-entry '' \
-        -me-accept-entry MousePrimary \
-        -p "$PROC_SHORT PID: $PID" \
+        -me-select-entry MousePrimary \
+        -me-accept-entry '!MousePrimary' \
+        -mesg "$PROC_SHORT PID: $PID" \
         -theme-str "$ACTION_THEME")
 
     # 7. Eksekusi Aksi

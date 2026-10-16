@@ -2,13 +2,14 @@
 ## installation
 ```
 sudo apt update
-sudo apt install bspwm rofi polybar picom sxhkd network-manager-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty betterlockscreen
+sudo apt install bspwm rofi polybar picom sxhkd network-manager-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty betterlockscreen vnstat
 sudo apt install x11-utils xdotool playerctl
 git clone https://github.com/marwanto606/dotfiles.git
 cd dotfiles
 cp -r .config/* ~/.config/
 mkdir -p ~/Pictures/wallpapers && cp -r wallpapers/* ~/Pictures/wallpapers
 betterlockscreen -u ~/Pictures/wallpapers/
+sudo systemctl enable --now vnstat
 ```
 ## install snixembed
 ```
@@ -94,10 +95,7 @@ chmod +x ~/.config/bspwm/scripts/*.sh
 chmod +x ~/.config/mprisence/mprisence.sh
 chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/polybar/scripts/*.sh
-chmod +x ~/.config/rofi/powermenu.sh
-chmod +x ~/.config/rofi/keybind.sh
-chmod +x ~/.config/rofi/process-manager.sh
-chmod +x ~/.config/rofi/wifi.sh
+chmod +x ~/.config/rofi/*.sh
 ```
 
-![ricing cyber1](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-10-04-10-52-40-screenshot.png)
+![ricing cyber1](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-10-16-10-08-31-screenshot.png)

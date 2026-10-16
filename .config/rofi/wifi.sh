@@ -9,10 +9,9 @@ ROFI_THEME='
 }
 window {
     width: 400px;
-    height: 400px;
     padding: 15px;
     border-radius: 10px;
-    border-color: #D946EF;
+    border-color: @fuchsia;
 }
 mainbox {
     children: [ inputbar, message, listview ];
@@ -24,44 +23,47 @@ entry {
 prompt {
     enabled: true;
     font: "JetBrains Mono 12";
-    text-color: #D946EF;
+    text-color: @fuchsia;
 }
 message {
     enabled: true;
-    padding: 8px 12px;
-    border: 1px;
-    border-color: #444444;
-    border-radius: 6px;
+    padding: 15px 20px;
+    border: 0px 2px;
+    border-radius: 8px;
+    border-color: @fuchsia;
+    background-color: @bg-main;
 }
 textbox {
     enabled: true;
-    text-color: #ffffff;
+    text-color: @fg-white;
 }
 listview {
     enabled: true;
-    columns: 1;
-    lines: 8;
-    fixed-num-lines: false;
-    spacing: 4px;
+    spacing: 5px;
     scrollbar: false;
+    columns: 1;
+    lines: 5;
+    fixed-height: true;
+}
+element {
+    padding: 9px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: @bg-item;
+    text-color: @fg-white;
 }
 element-icon {
     enabled: false;
 }
 element-text {
+    text-color: inherit;
     margin: 0px;
     padding: 3px 0px;
 }
-element normal.normal, element alternate.normal {
-        background-color: #161A26;
-        text-color: #FFFFFF;
-        border-color: #23283B;
-    }
-
-/* Kotak Terpilih / Hover (Fuchsia Solid) */
 element selected.normal, element selected.active {
-        background-color: #D946EF;
-        border-color: #D946EF;
+    background-color: @fuchsia;
+    border-color: @fuchsia;
+    text-color: @fg-selected;
 }
 '
 
@@ -151,6 +153,8 @@ chosen_network=$(echo "$menu_content" | rofi \
     -dmenu \
     -i \
     -p " " \
+    -me-select-entry MousePrimary \
+    -me-accept-entry '!MousePrimary' \
     -mesg "$SYS_INFO" \
     -theme-str "$ROFI_THEME")
 

@@ -1,143 +1,144 @@
 /* ==========================================================
- *   ROFI TRUE DARK - PURE TEAL & ZERO DEFAULT BLEED
+ * ROFI TRUE DARK - PURE TEAL & ZERO DEFAULT BLEED
  * ========================================================== */
 
 @theme "/dev/null"
 
 configuration {
-    modi:                       "drun,filebrowser,window,run";
-    terminal:                   "kitty";
-    run-shell-command:          "{terminal} --hold -e {cmd}";
-    font:                       "JetBrains Mono 10";
-    show-icons:                 true;               /* AKTIFKAN: agar filebrowser & drun bisa memuat icon */
-    icon-theme:                 "WhiteSur-dark";
-    
-    /* Glyph Font Prompt untuk mode run & filebrowser */
-    display-run:                " ";               /* Terminal glyph */
-    display-filebrowser:        " ";               /* Folder glyph */
-    display-window:             " ";               
-    display-drun:               "";                 /* Kosongkan karena drun akan memakai icon-search */
-    
-    drun-display-format:        "{name}";
-    hover-select:               false;
-    me-select-entry:            "";
-    me-accept-entry:            "MousePrimary";
-    drun-use-desktop-cache:     true;
-    kb-move-front:              "Control+Home";
-    kb-clear-line:              "Control+a,Control+w";
+ modi: "drun,filebrowser,window,run";
+ terminal: "kitty";
+ run-shell-command: "{terminal} --hold -e {cmd}";
+ font: "JetBrains Mono 10";
+ show-icons: true; /* AKTIFKAN: agar filebrowser & drun bisa memuat icon */
+ icon-theme: "WhiteSur-dark";
+ 
+ /* Glyph Font Prompt untuk mode run & filebrowser */
+ display-run: " "; /* Terminal glyph */
+ display-filebrowser: " "; /* Folder glyph */
+ display-window: " "; 
+ display-drun: ""; /* Kosongkan karena drun akan memakai icon-search */
+ 
+ drun-display-format: "{name}";
+ hover-select: false;
+ me-select-entry: "MousePrimary";
+ me-accept-entry: "!MousePrimary";
+ drun-use-desktop-cache: true;
+ kb-move-front: "Control+Home";
+ kb-clear-line: "Control+a,Control+w";
 }
 
 * {
-    bg-main:        #0B0D13;
-    bg-input:       #131722;
-    bg-item:        #141824;
-    border-color:   #1E2333;
+ bg-main: #0B0D13;
+ bg-input: #131722;
+ bg-item: #141824;
+ border-color: #1E2333;
 
-    teal:           #008080;
-    teal-bright:    #2DD4BF;
+ teal: #008080;
+ teal-bright: #2DD4BF;
+ fuchsia : #D946EF;
 
-    fg-white:       #FFFFFF;
-    fg-muted:       #717D96;
-    fg-selected:    #0B0D13;
+ fg-white: #FFFFFF;
+ fg-muted: #717D96;
+ fg-selected: #0B0D13;
 
-    background-color: transparent;
+ background-color: transparent;
 }
 
 window {
-    width:            720px;
-    background-color: @bg-main;
-    border:           2px;
-    border-color:     @teal;
-    border-radius:    10px;
-    padding:          14px;
+ width: 720px;
+ background-color: @bg-main;
+ border: 0px 5px;
+ border-color: @teal;
+ border-radius: 10px;
+ padding: 14px;
 }
 
 mainbox {
-    spacing:          12px;
-    children:         [ inputbar, listview ];
+ spacing: 12px;
+ children: [ inputbar, listview ];
 }
 
 /* Input / Search Bar Default */
 inputbar {
-    background-color: @bg-input;
-    border:           1px;
-    border-color:     @border-color;
-    border-radius:    8px;
-    padding:          10px 14px;
-    spacing:          10px;
-    children:         [ prompt, entry ]; /* Default: untuk run & filebrowser */
+ background-color: @bg-input;
+ border: 1px;
+ border-color: @border-color;
+ border-radius: 8px;
+ padding: 10px 14px;
+ spacing: 10px;
+ children: [ prompt, entry ]; /* Default: untuk run & filebrowser */
 }
 
 /* Widget Icon Search khusus (akan dipanggil saat drun) */
 icon-search {
-    expand:           false;
-    filename:         "system-search";
-    size:             24px;
-    vertical-align:   0.5;
+ expand: false;
+ filename: "system-search";
+ size: 24px;
+ vertical-align: 0.5;
 }
 
 prompt {
-    text-color:       @teal-bright;
-    vertical-align:   0.5;
-    font:             "JetBrains Mono 12"; 
+ text-color: @teal-bright;
+ vertical-align: 0.5;
+ font: "JetBrains Mono 12"; 
 }
 
 entry {
-    text-color:       @fg-white;
-    placeholder:      "Search apps..."; /* Default placeholder drun */
-    placeholder-color:@fg-muted;
-    vertical-align:   0.5;
+ text-color: @fg-white;
+ placeholder: "Search apps..."; /* Default placeholder drun */
+ placeholder-color:@fg-muted;
+ vertical-align: 0.5;
 }
 
 listview {
-    columns:          2;
-    lines:            6;
-    spacing:          8px;
-    cycle:            true;
-    dynamic:          true;
-    scrollbar:        false;
+ columns: 2;
+ lines: 6;
+ spacing: 8px;
+ cycle: true;
+ dynamic: true;
+ scrollbar: false;
 }
 
 element {
-    padding:          9px 12px;
-    border-radius:    8px;
-    spacing:          12px;
-    cursor:           pointer;
-    border:           1px;
-    children:         [ element-icon, element-text ];
+ padding: 9px 12px;
+ border-radius: 8px;
+ spacing: 12px;
+ cursor: pointer;
+ border: 1px;
+ children: [ element-icon, element-text ];
 }
 
 element-icon {
-    size:             24px;
-    vertical-align:   0.5;
-    background-color: transparent;
-    cursor:           inherit;
+ size: 24px;
+ vertical-align: 0.5;
+ background-color: transparent;
+ cursor: inherit;
 }
 
 element-text {
-    vertical-align:   0.5;
-    background-color: transparent;
-    cursor:           inherit;
-    text-color:       @fg-white;
+ vertical-align: 0.5;
+ background-color: transparent;
+ cursor: inherit;
+ text-color: @fg-white;
 }
 
 /* ================= KUNCI ANTI-PUTIH ================= */
 
 element normal.normal,
 element alternate.normal {
-    background-color: @bg-item;
-    border-color:     @border-color;
+ background-color: @bg-item;
+ border-color: @border-color;
 }
 
 element selected.normal,
 element selected.active,
 element selected.urgent {
-    background-color: @teal;
-    border-color:     @teal;
+ background-color: @teal;
+ border-color: @teal;
 }
 
 element selected.normal element-text,
 element selected.active element-text,
 element selected.urgent element-text {
-    text-color:       @fg-selected;
+ text-color: @fg-selected;
 }

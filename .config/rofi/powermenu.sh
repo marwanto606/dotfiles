@@ -7,77 +7,75 @@ Reboot\0icon\x1fsystem-reboot\n\
 Shutdown\0icon\x1fsystem-shutdown"
 
 # Eksekusi Rofi:
-# -no-config : Mencegah Rofi membaca file config global (SANGAT MEMPERCEPAT WAKTU BUKA)
-chosen=$(printf "%b" "$options" | rofi -no-config -dmenu -i -show-icons -p "Power" -theme-str '
+chosen=$(printf "%b" "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str '
     configuration {
-        icon-theme:      "WhiteSur-dark";
-        hover-select:    true;
-        me-select-entry: "";
-        me-accept-entry: "MousePrimary";
+        icon-theme: "WhiteSur-dark";
+        hover-select: true;
+        me-select-entry: "MousePrimary";
+        me-accept-entry: "!MousePrimary";
     }
     * {
         background-color: transparent;
     }
     window {
-        width:            380px;
-        height:           380px;
-        background-color: #0F111A;
-        border:           2px;
-        border-color:     #D946EF;
-        border-radius:    20px;
-        padding:          20px;
+        width: 380px;
+        background-color: @bg-main;
+        border: 0px 5px;
+        border-color: @fuchsia;
+        border-radius: 20px;
+        padding: 20px;
     }
     mainbox {
         children: [ listview ];
     }
     listview {
-        columns:          2;
-        lines:            2;
-        flow:             horizontal;
-        fixed-columns:    true;
-        fixed-height:     true;
-        spacing:          16px;
-        scrollbar:        false;
-        cycle:            true;
-        border:           0;
+        columns: 2;
+        lines: 2;
+        flow: horizontal;
+        fixed-columns: true;
+        fixed-height: true;
+        spacing: 16px;
+        scrollbar: false;
+        cycle: true;
+        border: 0;
     }
     element {
-        orientation:      vertical;
-        border-radius:    14px;
-        padding:          25px 0px;
-        cursor:           pointer;
-        border:           1px;
-        spacing:          15px;
+        orientation: vertical;
+        border-radius: 14px;
+        padding: 25px 0px;
+        cursor: pointer;
+        border: 1px;
+        spacing: 15px;
     }
     element-icon {
-        size:             64px;
+        size: 64px;
         horizontal-align: 0.5;
         background-color: transparent;
-        cursor:           inherit;
+        cursor: inherit;
     }
     element-text {
         horizontal-align: 0.5;
-        vertical-align:   0.5;
-        font:             "JetBrains Mono Bold 11";
-        text-color:       inherit;
+        vertical-align: 0.5;
+        font: "JetBrains Mono Bold 11";
+        text-color: inherit;
         background-color: transparent;
-        cursor:           inherit;
+        cursor: inherit;
     }
 
-    /* Kotak Normal (Dark Pekat, Border Halus) */
+    /* Kotak Normal (Menggunakan variabel tema Anda) */
     element normal.normal, element alternate.normal {
-        background-color: #161A26;
-        text-color:       #FFFFFF;
-        border-color:     #23283B;
+        background-color: @bg-item;
+        text-color: @fg-white;
+        border-color: @bg-item;
     }
 
-    /* Kotak Terpilih / Hover (Fuchsia Solid) */
+    /* Kotak Terpilih / Saat diklik (Fuchsia Solid) */
     element selected.normal, element selected.active {
-        background-color: #D946EF;
-        border-color:     #D946EF;
+        background-color: @fuchsia;
+        border-color: @fuchsia;
     }
     element selected.normal element-text, element selected.active element-text {
-        text-color:       #0F111A;
+        text-color: @fg-selected;
     }
 ')
 
@@ -90,7 +88,6 @@ sleep 0.25
 # Eksekusi aksi berdasarkan kata yang dipilih
 case "$chosen" in
     "Lock")
-        # Ganti dengan locker spesifik Anda jika tidak memakai i3lock
         betterlockscreen -l blur || dm-tool lock
         ;;
     "Logout")

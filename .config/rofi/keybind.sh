@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-THEME="$HOME/.config/rofi/keybind.rasi"
 TOTAL_WIDTH=80
 
 DATA=$(cat << 'EOF'
@@ -75,8 +74,86 @@ while IFS= read -r line; do
     FORMATTED_DATA+="${key}${spaces}${desc}"$'\n'
 done <<< "$DATA"
 
-# Jalankan via Rofi dmenu (sangat cepat & fuzzy search bawaan Rofi aktif)
+# Eksekusi Rofi mewarisi warna config.rasi dengan layout custom
 echo -n "$FORMATTED_DATA" | rofi -dmenu \
     -i \
     -p " " \
-    -theme "$THEME"
+    -theme-str '
+    configuration {
+        font: "JetBrains Mono 10";
+        show-icons: false;
+        hover-select: false;
+        me-select-entry: "";
+        me-accept-entry: "";
+        kb-move-front: "Control+Home";
+        kb-clear-line: "Control+a,Control+w"; 
+    }
+    * {
+        background-color: transparent;
+    }
+    window {
+        width: 710px;
+        background-color: @bg-main;
+        border: 0px 5px;
+        border-color: @teal;
+        border-radius: 12px;
+        padding: 15px;
+    }
+    mainbox {
+        spacing: 12px;
+        children: [ inputbar, listview ];
+    }
+    inputbar {
+        background-color: @bg-input;
+        border: 0px;
+        border-radius: 8px;
+        padding: 8px 12px;
+        spacing: 8px;
+        children: [ prompt, entry ];
+    }
+    prompt {
+        text-color: @teal;
+        font: "JetBrains Mono Bold 10";
+        vertical-align: 0.5;
+    }
+    entry {
+        text-color: @fg-white;
+        placeholder: "Cari shortcut atau fungsi...";
+        placeholder-color: @fg-muted;
+        vertical-align: 0.5;
+    }
+    listview {
+        columns: 1;
+        lines: 11;
+        spacing: 5px;
+        cycle: true;
+        dynamic: true;
+        scrollbar: false;
+    }
+    element {
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 0px;
+        background-color: @bg-item;
+        text-color: @fg-white;
+        children: [ element-text ];
+    }
+
+    element-text {
+        horizontal-align: 0.0;
+        vertical-align:   0.5;
+        background-color: transparent;
+        cursor: inherit;
+        text-color: @fg-white;
+        expand: true;
+    }
+    /* Terpilih (Menggunakan Fuchsia tema Anda) */
+    element selected.normal, element selected.active {
+        background-color: @teal;
+        text-color: @fg-selected;
+    }
+    element selected.normal element-text, element selected.active element-text {
+        font: "JetBrains Mono Bold 10";
+    }
+'
