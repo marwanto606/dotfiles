@@ -68,11 +68,9 @@ super + x
 super + alt + b
     ~/.config/bspwm/scripts/toggle_polybar.sh
 
-super + shift + g
-    pkill -x glava
-
+# Toggle GLava (On / Off)
 super + g
-    pkill -x glava || glava > /dev/null 2>&1 &
+    pkill -x glava || (glava & sleep 1 && xdo lower $(cat /tmp/xwinwrap_wid))
 
 # Switch workspace (1-10)
 super + {1-9,0}

@@ -118,4 +118,23 @@ cp -r .config/glava/* ~/.config/glava/
 ./glava.sh uninstall
 ```
 
+## live wallpaper mp4 mpv + xwinwrap
+```
+# install mpv
+sudo apt install mpv
+
+#install xwinwrap
+# 1. Pastikan folder ~/.local/bin sudah ada
+mkdir -p ~/.local/bin
+
+# 2. Download binary xwinwrap (versi rilis yang stabil & umum digunakan)
+curl -L -o ~/.local/bin/xwinwrap https://github.com/mmhobi7/xwinwrap/releases/download/v0.9/xwinwrap
+
+# 3. Beri izin eksekusi (chmod +x)
+chmod +x ~/.local/bin/xwinwrap
+
+# add 'live' on script execute workspace-wallpaper.sh on bspwmrc
+# ~/.config /bspwm/scripts/workspace-wallpaper.sh live &
+```
+
 ![ricing cyber1](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-10-16-10-08-31-screenshot.png)

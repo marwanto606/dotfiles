@@ -26,4 +26,7 @@ else
 
     # Kedua, turunkan GLava (agar GLava berada di bawah Polybar)
     xdo lower -N GLava 2>/dev/null
+
+    # Ketiga, turunkan Live Wallpaper (agar berada di PALING DASAR di bawah GLava & Polybar)
+    [ -s /tmp/xwinwrap_wid ] && xdo lower $(cat /tmp/xwinwrap_wid) 2>/dev/null
 fi

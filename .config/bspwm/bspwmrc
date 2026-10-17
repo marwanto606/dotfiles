@@ -64,8 +64,7 @@ nm-applet >/dev/null 2>&1 &
 # fi
 
 # autostart GLava (opsional)
-# pkill -x glava
-# (sleep 2 && glava) > /dev/null 2>&1 &
+# pgrep -x glava || (glava & sleep 1 && xdo lower $(cat /tmp/xwinwrap_wid)) &
 
 if ! pgrep -x "snixembed" > /dev/null; then
     (sleep 2 && ~/.local/bin/snixembed >/dev/null 2>&1) &

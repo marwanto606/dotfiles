@@ -25,7 +25,6 @@ super + s::Discord
 super + z::Text Editor (Zed)
 super + x::AB Download Manager
 super + g::Toggle Glava Visualizer
-super + shift + g::Kill Glava
 super + q::Close active window
 super + shift + q::Force Kill window
 super + m::Toggle Monocle layout
