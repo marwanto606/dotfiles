@@ -97,5 +97,25 @@ chmod +x ~/.config/polybar/launch.sh
 chmod +x ~/.config/polybar/scripts/*.sh
 chmod +x ~/.config/rofi/*.sh
 ```
+## install glava
+```
+chmod +x glava.sh
+# to install glava
+./glava.sh install
+
+# to copy example config glava
+glava --copy-config
+
+# to copy my dotfiles glava config
+cp -r .config/glava/* ~/.config/glava/
+
+# to change glava resolution, it is also available at bspwmrc, just uncomment it on this code 
+#if echo "$WIDTH" | grep -Eq '^[0-9]+$' && echo "$HEIGHT" | grep -Eq '^[0-9]+$'; then 
+#    sed -i "s/#request setgeometry .*/#request setgeometry 0 0 $WIDTH $HEIGHT/" "$HOME/.config/glava/rc.glsl" 
+#fi
+
+# to uninstall glava
+./glava.sh uninstall
+```
 
 ![ricing cyber1](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-10-16-10-08-31-screenshot.png)
