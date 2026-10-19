@@ -3,9 +3,10 @@
 # Pastikan binary user (~/.local/bin) terbaca oleh bspwm & sxhkd
 export PATH="$HOME/.local/bin:$PATH"
 
-# Integrasi Qt ala Parrot OS / Standalone WM
-export QT_QPA_PLATFORMTHEME=""
+# Integrasi Qt ala Parrot OS / Standalone WM / kde plasma DE
+# export QT_QPA_PLATFORMTHEME=""
 export QT_STYLE_OVERRIDE="Fusion"
+export QT_QPA_PLATFORMTHEME=kde
 
 # ================= INISIALISASI X11 =================
 xrdb -merge ~/.Xresources
