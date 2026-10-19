@@ -21,6 +21,12 @@ cp -r .local/bin/* ~/.local/bin/
 chmod +x ~/.local/bin/snixembed
 chmod +x ~/.local/bin/rxfetch
 ```
+
+## fix xfce4-notifyd yang tiba-tiba tidak jalan
+```
+# Buat symlink xfce4-notifyd
+ln -s /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd ~/.local/bin/xfce4-notifyd
+```
 ## starship init .zshrc
 ```
 if [[ "$TERM" != "linux" ]]; then

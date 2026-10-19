@@ -44,13 +44,14 @@ HEIGHT=${HEIGHT:-768}
 ) &
 
 # ================= PEMBERSIHAN PROSES =================
-killall -q picom polybar sxhkd nm-applet
+killall -q picom polybar sxhkd nm-applet xfce4-notifyd
 pkill -f "workspace-wallpaper.sh" 
 
 # Tunggu sampai proses lama benar-benar bersih
 while pgrep -x sxhkd >/dev/null; do sleep 0.1; done
 while pgrep -x polybar >/dev/null; do sleep 0.1; done
 while pgrep -x nm-applet >/dev/null; do sleep 0.1; done
+while pgrep -x xfce4-notifyd >/dev/null; do sleep 0.1; done
 
 # ================= AUTOSTART =================
 sxhkd &
@@ -58,6 +59,7 @@ picom --config ~/.config/picom/picom.conf &
 ~/.config/bspwm/scripts/workspace-wallpaper.sh &
 ~/.config/polybar/launch.sh &
 nm-applet >/dev/null 2>&1 &
+xfce4-notifyd >/dev/null 2>&1 &
 
 # Perbarui geometry GLava HANYA jika WIDTH dan HEIGHT benar-benar berupa angka
 # if echo "$WIDTH" | grep -Eq '^[0-9]+$' && echo "$HEIGHT" | grep -Eq '^[0-9]+$'; then
