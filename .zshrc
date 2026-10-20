@@ -1,35 +1,31 @@
-# ~/.zshrc file for zsh interactive shells.
-# see /usr/share/doc/zsh/examples/zshrc for examples
+# ~/.zshrc file for zsh interactive shells (Parrot OS + Kali Config)
 
 setopt autocd              # change directory just by typing its name
-#setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
-setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
+setopt magicequalsubst     # enable filename expansion for arguments
 setopt nonomatch           # hide error message if there is no match for the pattern
 setopt notify              # report the status of background jobs immediately
-setopt numericglobsort     # sort filenames numerically when it makes sense
+setopt numericglobsort     # sort filenames numerically
 setopt promptsubst         # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
-
-# hide EOL sign ('%')
 PROMPT_EOL_MARK=""
 
-# configure key keybindings
-bindkey -e                                        # emacs key bindings
-bindkey ' ' magic-space                           # do history expansion on space
-bindkey '^U' backward-kill-line                   # ctrl + U
-bindkey '^[[3;5~' kill-word                       # ctrl + Supr
-bindkey '^[[3~' delete-char                       # delete
-bindkey '^[[1;5C' forward-word                    # ctrl + ->
-bindkey '^[[1;5D' backward-word                   # ctrl + <-
-bindkey '^[[5~' beginning-of-buffer-or-history    # page up
-bindkey '^[[6~' end-of-buffer-or-history          # page down
-bindkey '^[[H' beginning-of-line                  # home
-bindkey '^[[F' end-of-line                        # end
-bindkey '^[[Z' undo                               # shift + tab undo last action
+# Keybindings
+bindkey -e
+bindkey ' ' magic-space
+bindkey '^U' backward-kill-line
+bindkey '^[[3;5~' kill-word
+bindkey '^[[3~' delete-char
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[5~' beginning-of-buffer-or-history
+bindkey '^[[6~' end-of-buffer-or-history
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[Z' undo
 
-# enable completion features (OPTIMIZED LAZY LOAD)
+# Enable completion features (Optimized Lazy Load)
 autoload -Uz compinit
 if [[ -n ~/.cache/zcompdump(#qN.mh+24) ]]; then
   compinit -d ~/.cache/zcompdump
@@ -53,29 +49,24 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # History configurations
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=2000
-setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_dups       # ignore duplicated commands history list
-setopt hist_ignore_all_dups   # hapus duplikate lama
-setopt hist_save_no_dups      # jangan simpan duplikat
-setopt hist_ignore_space      # ignore commands that start with space
-setopt hist_verify            # show command with history expansion to user before running it
-#setopt share_history         # share command history data
+HISTSIZE=100000
+SAVEHIST=200000
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_space
+setopt hist_verify
 
-# force zsh to show the complete history
 alias history="history 0"
-
-# configure `time` format
 TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
 
-# set variable identifying the chroot you work in
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # ======================================================================
-# SYNTAX HIGHLIGHTING (Dijalankan baik di Kitty maupun di TTY)
+# SYNTAX HIGHLIGHTING
 # ======================================================================
 if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -110,10 +101,8 @@ if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
 fi
 
 # ======================================================================
-# PENGATURAN PROMPT EKSKLUSIF (Starship vs Kali Default)
+# PROMPT & STARSHIP
 # ======================================================================
-
-# Fungsi pembantu untuk prompt bawaan kali
 configure_prompt() {
     prompt_symbol=㉿
     case "$PROMPT_ALTERNATIVE" in
@@ -127,114 +116,102 @@ configure_prompt() {
     unset prompt_symbol
 }
 
-# START KALI CONFIG VARIABLES
 PROMPT_ALTERNATIVE=twoline
 NEWLINE_BEFORE_PROMPT=yes
-# STOP KALI CONFIG VARIABLES
 
-# If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
     TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%n@%m: %~\a'
     ;;
-*)
-    ;;
 esac
 
-if [[ "$TERM" != "linux" ]]; then
-    # ---------------------------------------------------------
-    # JIKA TERMINAL GUI (KITTY, XFCE, ALACRITTY) -> PAKAI STARSHIP
-    # ---------------------------------------------------------
+if [[ "$TERM" != "linux" ]] && command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
-    
-    # Hanya print Terminal Title tanpa merusak margin atas Starship
-    precmd() {
-        print -Pnr -- "$TERM_TITLE"
-    }
+    precmd() { print -Pnr -- "$TERM_TITLE" }
 else
-    # ---------------------------------------------------------
-    # JIKA TTY (CONSOLE LINUX) -> PAKAI PROMPT BAWAAN KALI
-    # ---------------------------------------------------------
     VIRTUAL_ENV_DISABLE_PROMPT=1
     configure_prompt
-
     toggle_oneline_prompt(){
-        if [ "$PROMPT_ALTERNATIVE" = oneline ]; then
-            PROMPT_ALTERNATIVE=twoline
-        else
-            PROMPT_ALTERNATIVE=oneline
-        fi
-        configure_prompt
-        zle reset-prompt
+        if [ "$PROMPT_ALTERNATIVE" = oneline ]; then PROMPT_ALTERNATIVE=twoline; else PROMPT_ALTERNATIVE=oneline; fi
+        configure_prompt; zle reset-prompt
     }
     zle -N toggle_oneline_prompt
     bindkey ^P toggle_oneline_prompt
-
     precmd() {
         print -Pnr -- "$TERM_TITLE"
         if [ "$NEWLINE_BEFORE_PROMPT" = yes ]; then
-            if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then
-                _NEW_LINE_BEFORE_PROMPT=1
-            else
-                print ""
-            fi
+            if [ -z "$_NEW_LINE_BEFORE_PROMPT" ]; then _NEW_LINE_BEFORE_PROMPT=1; else print ""; fi
         fi
     }
 fi
 
 # ======================================================================
-# ALIAS & WARNA TERMINAL (ls, dircolors, dll)
+# ALIAS & FUNGSI (Gabungan Kali + Bawaan Parrot)
 # ======================================================================
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    export LS_COLORS="$LS_COLORS:ow=30;44:" # fix ls color for folders with 777 permissions
-
+    export LS_COLORS="$LS_COLORS:ow=30;44:"
     alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
     alias diff='diff --color=auto'
     alias ip='ip --color=auto'
 
-    export LESS_TERMCAP_mb=$'\E[1;31m'
-    export LESS_TERMCAP_md=$'\E[1;36m'
-    export LESS_TERMCAP_me=$'\E[0m'
-    export LESS_TERMCAP_so=$'\E[01;33m'
-    export LESS_TERMCAP_se=$'\E[0m'
-    export LESS_TERMCAP_us=$'\E[1;32m'
-    export LESS_TERMCAP_ue=$'\E[0m'
-
     zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 fi
 
-alias ll='ls -l'
-alias la='ls -A'
+alias ll='ls -lh'
+alias la='ls -lha'
 alias l='ls -CF'
 alias clear='printf "\033[2J\033[3J\033[H"'
 alias xmysql='/opt/lampp/bin/mysql'
 
-# enable auto-suggestions based on the history
+# Alias tambahan dari Parrot OS
+alias _='sudo'
+alias _i='sudo -i'
+alias fucking='sudo'
+alias please='sudo'
+alias tarnow='tar -acf '
+alias untar='tar -zxvf '
+alias wget='wget -c '
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Fungsi kriptografi bawaan Parrot OS
+hex-encode() { echo "$@" | xxd -p; }
+hex-decode() { echo "$@" | xxd -p -r; }
+rot13() { echo "$@" | tr 'A-Za-z' 'N-ZA-Mn-za-m'; }
+
+# ======================================================================
+# AUTOSUGGESTIONS & COMMAND-NOT-FOUND
+# ======================================================================
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
 
-# enable command-not-found if installed
 if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
 
 # ======================================================================
-# PATH & LINGKUNGAN (BUN, COMPOSER, DENO, NVM)
+# ENVIRONMENT & PATHS (BUN, COMPOSER, DENO, NVM)
 # ======================================================================
 export PATH=~/.deno/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games
 export PATH="$PATH:$HOME/.config/composer/vendor/bin"
 
-# bun
+# bun (Path dinamis $HOME, aman untuk Parrot)
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "/home/kali/.bun/_bun" ] && source "/home/kali/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # NVM (Optimized Lazy Load)
 export NVM_DIR="$HOME/.nvm"
@@ -247,4 +224,5 @@ for cmd in nvm node npm npx yarn; do
     eval "$cmd() { load_nvm; $cmd \"\$@\"; }"
 done
 
-. "$HOME/.local/bin/env"
+# Safe source untuk local env
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"

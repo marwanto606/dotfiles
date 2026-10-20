@@ -27,7 +27,14 @@ chmod +x ~/.local/bin/rxfetch
 # Buat symlink xfce4-notifyd
 ln -s /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd ~/.local/bin/xfce4-notifyd
 ```
-## starship init .zshrc
+## install zsh, autosuggestions, syntax highlighting for shell
+```
+sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting -y
+chsh -s $(which zsh)
+# sample .zshrc on repo copy to ~/.zshrc
+# logout and login again
+```
+## sample starship init .zshrc
 ```
 if [[ "$TERM" != "linux" ]]; then
     eval "$(starship init zsh)"
@@ -129,7 +136,7 @@ curl -L https://raw.githubusercontent.com/will8211/unimatrix/master/unimatrix.py
 chmod a+rx ~/.local/bin/unimatrix
 
 # sample my command
-unimatrix -b -s 96 -l cCgGkmnopPrRsS -a -f -c magenta
+unimatrix -b -s 96 -l cCgGkmnopPrRsS -a -o -f -c magenta
 ```
 
 ## live wallpaper mp4 mpv + xwinwrap
