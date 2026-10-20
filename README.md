@@ -123,6 +123,14 @@ cp -r .config/glava/* ~/.config/glava/
 # to uninstall glava
 ./glava.sh uninstall
 ```
+## install unimatrix
+```
+curl -L https://raw.githubusercontent.com/will8211/unimatrix/master/unimatrix.py -o ~/.local/bin/unimatrix
+chmod a+rx ~/.local/bin/unimatrix
+
+# sample my command
+unimatrix -b -s 96 -l cCgGkmnopPrRsS -a -f -c magenta
+```
 
 ## live wallpaper mp4 mpv + xwinwrap
 ```
