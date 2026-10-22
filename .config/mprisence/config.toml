@@ -3,7 +3,7 @@ event_driven = true
 
 clear_on_pause = true
 
-allowed_players = []
+allowed_players = ["player:aimp", "web_player:youtube"]
 
 [time]
 show = true
