@@ -2,7 +2,7 @@
 
 SERVICE="mprisence.service"
 # Perintah untuk membuka AIMP (sesuaikan jika Anda menjalankannya lewat command lain/Wine)
-PLAYER_CMD="aimp"
+# PLAYER_CMD="aimp"
 
 # Bagian Toggle
 if [ "$1" == "--toggle" ]; then
@@ -14,9 +14,9 @@ if [ "$1" == "--toggle" ]; then
         systemctl --user start "$SERVICE"
 
         # Buka AIMP jika belum berjalan (di-detach di background agar polybar tidak freeze)
-        if ! pgrep -i -f "$PLAYER_CMD" >/dev/null; then
-            nohup "$PLAYER_CMD" >/dev/null 2>&1 &
-        fi
+        # if ! pgrep -i -f "$PLAYER_CMD" >/dev/null; then
+        #     nohup "$PLAYER_CMD" >/dev/null 2>&1 &
+        # fi
     fi
     
     # Memaksa polybar untuk update instan
@@ -27,7 +27,7 @@ fi
 
 # Bagian Status
 if systemctl --user is-active --quiet "$SERVICE"; then
-    echo "%{F#FFFFFF}%{F-}"
+    echo "%{F#008080}%{F-}"
 else
     echo "%{F#FFFFFF}%{F-}"
 fi

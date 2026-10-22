@@ -3,9 +3,11 @@ event_driven = true
 
 clear_on_pause = true
 
+allowed_players = []
+
 [time]
 show = true
-as_elapsed = true
+as_elapsed = false
 
 [cover.provider]
 provider = []
@@ -14,6 +16,32 @@ provider = []
 use_content_type = true
 default = "listening"
 
-[player."*aimp*"]
+# ----------------------------------------
+# 1. Player AIMP
+# ----------------------------------------
+[player.aimp]
+match_patterns = ["*aimp*"]
 ignore = false
-app_id = "429559336982020107"  # App ID yang memunculkan nama "AIMP" di Discord
+app_id = "429559336982020107"
+status_display_type = "state"
+
+# ----------------------------------------
+# 2. Browser Chrome / Chromium (Native MPRIS) catatan: semua player bisa tertangkap datanya
+# ----------------------------------------
+# [player.chrome]
+# match_patterns = ["chrome", "chromium", "google-chrome", "*chrome*"]
+# ignore = false
+# allow_streaming = true
+# app_id = "1301894190904639559"
+# icon = "https://raw.githubusercontent.com/lazykern/mprisence/main/assets/icons/web-player/youtube.png"
+# show_icon = true
+# activity_type = "watching"
+# status_display_type = "state"
+
+# ----------------------------------------
+# 2. Khusus YouTube Web (via Ekstensi Bridge) catatan: khusus tab youtube via bridge dan extension
+# ----------------------------------------
+[web_player.youtube]
+ignore = false
+activity_type = "watching"
+status_display_type = "state"

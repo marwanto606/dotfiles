@@ -53,9 +53,11 @@ sudo apt install ./aimp_6.00.3083\~beta6-1_amd64.deb
 ```
 
 ## install mprisence for discord
-`
-install mprisence in the repository: https://github.com/lazykern/mprisence
-`
+```
+# install mprisence in the repository: https://github.com/lazykern/mprisence
+# install web bridge commnad: `mprisence web install` check: `mprisence web doctor`
+# add chrome extension `mprisence bridge`
+```
 ## disable starup mprisence
 ```
 systemctl --user disable mprisence.service
