@@ -104,13 +104,13 @@ super + shift + {j,k,i,l}
 super + m
     bspc desktop -l next
 
-# Fullscreen
+# Toggle fullscreen (jika fullscreen kembalikan ke tiled, jika tidak jadikan fullscreen)
 super + f
-    bspc node -t '~fullscreen'
+    bspc node -t fullscreen || bspc node -t tiled
 
-# Toggle floating
+# Toggle floating (jika floating kembalikan ke tiled, jika tidak jadikan floating)
 super + v
-    bspc node -t '~floating'
+    bspc node -t floating || bspc node -t tiled
 
 # Close window
 super + q
