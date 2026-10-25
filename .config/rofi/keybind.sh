@@ -43,12 +43,13 @@ super + ctrl + (j, k, i, l)::Preselection Split Mode
 super + ctrl + space::Batalkan Preselection
 XF86 Audio Keys::Volume Up / Down / Mute
 XF86 Brightness Keys::Brightness Up / Down
-XF86 Mic / WLAN::Toggle Mic Mute / Wifi Info
-Print::Screenshot Fullscreen
-alt + Print::Screenshot Area
-ctrl + Print::Screen Record (Start)
-ctrl + alt + Print::Screen Record (Pause)
-ctrl + shift + Print::Screen Record (Save & Stop)
+XF86 Mic::Toggle Mic Mute
+WLAN::Toggle Wifi on/off
+Print / super + p::Screenshot Fullscreen
+alt + Print / super + alt + p::Screenshot Area
+ctrl + Print / super + ctrl + p::Screen Record (Start)
+ctrl + alt + Print / super + ctrl + alt + p::Screen Record (Pause)
+ctrl + shift + Print / super + ctrl + shift + p::Screen Record (Save & Stop)
 super + shift + r::Screen Record Settings GUI
 super + \::Open, play, pause (AIMP player)
 super + shift + \::Kill Aimp player

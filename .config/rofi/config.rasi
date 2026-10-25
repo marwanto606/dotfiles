@@ -13,7 +13,7 @@ configuration {
  icon-theme: "WhiteSur-dark";
  
  /* Glyph Font Prompt untuk mode run & filebrowser */
- display-run: " "; /* Terminal glyph */
+ display-run: " "; /* Terminal glyph */
  display-filebrowser: " "; /* Folder glyph */
  display-window: " "; 
  display-drun: ""; /* Kosongkan karena drun akan memakai icon-search */

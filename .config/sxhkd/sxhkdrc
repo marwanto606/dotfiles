@@ -186,11 +186,13 @@ XF86WLAN
 # ==========================================
 
 # Screenshot seluruh layar
-Print
+# MacBook: Super + P | Keyboard Biasa: Print
+{Print, super + p}
     ~/.config/bspwm/scripts/screenshot-notify.sh full
 
 # Screenshot area yang dipilih
-alt + Print
+# MacBook: Super + Alt + P | Keyboard Biasa: Alt + Print
+{alt + Print, super + alt + p}
     ~/.config/bspwm/scripts/screenshot-notify.sh area
 
 # ==========================================
@@ -198,21 +200,23 @@ alt + Print
 # ==========================================
 
 # Mulai perekaman layar
-ctrl + Print
+# MacBook: Super + Ctrl + P | Keyboard Biasa: Ctrl + Print
+{ctrl + Print, super + ctrl + p}
     ~/.config/bspwm/scripts/record-notify.sh start
 
 # Jeda / Pause perekaman
-ctrl + alt + Print
+# MacBook: Super + Ctrl + Alt + P | Keyboard Biasa: Ctrl + Alt + Print
+{ctrl + alt + Print, super + ctrl + alt + p}
     ~/.config/bspwm/scripts/record-notify.sh pause
 
 # Selesai & Simpan rekaman video
-ctrl + shift + Print
+# MacBook: Super + Ctrl + Shift + P | Keyboard Biasa: Ctrl + Shift + Print
+{ctrl + shift + Print, super + ctrl + shift + p}
     ~/.config/bspwm/scripts/record-notify.sh save
 
 # Buka jendela GUI pengaturan jika ingin mengubah mic/resolusi
 super + shift + r
     ~/.config/bspwm/scripts/record-notify.sh gui
-
 
 # ==========================================
 # KONTROL AIMP MEDIA PLAYER
