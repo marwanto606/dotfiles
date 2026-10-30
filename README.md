@@ -1,8 +1,13 @@
 # dotfiles
+## disclaimer
+`
+backup config awal kalian sebelum menimpa dengan config dotfiles ini jika dirasa config kalian penting,
+folder .config pada dotfiles ini dapat menimpa .config di lokasi ~/.config/ kalian.
+`
 ## installation
 ```
 sudo apt update
-sudo apt install bspwm rofi polybar picom sxhkd network-manager-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty betterlockscreen vnstat
+sudo apt install bspwm rofi polybar picom sxhkd network-manager-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty betterlockscreen vnstat xfce4-terminal
 sudo apt install x11-utils xdotool playerctl
 git clone https://github.com/marwanto606/dotfiles.git
 cd dotfiles
