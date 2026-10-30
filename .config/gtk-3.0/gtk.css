@@ -1,0 +1,13 @@
+@import 'colors.css';
+/* Hilangkan border 1px dan buat tooltip melengkung 10px secara native */
+tooltip,
+tooltip *,
+tooltip decoration,
+tooltip.background,
+.tooltip {
+    border: none !important;
+    border-width: 0px !important;
+    border-color: transparent !important;  /* Trik untuk Chromium */
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
