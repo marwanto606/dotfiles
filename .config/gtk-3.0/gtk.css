@@ -5,9 +5,9 @@ tooltip *,
 tooltip decoration,
 tooltip.background,
 .tooltip {
-    border: none !important;
-    border-width: 0px !important;
-    border-color: transparent !important;  /* Trik untuk Chromium */
-    border-radius: 10px !important;
-    box-shadow: none !important;
+    border: none;
+    border-width: 0px;
+    border-color: transparent;
+    border-radius: 10px;
+    box-shadow: none;
 }
