@@ -18,10 +18,16 @@ map("i", "<C-a>", "<Esc>ggVG", { desc = "Umum Select all text" })
 map({ "n", "v" }, "<C-s>", "<cmd>w<cr>", { desc = "Umum Save file" })
 map("i", "<C-s>", "<cmd>w<cr>", { desc = "Umum Save file" })
 
--- CLIPBOARD (Ctrl + C & Ctrl + V)
+-- CLIPBOARD (Ctrl + C, Ctrl + X, & Ctrl + V)
 map("v", "<C-c>", '"+y', { desc = "Umum Copy to system clipboard" })
+map("v", "<C-x>", '"+d', { desc = "Umum Cut to system clipboard" })
+map("n", "<C-x>", '"+dd', { desc = "Umum Cut line to system clipboard" })
 map({ "n", "v" }, "<C-v>", '"+p', { desc = "Umum Paste from system clipboard" })
 map("i", "<C-v>", '<C-r>+', { desc = "Umum Paste from system clipboard" })
+
+-- TOGGLE COMMENT (Ctrl + /)
+map("n", "<C-/>", "gcc", { remap = true, desc = "Umum Toggle comment line" })
+map("v", "<C-/>", "gc", { remap = true, desc = "Umum Toggle comment selection" })
 
 -- UNDO & REDO (Ctrl + Z & Ctrl + Y)
 map({ "n", "i", "v" }, "<C-z>", "<cmd>undo<cr>", { desc = "Umum Undo change" })
@@ -50,19 +56,43 @@ map("v", "<A-J>", ":t'><cr>gv=gv", { desc = "Edit Duplicate selected lines" })
 map("v", "<", "<gv", { desc = "Edit Indent left (keep selection)" })
 map("v", ">", ">gv", { desc = "Edit Indent right (keep selection)" })
 
+-------------------------------------------------------------------
+-- SELEKSI TEKS DENGAN SHIFT + PANAH (VS CODE STYLE)
+-------------------------------------------------------------------
+
+-- Fungsi cerdas: Otomatis mendeteksi mode saat ini (Normal, Insert, atau Visual)
+local function select_dir(key)
+  local m = vim.api.nvim_get_mode().mode:sub(1, 1)
+  if m == "i" then
+    return "<Esc>v" .. key -- Jika di Insert, keluar dulu lalu mulai visual
+  elseif m == "v" or m == "V" or m == "\22" then
+    return key             -- Jika sudah di Visual, lanjutkan perluasan seleksi
+  else
+    return "v" .. key      -- Jika di Normal, langsung masuk mode visual
+  end
+end
+
+-- Mappings 1 baris untuk semua mode (Normal, Insert, & Visual)
+map({ "n", "i", "v" }, "<S-Up>", function() return select_dir "<Up>" end, { expr = true, desc = "Seleksi Blok baris ke atas" })
+map({ "n", "i", "v" }, "<S-Down>", function() return select_dir "<Down>" end, { expr = true, desc = "Seleksi Blok baris ke bawah" })
+map({ "n", "i", "v" }, "<S-Left>", function() return select_dir "<Left>" end, { expr = true, desc = "Seleksi Karakter ke kiri" })
+map({ "n", "i", "v" }, "<S-Right>", function() return select_dir "<Right>" end, { expr = true, desc = "Seleksi Karakter ke kanan" })
+
+-- Hapus blok teks yang terseleksi ala VS Code (hanya saat ada teks terseleksi)
+map("v", "<BS>", '"_d', { desc = "Seleksi Hapus blok (Backspace)" })
 
 -------------------------------------------------------------------
 -- 3. TERMINAL NVCHAD
 -------------------------------------------------------------------
 
--- TOGGLE TERMINAL HORIZONTAL (Space + h)
-map("n", "<leader>h", function()
+-- Fungsi toggle terminal horizontal
+local toggle_horizontal_term = function()
   require("nvchad.term").toggle { pos = "sp", id = "horizontalTerm" }
-end, { desc = "Terminal Toggle Horizontal" })
+end
 
-map("t", "<leader>h", function()
-  require("nvchad.term").toggle { pos = "sp", id = "horizontalTerm" }
-end, { desc = "Terminal Toggle Horizontal" })
+-- TOGGLE TERMINAL HORIZONTAL (Ctrl + \ & Space + h)
+map({ "n", "t" }, "<leader>h", toggle_horizontal_term, { desc = "Terminal Toggle Horizontal" })
+map({ "n", "t" }, "<C-\\>", toggle_horizontal_term, { desc = "Terminal Toggle Horizontal" })
 
 -- TOGGLE TERMINAL FLOATING / MELAYANG (Space + t)
 map({ "n", "t" }, "<leader>pt", function()
