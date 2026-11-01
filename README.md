@@ -166,3 +166,5 @@ chmod +x ~/.local/bin/xwinwrap
 ```
 
 ![ricing cyber1](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-10-16-10-08-31-screenshot.png)
+
+![ricing cyber-glass](https://raw.githubusercontent.com/marwanto606/dotfiles/refs/heads/main/2026-11-01-23-38-22-screenshot.png)
