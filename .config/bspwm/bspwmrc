@@ -98,7 +98,6 @@ bspc config bottom_monocle_padding 0
 # ================= WINDOW RULES =================
 bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
 bspc rule -a kitty state=tiled rectangle=700x420+0+0 center=on
-bspc rule -a Thunar state=tiled rectangle=900x600+0+0 center=on
 bspc rule -a "*:xdg-desktop-portal-gtk" state=floating layer=above center=on
 bspc rule -a Polybar manage=off
 
