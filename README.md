@@ -71,12 +71,15 @@ systemctl --user stop mprisence.service
 ## install fonts
 ```
 sudo apt update
-sudo apt install fonts-jetbrains-mono fonts-font-awesome
+sudo apt install fonts-jetbrains-mono
 mkdir -p ~/.local/share/fonts
 cp -r fonts/* ~/.local/share/fonts/
 fc-cache -fv
 ```
-`If the Font Awesome version obtained via 'apt' is outdated, you must install it manually by downloading Font Awesome 6 from https://github.com/FortAwesome/Font-Awesome/releases/tag/6.7.2`
+> [!NOTE]
+> Deprecated: old config icon fonts using Font Awesome 6, already migrate using icon fonts 'Symbols Nerd Font' for more icon fonts.
+> `If the Font Awesome version obtained via 'apt' is outdated, you must install it manually by downloading Font Awesome 6 from https://github.com/FortAwesome/Font-Awesome/releases/tag/6.7.2`
+
 ## install icon and cache (old config icon)
 ```
 sudo apt install -y papirus-icon-theme

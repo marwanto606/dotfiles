@@ -90,7 +90,7 @@ bspc config border_width         0
 bspc config window_gap           5
 bspc config automatic_scheme     longest_side
 bspc config split_ratio          0.52
-bspc config single_monocle       false:
+bspc config single_monocle       false
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 bspc config bottom_monocle_padding 0
@@ -110,6 +110,22 @@ bspc config pointer_modifier              mod4
 bspc config pointer_action1               move 
 bspc config pointer_action2               resize_side 
 bspc config pointer_action3               resize_corner
+
+# ================= SCRIPT OTOMATIS: MONOCLE ROUNDED CORNERS =================
+bspc subscribe desktop_layout | while read -r _ _ _ layout; do
+    if [ "$layout" = "monocle" ]; then
+        # Jika masuk mode monocle, pasang properti _BSPWM_MONOCLE=1 ke semua window di desktop tersebut
+        for win in $(bspc query -N -n .window -d focused); do
+            xprop -id "$win" -f _BSPWM_MONOCLE 32c -set _BSPWM_MONOCLE 1
+        done
+    else
+        # Jika keluar dari mode monocle, hapus properti tersebut agar kembali melengkung
+        for win in $(bspc query -N -n .window -d focused); do
+            xprop -id "$win" -remove _BSPWM_MONOCLE
+        done
+    fi
+done &
+
 
 # Otomatis mute mic setiap kali login / unlock dari dm-tool
 (
