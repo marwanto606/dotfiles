@@ -19,6 +19,31 @@ M.base46 = {
 --       tabufline = {
 --          lazyload = false
 --      }
---}
+-- }
+M.nvdash = {
+  load_on_startup = true,
+  header = {
+    [[                                                    ]],
+	[[ ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ]],
+	[[ ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ]],
+	[[ ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ]],
+	[[ ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ]],
+	[[ ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ]],
+	[[ ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ]],
+	[[                                                    ]],
+  },
+}
+M.ui = {
+  telescope = {
+    style = "borderless"
+  },
+  tabufline = {
+    enabled = false,
+  },
+  statusline = {
+    theme = "default",  -- default/vscode/vscode_colored/minimal
+    separator_style = "default", -- default/round/block/arrow
+  },
+}
 
 return M
