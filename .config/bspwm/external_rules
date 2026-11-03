@@ -205,7 +205,7 @@ case "$class" in
     [Tt]hunar)
         # Deteksi jendela dialog / popup transient (Warning, Attention, dll)
         is_dialog=$(xprop -id "$window_id" _NET_WM_WINDOW_TYPE 2>/dev/null | grep -E '_NET_WM_WINDOW_TYPE_DIALOG')
-        is_transient=$(xprop -id "$window_id" WM_TRANSIENT_FOR 2>/dev/null)
+        is_transient=$(xprop -id "$window_id" WM_TRANSIENT_FOR 2>/dev/null | grep -v "not found")
 
         if [ -n "$is_dialog" ] || [ -n "$is_transient" ]; then
             # Dialog / Warning / Attention tetap floating di tengah
