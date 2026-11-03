@@ -2,6 +2,7 @@
 window_id=$1
 class=$2
 instance=$3
+consequences=$4
 
 case "$class" in
     # ========================================================
@@ -210,6 +211,9 @@ case "$class" in
         if [ -n "$is_dialog" ] || [ -n "$is_transient" ]; then
             # Dialog / Warning / Attention tetap floating di tengah
             echo "state=floating center=on focus=on honor_size_hints=true"
+        elif echo "$consequences" | grep -q "state=floating"; then
+            # JANGAN override jika jendela dibuka via shortcut floating (super + alt + e)
+            echo "state=floating rectangle=900x600+0+0 center=on focus=on"
         else
             # Jendela Utama Thunar
             echo "state=tiled rectangle=900x600+0+0 center=on"
