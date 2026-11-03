@@ -40,9 +40,18 @@ M.ui = {
   tabufline = {
     enabled = false,
   },
+  -- statusline = {
+  --   theme = "default",  -- default/vscode/vscode_colored/minimal
+  --   separator_style = "default", -- default/round/block/arrow
+  -- },
   statusline = {
-    theme = "default",  -- default/vscode/vscode_colored/minimal
-    separator_style = "default", -- default/round/block/arrow
+    -- Override modul default NvChad menggunakan custom statusline buatanmu
+    order = { "custom_stl" },
+    modules = {
+      custom_stl = function()
+        return require("arfy_statusline").run()
+      end,
+    },
   },
 }
 
