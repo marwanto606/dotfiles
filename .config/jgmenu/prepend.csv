@@ -1,0 +1,14 @@
+@search,,12,12,206,30,8,left,top,auto,#1a1d2d 95,  Type to search...
+^sep()
+Applications, ^checkout(lx-apps), start-here
+Terminal, kitty, terminal
+Web Browser, google-chrome-stable, browser
+File Manager, thunar, org.xfce.thunar
+^sep()
+
+Lock, betterlockscreen -l blur, system-lock-screen
+Logout, bspc quit, system-log-out
+Reboot, systemctl reboot, system-reboot
+Shutdown, systemctl poweroff, system-shutdown
+
+^tag(lx-apps)

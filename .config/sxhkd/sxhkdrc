@@ -49,6 +49,14 @@ super + r
 super + alt + f
     rofi -show filebrowser -theme-str 'entry \{ placeholder: "Browse files..."; \}'
 
+# Buka jgmenu via keyboard
+super + j
+    jgmenu_run
+
+# Buka jgmenu via Klik kanan di Desktop
+~button3
+    ~/.config/bspwm/scripts/desktop_jgmenu.sh
+
 # Munculkan popup daftar semua aplikasi yang aktif untuk dipilih
 super + Tab
     rofi -show window -theme-str 'inputbar \{ children: [ icon-search, entry ]; \}' > /dev/null 2>&1 &
