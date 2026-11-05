@@ -4,36 +4,69 @@ class=$2
 instance=$3
 consequences=$4
 
+# Mengambil WIDTH & HEIGHT yang sudah dideteksi di bspwmrc
+[ -f /tmp/screen_res ] && . /tmp/screen_res
+SCREEN_W=${WIDTH:-1366}
+SCREEN_H=${HEIGHT:-768}
+
+# ========================================================
+# ATURAN PRIORITAS TINGGI (APP KHUSUS / WIDGET)
+# ========================================================
 case "$class" in
-    # ========================================================
-    # Gsimplecal (Ukuran Dinamis GTK & Pojok Kanan Bawah)
-    # ========================================================
+    # ----------------------------------------------------
+    # Gsimplecal (Kalkender GTK Pojok Kanan Bawah)
+    # ----------------------------------------------------
     [Gg]simplecal)
-        # Ambil ukuran dinamis rendering GTK-3
+        # Fallback ukuran default gsimplecal GTK jika xwininfo belum selesai kalkulasi
+        CAL_W=230
+        CAL_H=220
+
+        # Coba ambil ukuran real rendering jika sudah siap
         eval "$(xwininfo -id "$window_id" 2>/dev/null | awk '/Width:/{print "CAL_W=" $2} /Height:/{print "CAL_H=" $2}')"
 
-        if [ -n "$CAL_W" ] && [ -n "$CAL_H" ]; then
-            # Ambil resolusi layar (metode sama persis seperti PiP Anda)
-            eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+        GAP_X=5
+        GAP_Y=50 # 45 bottom bar + 5 margin
+        X=$((SCREEN_W - CAL_W - GAP_X))
+        Y=$((SCREEN_H - CAL_H - GAP_Y))
 
-            # Offset: GAP_X = 5, GAP_Y = 50 (45 bottom_padding + 5 window_gap)
-            GAP_X=5
-            GAP_Y=50
-
-            # Hitung koordinat pojok kanan bawah
-            X=$((SCREEN_W - CAL_W - GAP_X))
-            Y=$((SCREEN_H - CAL_H - GAP_Y))
-
-            # Suntikkan aturan sebelum jendela di-render (Instan tanpa kedip)
-            echo "state=floating layer=above sticky=on border=off focus=on rectangle=${CAL_W}x${CAL_H}+${X}+${Y}"
-        fi
+        echo "state=floating layer=above sticky=on border=off focus=on rectangle=${CAL_W}x${CAL_H}+${X}+${Y}"
+        exit 0
         ;;
 
-    # ========================================================
+    # ----------------------------------------------------
+    # Pavucontrol
+    # ----------------------------------------------------
+    [Pp]avucontrol)
+        PAVU_W=360
+        PAVU_H=300
+        GAP_X=10
+        GAP_Y=55
+        X=$((SCREEN_W - PAVU_W - GAP_X))
+        Y=$((SCREEN_H - PAVU_H - GAP_Y))
+
+        echo "state=floating layer=above top=on sticky=on border=off focus=on rectangle=${PAVU_W}x${PAVU_H}+${X}+${Y}"
+        exit 0
+        ;;
+
+    # ----------------------------------------------------
+    # Htop Task Manager
+    # ----------------------------------------------------
+    HtopTaskManager|htoptaskmanager)
+        HTOP_W=730
+        HTOP_H=545
+        GAP_X=10
+        GAP_Y=55
+        X=$((SCREEN_W - HTOP_W - GAP_X))
+        Y=$((SCREEN_H - HTOP_H - GAP_Y))
+
+        echo "state=floating layer=above top=on sticky=on border=off focus=on rectangle=${HTOP_W}x${HTOP_H}+${X}+${Y}"
+        exit 0
+        ;;
+
+    # ----------------------------------------------------
     # Picture-in-Picture Player (Brave / Chrome / Chromium)
-    # ========================================================
+    # ----------------------------------------------------
     ""|*[Bb]rave*|*[Cc]hrome*|*[Cc]hromium*)
-        # Cek judul PiP
         title=$(xprop -id "$window_id" _NET_WM_NAME WM_NAME 2>/dev/null | grep -E '("Picture in picture"|"Picture-in-picture")')
 
         if [ -n "$title" ]; then
@@ -41,18 +74,11 @@ case "$class" in
             HEIGHT=360
             GAP_X=10
             GAP_Y=50
-
-            # Ambil resolusi layar aktif
-            eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
-
-            # Hitung posisi kanan bawah
             X=$((SCREEN_W - WIDTH - GAP_X))
             Y=$((SCREEN_H - HEIGHT - GAP_Y))
 
-            # Output aturan bspwm
             echo "state=floating rectangle=${WIDTH}x${HEIGHT}+${X}+${Y} sticky=on top=on honor_size_hints=false"
 
-            # Subshell delay untuk mengunci ukuran & posisi jika ditimpa oleh Chrome
             (
                 sleep 0.15
                 xdotool windowsize "$window_id" $WIDTH $HEIGHT
@@ -60,163 +86,134 @@ case "$class" in
             ) &
         fi
         ;;
-        
-    # ========================================================
-    # Pavucontrol (Ukuran & Posisi Pojok Kanan Bawah)
-    # ========================================================
-    [Pp]avucontrol)
-        PAVU_W=360
-        PAVU_H=300
-        GAP_X=10
-        GAP_Y=55
 
-        # Ambil resolusi layar saat ini
-        eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
-
-        if [ -n "$SCREEN_W" ]; then
-            X=$((SCREEN_W - PAVU_W - GAP_X))
-            Y=$((SCREEN_H - PAVU_H - GAP_Y))
-            echo "state=floating layer=above top=on sticky=on border=off focus=on rectangle=${PAVU_W}x${PAVU_H}+${X}+${Y}"
-        fi
-        ;;
-        
-    # ========================================================
-    # Htop Task Manager (Pojok Kanan Bawah)
-    # ========================================================
-    HtopTaskManager|htoptaskmanager)
-        HTOP_W=730
-        HTOP_H=545
-        GAP_X=10
-        GAP_Y=55
-
-        # Ambil resolusi layar saat ini
-        eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
-
-        if [ -n "$SCREEN_W" ]; then
-            X=$((SCREEN_W - HTOP_W - GAP_X))
-            Y=$((SCREEN_H - HTOP_H - GAP_Y))
-            echo "state=floating layer=above top=on sticky=on border=off focus=on rectangle=${HTOP_W}x${HTOP_H}+${X}+${Y}"
-        fi
-        ;;
-
-    # ========================================================
+    # ----------------------------------------------------
     # AIMP Player, Preferences, & TrayControl
-    # ========================================================
+    # ----------------------------------------------------
     [Aa]imp)
         title=$(xprop -id "$window_id" WM_NAME 2>/dev/null | awk -F '"' '{print $2}')
 
         case "$title" in
-            # --- 1. Mode TrayControl (Mini Widget) ---
             "TrayControl")
                 echo "state=floating layer=above border=off focus=off honor_size_hints=true"
                 ;;
 
-            # --- 2. Menu Setting / Preferences (Center & Ukuran Alami) ---
             "Preferences")
-                # center=on & honor_size_hints=true membuat ukurannya tidak terpengaruh player
                 echo "state=floating layer=above center=on focus=on border=off honor_size_hints=true"
 
-                # Subshell pengunci agar posisi benar-benar tepat di tengah monitor
                 (
                     sleep 0.05
-                    eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SW=" $1 "; SH=" $2}')"
                     eval "$(xwininfo -id "$window_id" 2>/dev/null | awk '/Width:/{print "PW=" $2} /Height:/{print "PH=" $2}')"
-                    if [ -n "$PW" ] && [ -n "$PH" ] && [ -n "$SW" ]; then
-                        X=$(( (SW - PW) / 2 ))
-                        Y=$(( (SH - PH) / 2 ))
+                    if [ -n "$PW" ] && [ -n "$PH" ]; then
+                        X=$(( (SCREEN_W - PW) / 2 ))
+                        Y=$(( (SCREEN_H - PH) / 2 ))
                         xdotool windowmove "$window_id" "$X" "$Y"
                     fi
                 ) &
                 ;;
 
-            # --- 3. Jendela Utama AIMP Player (1/3 Layar Kanan Bawah) ---
             *)
-                eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+                GAP=5
+                BOTTOM_GAP=50 # 45 polybar + 5 gap
+                AIMP_W=$(( (SCREEN_W / 3) - (GAP * 2) ))
 
-                if [ -n "$SCREEN_W" ]; then
-                    GAP=5
-                    GAP_POLYBAR=45
-                    BOTTOM_GAP=$(( GAP_POLYBAR + GAP )) # 50px
+                eval "$(xwininfo -id "$window_id" 2>/dev/null | awk '/Height:/{print "SKIN_H=" $2}')"
+                MAX_H=$(( SCREEN_H - BOTTOM_GAP - GAP ))
 
-                    # Lebar 1/3 layar
-                    AIMP_W=$(( (SCREEN_W / 3) - (GAP * 2) ))
-
-                    eval "$(xwininfo -id "$window_id" 2>/dev/null | awk '/Height:/{print "SKIN_H=" $2}')"
-                    MAX_H=$(( SCREEN_H - BOTTOM_GAP - GAP ))
-
-                    if [ -n "$SKIN_H" ] && [ "$SKIN_H" -le "$MAX_H" ] && [ "$SKIN_H" -gt 100 ]; then
-                        AIMP_H=$SKIN_H
-                    else
-                        AIMP_H=$MAX_H
-                    fi
-
-                    X=$(( SCREEN_W - AIMP_W - GAP ))
-                    Y=$(( SCREEN_H - AIMP_H - BOTTOM_GAP ))
-
-                    echo "state=floating layer=normal border=off rectangle=${AIMP_W}x${AIMP_H}+${X}+${Y} honor_size_hints=false"
-
-                    (
-                        sleep 0.15
-                        xdotool windowsize "$window_id" "$AIMP_W" "$AIMP_H"
-                        xdotool windowmove "$window_id" "$X" "$Y"
-                    ) &
+                if [ -n "$SKIN_H" ] && [ "$SKIN_H" -le "$MAX_H" ] && [ "$SKIN_H" -gt 100 ]; then
+                    AIMP_H=$SKIN_H
+                else
+                    AIMP_H=$MAX_H
                 fi
+
+                X=$(( SCREEN_W - AIMP_W - GAP ))
+                Y=$(( SCREEN_H - AIMP_H - BOTTOM_GAP ))
+
+                echo "state=floating layer=normal border=off rectangle=${AIMP_W}x${AIMP_H}+${X}+${Y} honor_size_hints=false"
+
+                (
+                    sleep 0.15
+                    xdotool windowsize "$window_id" "$AIMP_W" "$AIMP_H"
+                    xdotool windowmove "$window_id" "$X" "$Y"
+                ) &
                 ;;
         esac
         ;;
 
-    # ========================================================
+    # ----------------------------------------------------
     # Free Download Manager (FDM)
-    # ========================================================
+    # ----------------------------------------------------
     "Free Download Manager"|[Ff]dm)
-        # Ambil title untuk membedakan Main Window vs Window Progress/Popup
         title=$(xprop -id "$window_id" WM_NAME 2>/dev/null | awk -F '"' '{print $2}')
 
         if [ "$title" = "Free Download Manager" ]; then
-            # --- 1. Jendela Utama FDM ---
-            # Ukuran diset ke 900x600 (bisa Anda ubah sesuai selera) dan posisinya di tengah layar
             FDM_W=900
             FDM_H=600
+            X=$(( (SCREEN_W - FDM_W) / 2 ))
+            Y=$(( (SCREEN_H - FDM_H) / 2 ))
 
-            eval "$(xdotool getdisplaygeometry 2>/dev/null | awk '{print "SCREEN_W=" $1 "; SCREEN_H=" $2}')"
+            echo "state=floating center=on rectangle=${FDM_W}x${FDM_H}+${X}+${Y} honor_size_hints=false"
 
-            if [ -n "$SCREEN_W" ]; then
-                X=$(( (SCREEN_W - FDM_W) / 2 ))
-                Y=$(( (SCREEN_H - FDM_H) / 2 ))
-
-                echo "state=floating center=on rectangle=${FDM_W}x${FDM_H}+${X}+${Y} honor_size_hints=false"
-
-                # Subshell pengunci untuk aplikasi berbasis Qt/Web (mencegah resize liar)
-                (
-                    sleep 0.15
-                    xdotool windowsize "$window_id" $FDM_W $FDM_H
-                    xdotool windowmove "$window_id" $X $Y
-                ) &
-            fi
+            (
+                sleep 0.15
+                xdotool windowsize "$window_id" $FDM_W $FDM_H
+                xdotool windowmove "$window_id" $X $Y
+            ) &
         else
-            # --- 2. Jendela Dialog / Progress  ---
-            # Dibuat floating, di tengah layar, tapi mematuhi ukuran asli (honor_size_hints=true)
             echo "state=floating center=on layer=above focus=on honor_size_hints=true"
         fi
         ;;
 
-    # ========================================================
+    # ----------------------------------------------------
     # Thunar File Manager
-    # ========================================================
+    # ----------------------------------------------------
     [Tt]hunar)
-        # Deteksi jendela dialog / popup transient (Warning, Attention, dll)
         is_dialog=$(xprop -id "$window_id" _NET_WM_WINDOW_TYPE 2>/dev/null | grep -E '_NET_WM_WINDOW_TYPE_DIALOG')
         is_transient=$(xprop -id "$window_id" WM_TRANSIENT_FOR 2>/dev/null | grep -v "not found")
 
         if [ -n "$is_dialog" ] || [ -n "$is_transient" ]; then
-            # Dialog / Warning / Attention tetap floating di tengah
             echo "state=floating center=on focus=on honor_size_hints=true"
-        elif echo "$consequences" | grep -q "state=floating"; then
-            # JANGAN override jika jendela dibuka via shortcut floating (super + alt + e)
-            echo "state=floating rectangle=900x600+0+0 center=on focus=on"
         else
-            # Jendela Utama Thunar
             echo "state=tiled rectangle=900x600+0+0 center=on"
         fi
         ;;
+    
+    # ----------------------------------------------------
+    # Discord (Bedakan Jendela Loading/Splash vs Jendela Utama)
+    # ----------------------------------------------------
+    [Dd]iscord|[Vv]esktop)
+        title=$(xprop -id "$window_id" WM_NAME 2>/dev/null | awk -F '"' '{print $2}')
+        role=$(xprop -id "$window_id" WM_WINDOW_ROLE 2>/dev/null | awk -F '"' '{print $2}')
+
+        # 1. Jika ini Splash Screen / Loading Updater -> Biarkan FLOATING ukuran aslinya
+        if [ "$title" = "Discord Updater" ] || [ "$role" != "browser-window" ]; then
+            echo "state=floating center=on focus=on honor_size_hints=true"
+            exit 0
+        fi
+
+        # 2. Jendela Utama Discord -> BUKA SEBAGAI TILED (Normal/Penuh)
+        echo "state=tiled"
+        exit 0
+        ;;
 esac
+
+# ========================================================
+# GLOBAL OVERRIDE: Berlaku untuk SEMUA Aplikasi Umum
+# Menangkap shortcut floating (Super + Alt + ...)
+# ========================================================
+if echo "$consequences" | grep -q "state=floating"; then
+    is_dialog_type=$(xprop -id "$window_id" _NET_WM_WINDOW_TYPE 2>/dev/null | grep -E '_NET_WM_WINDOW_TYPE_(DIALOG|NOTIFICATION|SPLASH|UTILITY)')
+    is_transient=$(xprop -id "$window_id" WM_TRANSIENT_FOR 2>/dev/null | grep -v "not found")
+
+    if [ -n "$is_dialog_type" ] || [ -n "$is_transient" ]; then
+        # Dialog/Alert/Notif popup: Ukuran asli bawaan app
+        echo "state=floating center=on focus=on honor_size_hints=true"
+    else
+        # Jendela Utama: Terapkan ukuran RECT
+        RECT=$(echo "$consequences" | grep -o 'rectangle=[^ ]*' | cut -d'=' -f2)
+        [ -z "$RECT" ] && RECT="940x600+0+0"
+
+        echo "state=floating center=on focus=on rectangle=$RECT honor_size_hints=false"
+    fi
+    exit 0
+fi

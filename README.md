@@ -8,7 +8,7 @@ folder .config pada dotfiles ini dapat menimpa .config di lokasi ~/.config/ kali
 ```
 sudo apt update
 sudo apt install bspwm rofi polybar picom sxhkd network-manager-applet feh starship thunar brightnessctl xfce4-notifyd scrot htop pavucontrol gsimplecal simplescreenrecorder kitty betterlockscreen vnstat xfce4-terminal jgmenu
-sudo apt install x11-utils xdotool playerctl
+sudo apt install x11-utils xdotool playerctl wmctrl
 git clone https://github.com/marwanto606/dotfiles.git
 cd dotfiles
 cp -r .config/* ~/.config/

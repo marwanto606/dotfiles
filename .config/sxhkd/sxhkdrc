@@ -26,10 +26,10 @@ super + {_,alt + }Return
     {xfce4-terminal, bspc rule -a \* -o state=floating center=true rectangle=700x420+0+0 && xfce4-terminal} > /dev/null 2>&1 &
 
 super + {_,alt + }t
-    {kitty, bspc rule -a \* -o state=floating center=true rectangle=700x420+0+0 && kitty} > /dev/null 2>&1 &
+    {kitty, bspc rule -a \* -o state=floating center=true rectangle=800x500+0+0 && kitty} > /dev/null 2>&1 &
 
 super + {_,alt + }e
-    {thunar, bspc rule -a \* -o state=floating center=true rectangle=900x600+0+0 && thunar} > /dev/null 2>&1 &
+    {thunar, bspc rule -a \* -o state=floating center=true rectangle=800x500+0+0 && thunar} > /dev/null 2>&1 &
 
 super + w
     ~/.config/rofi/wifi.sh
@@ -118,7 +118,7 @@ super + f
 
 # Toggle floating (jika floating kembalikan ke tiled, jika tidak jadikan floating)
 super + v
-    bspc node -t floating || bspc node -t tiled
+    ~/.config/bspwm/scripts/toggle-floating.sh
 
 # Close window
 super + q

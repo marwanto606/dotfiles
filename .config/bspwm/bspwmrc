@@ -27,6 +27,9 @@ HEIGHT=$(echo "$SCREEN_RES" | cut -d'x' -f2)
 WIDTH=${WIDTH:-1366}
 HEIGHT=${HEIGHT:-768}
 
+# SIMPAN KE CACHE UNTUK DIPAKAI SCRIPT LAIN (INSTAN)
+echo "WIDTH=$WIDTH; HEIGHT=$HEIGHT" > /tmp/screen_res
+
 # --- AUTO DETECT TOUCHPAD & TAP-TO-CLICK ---
 (
     for id in $(xinput list --id-only 2>/dev/null); do
@@ -84,6 +87,7 @@ bspc config top_padding          0
 bspc config bottom_padding       45
 bspc config left_padding         0
 bspc config right_padding        0
+# bspc config honor_size_hints     false
 
 # ================= PENGATURAN WINDOW & MONOCLE =================
 bspc config border_width         0
@@ -97,7 +101,7 @@ bspc config bottom_monocle_padding 0
 
 # ================= WINDOW RULES =================
 bspc rule -a "com-abdownloadmanager-desktop-AppKt:com-abdownloadmanager-desktop-AppKt" state=floating border=off
-bspc rule -a kitty state=tiled rectangle=700x420+0+0 center=on
+# bspc rule -a kitty state=tiled rectangle=800x500+0+0 center=on
 bspc rule -a "*:xdg-desktop-portal-gtk" state=floating layer=above center=on
 bspc rule -a Polybar manage=off
 
