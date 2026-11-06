@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
 # Buat daftar menu menggunakan format dmenu icon Rofi
-options="Lock\0icon\x1fsystem-lock-screen\n\
-Logout\0icon\x1fsystem-log-out\n\
-Reboot\0icon\x1fsystem-reboot\n\
-Shutdown\0icon\x1fsystem-shutdown"
+menu=(
+    "Lock:system-lock-screen"
+    "Logout:system-log-out"
+    "Reboot:system-reboot"
+    "Shutdown:system-shutdown"
+)
+
+# Otomatis buat format options untuk Rofi
+options=""
+for item in "${menu[@]}"; do
+    options+="${item%%:*}\0icon\x1f${item#*:}\n"
+done
 
 # Eksekusi Rofi:
 chosen=$(printf "%b" "$options" | rofi -dmenu -i -show-icons -p "Power" -theme-str '

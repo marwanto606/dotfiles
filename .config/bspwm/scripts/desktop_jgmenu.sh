@@ -36,13 +36,17 @@ fi
 log "--------------------------------------------------"
 log "CUR_WIN: $CUR_WIN | ROOT_WIN: $ROOT_WIN | XWIN_DEC: $XWIN_DEC"
 
-# Fungsi pemicu jgmenu
+# Fungsi pemicu jgmenu (Kompatibel untuk stay_alive 0 maupun 1)
 show_menu() {
     log "Keputusan: BUKA JGMENU ($1)"
-    if command -v jgmenu >/dev/null 2>&1; then
-        jgmenu --at-pointer &
+    
+    # Cek apakah proses jgmenu sedang berjalan di sistem
+    if pgrep -x jgmenu >/dev/null 2>&1; then
+        # Jika jgmenu sudah ada di background (stay_alive = 1), bangunkan dengan sinyal:
+        killall -SIGUSR1 jgmenu
     else
-        jgmenu_run &
+        # Jika belum berjalan (stay_alive = 0 atau belum autostart), jalankan dari awal:
+        jgmenu --at-pointer &
     fi
     exit 0
 }
