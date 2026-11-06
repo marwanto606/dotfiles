@@ -1,6 +1,5 @@
 position_mode       = pointer
 stay_alive          = 0
-hide_on_startup     = 1
 csv_cmd             = apps
 csv_no_dirs         = 0
 tint2_look          = 0
@@ -24,7 +23,6 @@ font                = Maple Mono NF 13px
 icon_size           = 16
 icon_theme          = WhiteSur-dark
 arrow_string        = 󰄾
-at_pointer 			= 1
 
 # Colors
 color_menu_border = #222330
